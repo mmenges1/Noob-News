@@ -9,7 +9,7 @@ class User(models.Model):
     player_tag = models.CharField(max_length=128, unique=True)
     email =  models.CharField(max_length=128, unique=True)
     password = models.CharField(max_length=128)
-    profile_image = models.CharField(max_length=300)
+    profile_image = models.ImageField(default="")
 
     def __str__(self):
         return self.player_tag
@@ -30,7 +30,8 @@ class VideoGame(models.Model):
     release = models.DateField(("Date"),default=date.today)
     developer = models.CharField(max_length=128)
     publisher = models.CharField(max_length=128)
-    image = models.CharField(max_length=300)
+    image = models.ImageField(default="")
+
 
 
     def __str__(self):
