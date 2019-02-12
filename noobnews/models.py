@@ -11,6 +11,9 @@ class User(models.Model):
     password = models.CharField(max_length=128)
     profile_image = models.CharField(max_length=300)
 
+    def __str__(self):
+        return self.player_tag
+
 class Genre(models.Model):
     genre_id = models.IntegerField(unique=True, primary_key=True)
     name = models.CharField(max_length=128)
@@ -39,7 +42,13 @@ class Review(models.Model):
     publish_date = models.DateField(("Date"),default=date.today)
     rating = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.reviews_id
+
 class VideoGameList(models.Model):
     list_id = models.IntegerField(unique=True, primary_key=True)
     videogame_id = models.ForeignKey(VideoGame)
     user_id = models.ForeignKey(User)
+
+    def __str__(self):
+        return self.list_id
