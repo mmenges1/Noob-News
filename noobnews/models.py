@@ -30,6 +30,8 @@ class VideoGame(models.Model):
     release = models.DateField(("Date"),default=date.today)
     developer = models.CharField(max_length=128)
     publisher = models.CharField(max_length=128)
+    image = models.CharField(max_length=300)
+
 
     def __str__(self):
         return self.name
