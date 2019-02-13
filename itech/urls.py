@@ -21,7 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-url(r'^$', views.index, name='index'),
+url(r'^$', views.home, name='home'),
 url(r'^noobnews/', include('noobnews.urls')),
 # above maps any URLs starting
 # with noobnews/ to be handled by

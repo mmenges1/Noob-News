@@ -18,5 +18,5 @@ from noobnews import views
 
 
 urlpatterns = [
-url(r'^$', views.index, name='index'),
+url(r'^$', views.home, name='home'),
 ]

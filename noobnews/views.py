@@ -18,5 +18,5 @@ from datetime import datetime
 
 def home(request):
 
-    response = render(request, 'noobnews/index.html', {})
+    response = render(request, 'noobnews/home.html', {})
     return response
