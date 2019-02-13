@@ -1,4 +1,4 @@
-"""itech URL Configuration
+"""tango_with_django_project URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -14,17 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
-from django.contrib import admin
-from django.conf.urls import include
 from noobnews import views
-from django.conf import settings
-from django.conf.urls.static import static
+
 
 urlpatterns = [
 url(r'^$', views.index, name='index'),
-url(r'^noobnews/', include('noobnews.urls')),
-# above maps any URLs starting
-# with noobnews/ to be handled by
-# the noobnews application
-url(r'^admin/', admin.site.urls),
 ]
