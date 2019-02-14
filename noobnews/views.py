@@ -16,7 +16,7 @@ from django.contrib.auth import logout
 from datetime import datetime
 
 
-def index(request):
+def home(request):
 
-    response = render(request, 'noobnews/index.html', {})
+    response = render(request, 'noobnews/home.html', {})
     return response
