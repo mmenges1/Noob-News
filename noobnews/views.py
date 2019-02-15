@@ -51,3 +51,28 @@ def suggest_category(request):
         starts_with = request.GET['suggestion']
     cat_list = get_category_list(8, starts_with)
     return render(request, 'noobnews/cats.html', {'cats': cat_list})
+
+def user_login(request):
+    if request.method == 'POST':
+        email = request.POST.get('mail')
+        password = request.POST.get('password')
+
+        user = authenticate(username=email, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('home'))
+            else:
+                return HttpResponse("Your account is disabled")
+        else:
+            message = "Invalid login details: {0}, {1}".format(
+                username, password)
+            return render(request, 'noobnews/login.html', {'message': message})
+
+    else:
+        return render(request, 'noobnews/login.html', {})
+
+def user_logout(request):
+    auth_logout(request)
+    return redirect('/')

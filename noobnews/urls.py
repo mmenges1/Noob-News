@@ -14,11 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from django.conf.urls import include
 from noobnews import views
 
 
 urlpatterns = [
-url(r'^$', views.home, name='home'),
-url(r'^suggest/$', views.suggest_category, name='suggest_category'),
-url(r'^videogame/(?P<videogame_name_slug>[\w\-]+)/$', views.show_videogame, name='show_videogame'),
+    url(r'^$', views.home, name='home'),
+    url(r'^suggest/$', views.suggest_category, name='suggest_category'),
+    url(r'^videogame/(?P<videogame_name_slug>[\w\-]+)/$', views.show_videogame, name='show_videogame'),
+    url(r'^login/$', views.user_login, name='login'),
+    url(r'^logout/$', views.user_logout, name='logout'),
+    url('', include('social_django.urls', namespace='social')),
 ]

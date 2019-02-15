@@ -28,6 +28,10 @@ SECRET_KEY = '=xdyl5z+a*n7j!-)+9*t111q!vihc#(zkym9x%b5&uw-*z@yk0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SOCIAL_AUTH_TWITTER_KEY = '4Kx1d0pV1VtyKZLpTxKHh88Od'
+SOCIAL_AUTH_TWITTER_SECRET = '75De0xcoR0ZywFA6WFbxnfJQD6wGjAx75cY1WTYbaGU8swylOj'
+
+
 ALLOWED_HOSTS = []
 
 
@@ -119,6 +123,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -137,10 +147,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-
 LOGIN_URL = '/noobnews/login'
 LOGOUT_URL = '/noobnews/logout'
-LOGIN_REDIRECT_URL = 'index'
+LOGIN_REDIRECT_URL = '/'
+SOCIAL_AUTH_LOGIN_URL = '/noobnews/'
 # Base template bootstrap4
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 STATIC_URL = '/static/'
