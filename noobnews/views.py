@@ -14,9 +14,40 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from datetime import datetime
+from noobnews.models import VideoGame
 
 
 def home(request):
+    videoGameList = VideoGame.objects.order_by('name')
+    context_dict = {'videogames': videoGameList}
+    # Render the response and send it back!
+    return render(request, 'noobnews/home.html', context_dict)
 
-    response = render(request, 'noobnews/home.html', {})
-    return response
+def show_videogame(request, videogame_name_slug):
+    context_dict={}
+    try:
+        videoGame = VideoGame.objects.get(slug=videogame_name_slug)
+        context_dict['videoGame'] = videoGame
+    except VideoGame.DoesNotExist:
+        context_dict['videoGame'] = None
+
+    return render(request, 'noobnews/videoGame.html', context_dict)
+
+
+def get_category_list(max_results=0, starts_with=''):
+    cat_list = []
+    if starts_with:
+        cat_list = VideoGame.objects.filter(name__istartswith=starts_with)
+    if max_results > 0:
+        if len(cat_list) > max_results:
+            cat_list = cat_list[:max_results]
+    return cat_list
+
+
+def suggest_category(request):
+    cat_list = []
+    starts_with = ''
+    if request.method == 'GET':
+        starts_with = request.GET['suggestion']
+    cat_list = get_category_list(8, starts_with)
+    return render(request, 'noobnews/cats.html', {'cats': cat_list})
