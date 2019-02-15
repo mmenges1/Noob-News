@@ -21,6 +21,7 @@ def home(request):
     response = render(request, 'noobnews/home.html', {})
     return response
 
+
 def user_login(request):
     if request.method == 'POST':
         email = request.POST.get('mail')
@@ -36,11 +37,13 @@ def user_login(request):
                 return HttpResponse("Your account is disabled")
         else:
             message = "Invalid login details: {0}, {1}".format(
-                username, password)
+                email, password)
+                
             return render(request, 'noobnews/login.html', {'message': message})
 
     else:
         return render(request, 'noobnews/login.html', {})
+
 
 def user_logout(request):
     auth_logout(request)
