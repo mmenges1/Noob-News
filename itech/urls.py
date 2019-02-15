@@ -27,4 +27,4 @@ url(r'^noobnews/', include('noobnews.urls')),
 # with noobnews/ to be handled by
 # the noobnews application
 url(r'^admin/', admin.site.urls),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

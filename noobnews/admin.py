@@ -1,8 +1,8 @@
 from django.contrib import admin
-from noobnews.models import User, Genre, VideoGame, Review, VideoGameList
+from noobnews.models import UserProfile, Genre, VideoGame, Review, VideoGameList
 # Register your models here.
 
-admin.site.register(User)
+admin.site.register(UserProfile)
 admin.site.register(Genre)
 admin.site.register(VideoGame)
 admin.site.register(Review)
