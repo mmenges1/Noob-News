@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'crispy_forms',
+    'bootstrap_toolkit',
     'noobnews',
 ]
 
@@ -146,11 +147,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
 LOGIN_URL = '/noobnews/login'
 LOGOUT_URL = '/noobnews/logout'
 LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_LOGIN_URL = '/noobnews/'
 # Base template bootstrap4
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'

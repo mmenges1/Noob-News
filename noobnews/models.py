@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
+from django.template.defaultfilters import slugify
+
 
 # Create your models here.
 
@@ -22,7 +24,8 @@ class Genre(models.Model):
 class VideoGame(models.Model):
     id = models.IntegerField(unique=True, primary_key=True)
     genre = models.ForeignKey(Genre)
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, unique=True)
+    slug = models.SlugField(blank=True)
     description = models.CharField(max_length=300)
     rating = models.IntegerField(default=0)
     release = models.DateField(("Date"),default=date.today)
@@ -30,7 +33,12 @@ class VideoGame(models.Model):
     publisher = models.CharField(max_length=128)
     image = models.ImageField(default="")
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(VideoGame, self).save(*args, **kwargs)
 
+    class Meta:
+        verbose_name_plural = 'videogames'
 
     def __str__(self):
         return self.name
