@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="../../static/css/noobnews.css" />
+    <link rel="stylesheet" href="/static/css/noobnews.css" />
     <script src="{% static "js/noobnews-jquery.js" %}"></script>
     <script src="{% static "js/noobnews-ajax.js" %}"></script>
     <script>
@@ -33,10 +33,9 @@
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
         >&times;</a
       >
-      <a href="#">Home</a>
-      <a href="#">Top 40</a>
-      <a href="#">Profile</a>
-      <a href="#">PlaceHolder</a>
+      <a href="#">Home</a><a href="#">Top 40</a>
+<a href="#">Profile</a>
+<a href="#">PlaceHolder</a>
     </div>
     <br />
     <span
@@ -47,18 +46,22 @@
     >
     <!-- https://codepen.io/CBeghin/pen/HeuiF-->
     <a herf="www.google.com" class="user"> <i class="far fa-user"></i></a>
-    <a herf="www.google.com" class="search"> <i class="fas fa-search"></i></a>
+    <a herf="www.google.com" class="searchicon"> <i class="fas fa-search"></i></a>
 
-    <form>
-          <li class="nav nav-item"><input class="search-query form-control suggestion" type="text"
-                                      name="suggestion" value="" id="suggestion" placeholder="Find a category"/>
-          </li>
-      </form>
 
-  </ul>
-  <div id="cats">
-  </div>
-    {% block body_block %}{% endblock %}
+  <!--Search Feacture: results are shown in the cats div! -->
+	 <form class="search" >
+     <input class="search-query form-control suggestion" type="text"name="suggestion" value="" id="suggestion" placeholder="Find a Game"/>
+       <div class="results" id="cats">
+      </div>
+	 </form>
+
+
+
+
+    {% block body_block %}
+
+    {% endblock %}
 
     </div>
   </body>
@@ -71,5 +74,6 @@
 <script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"> </script>
 <script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"> </script>
+
 <script src= "http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"> </script>
 </html>
