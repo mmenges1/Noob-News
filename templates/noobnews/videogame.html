@@ -1,9 +1,29 @@
-{% extends 'noobnews/base.html' %}
-{% load staticfiles %}
-{% block title_block %}
-Home
-{% endblock %}
-{% block body_block %}
 
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Blog Card fun #1</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>
+</head>
 
-{% endblock %}
+<link rel="stylesheet" href="/static/css/noobnews.css"/>
+<body>
+{% if videoGame %}
+<div class="fond"><span class="s2">{{ videoGame.name }}</span></div>
+<div class="card">
+  <div class="thumbnail"><img class="left" src="/static/videogameImages/{{ videoGame.image }}"/></div>
+  <div class="right">
+    <h1>{{ videoGame.name }}</h1>
+    <div class="author">
+      <h2>Nintendo</h2>
+    </div>
+    <div class="separator"></div>
+<p>{{ videoGame.description }}<p>  </div>
+  <h5>{{ videoGame.rating }}/5</h5>
+  <h6>{{ videoGame.release }}</h6>
+  <div class="fab"><i class="fa fa-arrow-down fa-3x"> </i></div>
+</div>
+    {% endif %}
+</body>
+</html>
