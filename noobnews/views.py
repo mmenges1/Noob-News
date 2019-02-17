@@ -28,7 +28,7 @@ def show_videogame(request, videogame_name_slug):
     except VideoGame.DoesNotExist:
         context_dict['videoGame'] = None
 
-    return render(request, 'noobnews/videoGame.html', context_dict)
+    return render(request, 'noobnews/videogame.html', context_dict)
 
 
 def get_category_list(max_results=0, starts_with=''):

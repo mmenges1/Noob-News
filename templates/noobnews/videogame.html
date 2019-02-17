@@ -1,21 +1,9 @@
 {% extends 'noobnews/base.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html>
+{% block title_block %}
+Home
+{% endblock %}
+{% block body_block %}
 
-<head>
-  <title>Video Games</title>
-</head>
 
-<body>
-  <div>
-    hello bith
-    {% if videogame %}
-    <h1>{{ videogame.name }}</h1>
-    <ul>
-    The specified VideoGame does not exist!
-    {% endif %}
-  </div>
-</body>
-
-</html>
+{% endblock %}

@@ -4,6 +4,93 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+/*Search Bar */
+
+.search input:focus {
+    outline: none;
+    border-color: #66b1ee;
+}
+
+.search .results {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 0;
+    margin: 0;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cbcfe2 #c8cee7 #c4c7d7;
+    border-radius: 3px;
+    background-color: #fdfdfd;
+}
+
+.search .results li { display: block }
+
+
+.search .results li:first-child:before {
+    border-bottom: 5px solid #c4c7d7;
+    top: -11px;
+}
+.search .results a {
+    display: block;
+    position: relative;
+    margin: 0 -1px;
+    padding: 6px 40px 6px 10px;
+    color: #808394;
+    font-weight: 500;
+    text-shadow: 0 1px #fff;
+    border: 1px solid transparent;
+}
+
+.search .results a span { font-weight: 200 }
+
+.search .results a:before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    top: 50%;
+    margin-top: -9px;
+}
+
+.search .results a:hover {
+    text-decoration: none;
+    color: #fff;
+    text-shadow: 0 -1px rgba(0, 0, 0, 0.3);
+    border-color: #2380dd #2179d5 #1a60aa;
+    background-color: #338cdf;
+}
+
+/*User Icon */
+.user {
+  width: 30%;
+  position: absolute;
+  top: 6%;
+  left: 110%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+}
+
+/*Search Icon */
+.searchicon {
+  width: 30%;
+  position: absolute;
+  top: 6%;
+  left: 107%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+.search {
+  width: 30%;
+  position: absolute;
+  top: 6%;
+  left: 74%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
 /*Grid Image Overlay effect*/
 .overlay {
   position: relative;
@@ -104,15 +191,6 @@ img {
   color: #fff;
 }
 
-/*Search Icon */
-.search {
-  width: 30%;
-  position: absolute;
-  top: 6%;
-  left: 107%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-}
 @import url(https://fonts.googleapis.com/css?family=Lato:100, 300, 400, 700);
 @import url(https://raw.github.com/FortAwesome/Font-Awesome/master/docs/assets/css/font-awesome.min.css);
 

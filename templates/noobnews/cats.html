@@ -1,19 +1,17 @@
 <ul>
-    {% if cats %}
-        {% for c in cats %}
-            {% if c == act_cat %}
-                <li>
-                    <strong>
-                        <a href="{% url 'show_videogame' c.slug %}">{{ c.name }}</a>
-                    </strong>
-                </li>
-            {% else %}
-                <li>
-                    <a href="{% url 'show_videogame' c.slug %}">{{ c.name }}</a>
-                </li>
-            {% endif %}
-        {% endfor %}
-    {% else %}
-        <li><strong>There are no categories present.</strong></li>
-    {% endif %}
+  {% if cats %}
+  {% for c in cats %}
+  {% if c == act_cat %}
+
+
+  <a href="{% url 'show_videogame' c.slug %}">{{ c.name }}</a></div>
+
+  {% else %}
+  <li><a href="{% url 'show_videogame' c.slug %}">{{ c.name }}<br /><span>We could put a small description of the game here lads</span></a></li>
+
+  {% endif %}
+  {% endfor %}
+  {% else %}
+  <a href=""> There are no games that match your search term</a>
+  {% endif %}
 </ul>
