@@ -146,7 +146,6 @@ img {
   margin: auto;
 }
 
-
 /*Sidebar */
 .sidenav {
   height: 100%;
@@ -182,7 +181,15 @@ img {
   margin-left: 50px;
 }
 
-
+/*User Icon */
+.user {
+  width: 30%;
+  position: absolute;
+  top: 6%;
+  left: 110%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+}
 
 @import url(https://fonts.googleapis.com/css?family=Lato:100, 300, 400, 700);
 @import url(https://raw.github.com/FortAwesome/Font-Awesome/master/docs/assets/css/font-awesome.min.css);
