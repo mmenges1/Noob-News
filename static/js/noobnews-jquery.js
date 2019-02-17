@@ -4,3 +4,9 @@ $(document).ready(function() {
     alert("You clicked the button using JQuery!");
   });
 });
+
+$('button').click(function(){
+  $('button').toggleClass('active');
+  $('.title').toggleClass('active');
+  $('nav').toggleClass('active');
+});

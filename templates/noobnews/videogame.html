@@ -1,29 +1,95 @@
+<link rel="stylesheet" href="css/style.css">
+<!DOCTYPE html>
+<html lang="en">
 
-<html >
 <head>
   <meta charset="UTF-8">
-  <title>Blog Card fun #1</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>
+  <title>Contact Me Animation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed'>
+
+  <link rel="stylesheet" href="/static/css/noobnews.css">
+
+
 </head>
 
-<link rel="stylesheet" href="/static/css/noobnews.css"/>
 <body>
-{% if videoGame %}
-<div class="fond"><span class="s2">{{ videoGame.name }}</span></div>
-<div class="card">
-  <div class="thumbnail"><img class="left" src="/static/videogameImages/{{ videoGame.image }}"/></div>
-  <div class="right">
-    <h1>{{ videoGame.name }}</h1>
-    <div class="author">
-      <h2>Nintendo</h2>
+  <div class="fond"><span class="s2"></span></div>
+  <div class="contact">
+    <main>
+      <div class="card">
+        <div class="thumbnail"><img class="left" src="{{ videoGame.image }}" /></div>
+        <div class="right">
+          <h1>{{ videoGame.name }}</h1>
+          <div class="author">
+            <h2>Nintendo</h2>
+          </div>
+          <div class="separator"></div>
+          <p>{{ videoGame.description }}
+            <p>
+        </div>
+        <h5>{{ videoGame.rating }}/5</h5>
+        <h6>{{ videoGame.release }}</h6>
+
+
+        <button>
+          <span>More</span>
+
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+            <g class="nc-icon-wrapper" fill="#444444">
+              <path d="M14.83 30.83L24 21.66l9.17 9.17L36 28 24 16 12 28z"></path>
+            </g>
+          </svg>
+        </button>
+      </div>
+      <div class="title">
+        <p>Game Information</p>
+      </div>
+    </main>
+
+      <nav>
+        <a>
+          <div class="content">
+            <h1>Comments </h1>
+            <span>All of the comments will go here?</span>
+          </div>
+
+        </a>
+        <a>
+          <div class="content">
+            <h1>Speed Run</h1>
+            <span>The current speedrun record is holded by...</span>
+          </div>
+
+        </a>
+        <a>
+
+          <div class="content">
+            <!--To embred a video you need to https://www.youtube.com/embed/videoseries?list= then the playlist code, the playlist code could be stored in the database -->
+            <h1>Youtube Playlist:</h1>
+            <center>
+            <span><iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLlc94szfcNDEV3nP3Ojb01fbK51_o6D4j" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span>
+          </center>
+          </div>
+
+        </a>
+
+        <a>
+          <div class="content">
+            <h1>Cheats</h1>
+            <span>Could have cheats here </span>
+          </div>
+        </a>
+
+
+
+
+      </nav>
     </div>
-    <div class="separator"></div>
-<p>{{ videoGame.description }}<p>  </div>
-  <h5>{{ videoGame.rating }}/5</h5>
-  <h6>{{ videoGame.release }}</h6>
-  <div class="fab"><i class="fa fa-arrow-down fa-3x"> </i></div>
-</div>
-    {% endif %}
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  <script src="/static/js/index.js"></script>
 </body>
+
 </html>
