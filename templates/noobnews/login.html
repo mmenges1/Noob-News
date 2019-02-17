@@ -5,12 +5,11 @@ Login
 {% endblock %}
 
 {% block body_block %}
-<div class="row align-items-center">
-    <div class="col-4"></div>
-    <div class="col-4">
+<div class="row justify-content-center">
+    <div class="col-6">
         <div class="card">
             <article class="card-body">
-                <a href="" class="float-right btn btn-outline-primary">Sign up</a>
+                <a href="{% url 'register' %}" class="float-right btn btn-outline-primary">Sign up</a>
                 <h4 class="card-title mb-4 mt-1">Sign in</h4>
                 <p>
                     <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-block btn-outline-info">
@@ -21,14 +20,14 @@ Login
                 <form id="login_form" method="post" action="{% url 'login' %}">
                   {% csrf_token %}
                   <div class="form-group">
-                    <input name="mail" class="form-control" placeholder="Email" type="email" />
+                    <input name="mail" class="form-control" required placeholder="Email" type="email" />
                   </div>
                   <!-- form-group// -->
                   <div class="form-group">
-                    <input name="password" class="form-control" placeholder="Password" type="password" />
+                    <input name="password" class="form-control" required placeholder="Password" type="password" />
                   </div>
                   <!-- form-group// -->
-                  <div class="row">
+                  <div class="row align-items-center">
                     <div class="col-md-6">
                       <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block">
@@ -42,14 +41,10 @@ Login
                     </div>
                   </div>
                   <!-- .row// -->
-                    {% if message %}
-                        <p class="text-danger text-center">{{ message }}</p>
-                    {% endif %}
                 </form>
               </article>
             </div>
             <!-- card.// -->
     </div>
-    <div class="col4"></div>
 </div>
 {% endblock %}

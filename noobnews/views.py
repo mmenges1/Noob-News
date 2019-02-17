@@ -1,20 +1,16 @@
 from django.shortcuts import render
-from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-
-
-from datetime import datetime
-
-
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
+from django.contrib import messages
 from datetime import datetime
 from noobnews.models import VideoGame
+from noobnews.forms import UserForm, UserProfileForm
 
 
 def home(request):
@@ -23,8 +19,9 @@ def home(request):
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
 
+
 def show_videogame(request, videogame_name_slug):
-    context_dict={}
+    context_dict = {}
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
         context_dict['videoGame'] = videoGame
@@ -67,13 +64,53 @@ def user_login(request):
             else:
                 return HttpResponse("Your account is disabled")
         else:
-            message = "Invalid login details: {0}, {1}".format(
-                email, password)
-                
+            message = "Invalid login details"
+            messages.error(request, message)
             return render(request, 'noobnews/login.html', {'message': message})
 
     else:
         return render(request, 'noobnews/login.html', {})
+
+
+def register(request):
+    registered = False
+
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+        profile_form = UserProfileForm(data=request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save(commit=False)
+            user.set_password(user.password)
+
+            profile = profile_form.save(commit=False)
+            user.username = user.email
+            user.save()
+            profile.user = user
+
+            if 'user_profile_image' in request.FILES:
+                profile.user_profile_image = request.FILES['user_profile_image']
+
+            profile.save()
+
+            registered = True
+            messages.success(request, 'Account created successfully!')
+            return render(request,
+                          'noobnews/login.html',
+                          {})
+        else:
+            print(user_form.errors, profile_form.errors)
+    else:
+        user_form = UserForm()
+        profile_form = UserProfileForm()
+
+    return render(request,
+                  'noobnews/register.html',
+                  {
+                      'user_form': user_form,
+                      'profile_form': profile_form,
+                      'registered': registered
+                  })
 
 
 def user_logout(request):
