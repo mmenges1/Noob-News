@@ -4,7 +4,8 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
-/*Search Bar */
+/*Search Bar_ https://codepen.io/airpwn/pen/ckCJd */
+
 
 .search input:focus {
     outline: none;
@@ -82,6 +83,7 @@ body {
   transform: translate(-50%, -50%);
   color: white;
 }
+
 .search {
   width: 30%;
   position: absolute;
