@@ -32,6 +32,8 @@ class VideoGame(models.Model):
     developer = models.CharField(max_length=128)
     publisher = models.CharField(max_length=128)
     image = models.ImageField(default="")
+    youtubeurl = models.CharField(max_length=300)
+    speedRun= models.CharField(max_length=300)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

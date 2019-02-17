@@ -6,15 +6,9 @@
   <meta charset="UTF-8">
   <title>Contact Me Animation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed'>
-
   <link rel="stylesheet" href="/static/css/noobnews.css">
-
-
 </head>
-
 <body>
   <div class="fond"><span class="s2"></span></div>
   <div class="contact">
@@ -32,8 +26,6 @@
         </div>
         <h5>{{ videoGame.rating }}/5</h5>
         <h6>{{ videoGame.release }}</h6>
-
-
         <button>
           <span>More</span>
 
@@ -45,46 +37,31 @@
         </button>
       </div>
       <div class="title">
-        <p>Game Information</p>
-      </div>
+        <p>could do different style of cards </p>
     </main>
 
       <nav>
+
         <a>
           <div class="content">
-            <h1>Comments </h1>
-            <span>All of the comments will go here?</span>
+            <!--To embred a video you need to https://www.youtube.com/embed/videoseries?list= then the playlist code, the playlist code could be stored in the database -->
+            <h1>Youtube Playlist:</h1>
+            <center>
+            <span><iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list={{ videoGame.youtubeurl }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span>
+          </center>
           </div>
+
 
         </a>
         <a>
           <div class="content">
             <h1>Speed Run</h1>
-            <span>The current speedrun record is holded by...</span>
-          </div>
-
-        </a>
-        <a>
-
-          <div class="content">
-            <!--To embred a video you need to https://www.youtube.com/embed/videoseries?list= then the playlist code, the playlist code could be stored in the database -->
-            <h1>Youtube Playlist:</h1>
             <center>
-            <span><iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list=PLlc94szfcNDEV3nP3Ojb01fbK51_o6D4j" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span>
+            <span><iframe width="560" height="315" src="https://www.youtube.com/embed/{{ videoGame.speedRun }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span>
           </center>
           </div>
 
         </a>
-
-        <a>
-          <div class="content">
-            <h1>Cheats</h1>
-            <span>Could have cheats here </span>
-          </div>
-        </a>
-
-
-
 
       </nav>
     </div>
