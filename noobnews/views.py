@@ -101,6 +101,16 @@ def register(request):
         profile_form = UserProfileForm(data=request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
+            repeat_password=user_form.cleaned_data['repeat_password']
+            if(user_form.cleaned_data['password']!=repeat_password):
+                messages.error(request, 'The passwords do not match!')
+                return render(request,
+                  'noobnews/register.html',
+                  {
+                      'user_form': user_form,
+                      'profile_form': profile_form,
+                      'registered': registered
+                  })
             user = user_form.save(commit=False)
             user.set_password(user.password)
 
