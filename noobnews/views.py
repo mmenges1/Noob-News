@@ -9,11 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
-<<<<<<< HEAD
-from noobnews.models import VideoGame,Review
-=======
-from noobnews.models import VideoGame, Genre
->>>>>>> c9d2352b36784fd26628d3f40effb3c55733b22b
+from noobnews.models import VideoGame, Genre, Review, UserProfile
 from noobnews.forms import UserForm, UserProfileForm
 
 
@@ -29,11 +25,15 @@ def show_videogame(request, videogame_name_slug):
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
         genres = Review.objects.filter(videogame=videoGame);
+        users = UserProfile.objects.filter(review=genres)
+
+        context_dict['users'] = users
         context_dict['genres'] = genres
         context_dict['videoGame'] = videoGame
     except VideoGame.DoesNotExist:
         context_dict['videoGame'] = None;
-        context_dict['genres'] = None
+        context_dict['genres'] = None;
+        context_dict['users'] = None;
 
     return render(request, 'noobnews/videogame.html', context_dict)
 #

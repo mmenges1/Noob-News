@@ -13,13 +13,15 @@
 </head>
 
 <body>
+
+</div>
   <div class="fond"><span class="s2"></span></div>
   <div class="contact">
     <main>
       <div class="card">
         <div class="thumbnail"><img class="left" src="{{ videoGame.image }}" /></div>
         <div class="right">
-          <h1>{{ videoGame.name }}</h1>
+          <h1>{{ videoGame.name }} </h1>
           <div class="author">
             <h2>Nintendo</h2>
           </div>
@@ -43,6 +45,7 @@
 
     </main>
 
+
     <nav>
         <div class="blog-slider">
           <div class="blog-slider__wrp swiper-wrapper">
@@ -58,8 +61,7 @@
             </div>
             <div class="blog-slider__item swiper-slide">
               <div class="blog-slider__img">
-                <span><iframe width="560" height="315" src="https://www.youtube.com/embed/{{ videoGame.speedRun }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span>
-              </div>
+                <span><iframe width="560" height="315" src="https://player.twitch.tv/?autoplay=false&video={{ videoGame.speedRun }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span>              </div>
               <div class="blog-slider__content">
                 <div class="blog-slider__title">Twitch Speed Run</div>
                 <div class="blog-slider__text">Speed run record held by BLA BLA BLA</div>
@@ -82,31 +84,46 @@
       <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js'></script>
 
       <a>
-        <div class="content">
+        <div class="content scroll" >
+
+
           <!--To embred a video you need to https://www.youtube.com/embed/videoseries?list= then the playlist code, the playlist code could be stored in the database -->
-          <center>
-            
-            {% if genres %}
-            {% for g in genres %}
-            {{ g.user_id }}:
-            {{ g.comments }}
-            {% endfor %}
-            {% endif %}
+            <!--Comments Sections -->
 
-<<<<<<< HEAD
-        </div>
-=======
-        </a>
-        <a>
-          <div class="content">
-            <h1>Speed Run</h1>
-            <center>
-            <span><iframe width="560" height="315" src="https://player.twitch.tv/?autoplay=false&video={{ videoGame.speedRun }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span>
-          </center>
+
+
+            <div class="comment-item">
+        <h1>Comment Section</h1>
+
+
+          <div class="separator"></div>
+      <div class="comment-item">
+        <div class="comment-item--inner">
+          {% if genres %}
+          {% for g in genres %}
+          <div class="is-left">
+            <div class="avatar">
+      {% for u in users %}
+       <img src="/static/{{u.user_profile_image }}"  style="width: 100%;"alt="">
+           {% endfor %}
+     </div>
           </div>
->>>>>>> c9d2352b36784fd26628d3f40effb3c55733b22b
+          <div class="is-right">
+            <div class="is-right--inner">
+              <br>
 
-      </a>
+              <div class="name">{{ g.user_id }}-    <small>{{ g.publish_date }}</small><div><br>
+                <div class="blog-slider__text" style=" font-weight: normal;">{{ g.comments }}</div>
+              <span class="share share-count share-plus">{{ g.rating }}/5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% endfor %}
+      {% endif %}
+    </div>
 
     </nav>
   </div>
