@@ -9,11 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
-<<<<<<< HEAD
-from noobnews.models import VideoGame,Review
-=======
-from noobnews.models import VideoGame, Genre
->>>>>>> c9d2352b36784fd26628d3f40effb3c55733b22b
+from noobnews.models import VideoGame, Genre, Review
 from noobnews.forms import UserForm, UserProfileForm
 
 
