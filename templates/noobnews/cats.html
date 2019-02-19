@@ -7,11 +7,11 @@
   <a href="{% url 'show_videogame' c.slug %}">{{ c.name }}</a></div>
 
   {% else %}
-  <li><a href="{% url 'show_videogame' c.slug %}">{{ c.name }}<br /><span>We could put a small description of the game here lads</span></a></li>
+  <li><a href="{% url 'show_videogame' c.slug %}">{{ c.name }}<br /><span></span></a></li>
 
   {% endif %}
   {% endfor %}
   {% else %}
-  <a href=""> There are no games that match your search term</a>
+  <li><a href=""> There are no games that match your search term</a><li>
   {% endif %}
 </ul>

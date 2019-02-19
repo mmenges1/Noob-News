@@ -53,7 +53,7 @@ class Review(models.Model):
     publish_date = models.DateField(("Date"),default=date.today)
     rating = models.IntegerField(default=0)
 
-    def __str__(self):
+    def __int__(self):
         return self.reviews_id
 
 class VideoGameList(models.Model):
