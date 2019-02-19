@@ -6,38 +6,39 @@
 {% endblock %}
 {% block body_block %}
 <div class="row justify-content-center">
-        <style type="text/css">
-            .input-group-text { width: 40px; }
-          </style>
-        <div class="col-6">
-                <form
-                id="user_form"
-                class="form-horizontal"
-                method="POST"
-                action="{% url 'register' %}"
-                enctype="multipart/form-data"
-                >
-                {% csrf_token %}
-                <div class="card bg-light">
-                    <article class="card-body">
-                        {% crispy user_form %}
-                        {% crispy profile_form %}                        
-                        <div class="row align-items-center">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-block">
-                                        Create Account
-                                    </button>
-                                </div>
-                                <!-- form-group// -->
-                            </div>
-                            <div class="col-md-6 text-right">
-                                Have an account? <a class="small" href="{% url 'login' %}">Log In</a>
-                            </div>
-                        </div>
-                    </article>
-                    </div>
-                </form>
+  <style type="text/css">
+    .input-group-text {
+      width: 40px;
+    }
+  </style>
+  <form
+    id="user_form"
+    class="form-horizontal"
+    method="POST"
+    action="{% url 'register' %}"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+    <div class="card w-100 bg-light">
+      <article class="card-body">
+        {% crispy user_form %}
+        {% crispy profile_form %}
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block">
+                Create Account
+              </button>
+            </div>
+            <!-- form-group// -->
+          </div>
+          <div class="col-md-6 text-right">
+            Have an account?
+            <a class="small" href="{% url 'login' %}">Log In</a>
+          </div>
         </div>
+      </article>
+    </div>
+  </form>
 </div>
 {% endblock %}
