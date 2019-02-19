@@ -1,0 +1,84 @@
+* {
+  box-sizing: border-box;
+}
+
+
+/* Center website */
+.main {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.row2 {
+  margin: 8px -16px;
+}
+
+/* Add padding BETWEEN each column (if you want) */
+.row2,
+.row2 > .column2 {
+  padding: 8px;
+}
+
+/* Create three equal columns that floats next to each other */
+.column2 {
+  float: left;
+  width: 32%;
+  display: none; /* Hide columns by default */
+}
+
+/* Clear floats after rows */
+.row2:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Content */
+.content2 {
+  background: #fff;
+  border-bottom: 10px;
+  padding: 10px;
+  height: 350px;
+  transition: 0.5s;
+}
+
+.hover:hover{
+  transform: scale(1.5);
+  opacity: 1;
+  filter: blur(0);
+  transition: 0.5s;
+}
+
+.hover{
+  transition: 0.5s;
+}
+
+/* The "show" class is added to the filtered elements */
+.show2 {
+  display: block;
+}
+
+/* Style the buttons */
+.btn2 {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  background-color: white;
+  cursor: pointer;
+  align-items: center;
+  font-size: 18px;
+  text-transform: uppercase;
+  transition: 0.5s;
+}
+
+/* Add a grey background color on mouse-over */
+#btn2:hover {
+  background-color: #fff;
+  transform: scale(1.5);
+  opacity: 1;
+  transition: 0.5s;
+}
+
+.btn2.active2 {
+  background-color: #fff;
+}

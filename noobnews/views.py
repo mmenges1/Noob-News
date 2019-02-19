@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
-from noobnews.models import VideoGame
+from noobnews.models import VideoGame, Genre
 from noobnews.forms import UserForm, UserProfileForm
 
 
@@ -29,6 +29,27 @@ def show_videogame(request, videogame_name_slug):
         context_dict['videoGame'] = None
 
     return render(request, 'noobnews/videogame.html', context_dict)
+#
+# def top40(request):
+#     context_dict = {}
+#     try:
+#         videoGame = VideoGame.objects.order_by('name')
+#         context_dict['videoGame'] = videoGame
+#     except VideoGame.DoesNotExist:
+#         context_dict['videoGame'] = None
+#     return render(request, 'noobnews/top40.html', context_dict)
+
+def top40(request):
+    context_dict = {}
+    try:
+        genres = Genre.objects.all()
+        videoGame = VideoGame.objects.order_by('-rating')[:40]
+        context_dict['genres'] = genres
+        context_dict['videoGame'] = videoGame
+    except VideoGame.DoesNotExist:
+        context_dict['genres'] = None
+        context_dict['videoGame'] = None
+    return render(request, 'noobnews/top40.html', context_dict)
 
 
 def get_category_list(max_results=0, starts_with=''):
