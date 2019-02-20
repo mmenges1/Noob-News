@@ -18,7 +18,7 @@ from social_django.models import UserSocialAuth
 def home(request):
     videoGameList = VideoGame.objects.order_by('name')
     context_dict = {'videogames': videoGameList}
-    user=request.user
+    user = request.user
     print(user.first_name)
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
@@ -29,11 +29,13 @@ def show_videogame(request, videogame_name_slug):
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
         genres = Review.objects.filter(videogame=videoGame)
-        context_dict['genres'] = genres
-        context_dict['videoGame'] = videoGame
+        users = UserProfile.objects.order_by('player_tag')
+        context_dict = {'users': users,
+                        'genres': genres, 'videoGame': videoGame}
     except VideoGame.DoesNotExist:
         context_dict['videoGame'] = None
         context_dict['genres'] = None
+        context_dict['users'] = None
 
     return render(request, 'noobnews/videogame.html', context_dict)
 #
@@ -109,6 +111,7 @@ def register(request):
         profile_form = UserProfileForm(data=request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
+
             repeat_password = user_form.cleaned_data['repeat_password']
             if(user_form.cleaned_data['password'] != repeat_password):
                 messages.error(request, 'The passwords do not match!')
@@ -117,7 +120,6 @@ def register(request):
                               {
                                   'user_form': user_form,
                                   'profile_form': profile_form,
-                                  'registered': registered
                               })
             try:
                 userTmp = User.objects.get(
@@ -152,19 +154,6 @@ def register(request):
                                   'profile_form': profile_form,
                                   'registered': registered
                               })
-
-            user = user_form.save(commit=False)
-            user.set_password(user.password)
-
-            profile = profile_form.save(commit=False)
-            user.username = user.email
-            user.save()
-            profile.user = user
-
-            if 'user_profile_image' in request.FILES:
-                profile.user_profile_image = request.FILES['user_profile_image']
-
-            profile.save()
 
             registered = True
             messages.success(request, 'Account created successfully!')

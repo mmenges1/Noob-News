@@ -9,7 +9,7 @@ from django.template.defaultfilters import slugify
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     player_tag = models.CharField(max_length=128, unique=True)
-    user_profile_image = models.ImageField(upload_to='profile_images', blank=True, default='profile_images/default-user.png')
+    user_profile_image = models.ImageField(upload_to='static/profile_images', blank=True, default='profile_images/default-user.png')
 
     def __str__(self):
         return self.player_tag
