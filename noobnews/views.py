@@ -19,17 +19,13 @@ def home(request):
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
 
-
 def show_videogame(request, videogame_name_slug):
     context_dict = {}
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
         genres = Review.objects.filter(videogame=videoGame);
-        users = UserProfile.objects.filter(review=genres)
-
-        context_dict['users'] = users
-        context_dict['genres'] = genres
-        context_dict['videoGame'] = videoGame
+        users = UserProfile.objects.order_by('player_tag')
+        context_dict = {'users': users, 'genres': genres, 'videoGame': videoGame}
     except VideoGame.DoesNotExist:
         context_dict['videoGame'] = None;
         context_dict['genres'] = None;
