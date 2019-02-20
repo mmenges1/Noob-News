@@ -9,13 +9,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
-from noobnews.models import VideoGame, Genre, Review
+from noobnews.models import VideoGame, Genre, Review, User, UserProfile
 from noobnews.forms import UserForm, UserProfileForm
+
+from social_django.models import UserSocialAuth
 
 
 def home(request):
     videoGameList = VideoGame.objects.order_by('name')
     context_dict = {'videogames': videoGameList}
+    user=request.user
+    print(user.first_name)
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
 
@@ -24,11 +28,11 @@ def show_videogame(request, videogame_name_slug):
     context_dict = {}
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
-        genres = Review.objects.filter(videogame=videoGame);
+        genres = Review.objects.filter(videogame=videoGame)
         context_dict['genres'] = genres
         context_dict['videoGame'] = videoGame
     except VideoGame.DoesNotExist:
-        context_dict['videoGame'] = None;
+        context_dict['videoGame'] = None
         context_dict['genres'] = None
 
     return render(request, 'noobnews/videogame.html', context_dict)
@@ -41,6 +45,7 @@ def show_videogame(request, videogame_name_slug):
 #     except VideoGame.DoesNotExist:
 #         context_dict['videoGame'] = None
 #     return render(request, 'noobnews/top40.html', context_dict)
+
 
 def top40(request):
     context_dict = {}
@@ -104,16 +109,50 @@ def register(request):
         profile_form = UserProfileForm(data=request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
-            repeat_password=user_form.cleaned_data['repeat_password']
-            if(user_form.cleaned_data['password']!=repeat_password):
+            repeat_password = user_form.cleaned_data['repeat_password']
+            if(user_form.cleaned_data['password'] != repeat_password):
                 messages.error(request, 'The passwords do not match!')
                 return render(request,
-                  'noobnews/register.html',
-                  {
-                      'user_form': user_form,
-                      'profile_form': profile_form,
-                      'registered': registered
-                  })
+                              'noobnews/register.html',
+                              {
+                                  'user_form': user_form,
+                                  'profile_form': profile_form,
+                                  'registered': registered
+                              })
+            try:
+                userTmp = User.objects.get(
+                    email=user_form.cleaned_data['email'])
+            except User.DoesNotExist:
+                userTmp = None
+
+            if userTmp:
+                messages.error(request, 'A user with the email ' +
+                               userTmp.email+' already exists')
+                return render(request,
+                              'noobnews/register.html',
+                              {
+                                  'user_form': user_form,
+                                  'profile_form': profile_form,
+                                  'registered': registered
+                              })
+
+            try:
+                profileTmp = UserProfile.objects.get(
+                    player_tag=profile_form.cleaned_data['player_tag'])
+            except UserProfile.DoesNotExist:
+                profileTmp = None
+
+            if profileTmp:
+                messages.error(request, 'A user with the player tag ' +
+                               profileTmp.player_tag+' already exists')
+                return render(request,
+                              'noobnews/register.html',
+                              {
+                                  'user_form': user_form,
+                                  'profile_form': profile_form,
+                                  'registered': registered
+                              })
+
             user = user_form.save(commit=False)
             user.set_password(user.password)
 
