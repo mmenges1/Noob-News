@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
@@ -17,9 +17,10 @@ from social_django.models import UserSocialAuth
 
 def home(request):
     videoGameList = VideoGame.objects.order_by('name')
-    context_dict = {'videogames': videoGameList}
-    user = request.user
-    print(user.first_name)
+    context_dict = {
+        'videogames': videoGameList,
+        'user':request.user
+        }
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
 
@@ -176,5 +177,5 @@ def register(request):
 
 
 def user_logout(request):
-    auth_logout(request)
+    logout(request)
     return redirect('/')

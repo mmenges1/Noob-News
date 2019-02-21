@@ -834,6 +834,15 @@ li {
   color: #fff;
 }
 
+.login-button {
+  width: 8%;
+  position: absolute;
+  top: 6%;
+  left: 95%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
 /*Search Icon */
 .searchicon {
   width: 30%;
