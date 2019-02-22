@@ -10,7 +10,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
 from noobnews.models import VideoGame, Genre, Review, User, UserProfile
-from noobnews.forms import UserForm, UserProfileForm
+from noobnews.forms import UserForm, UserProfileForm,ReviewForm
 
 from social_django.models import UserSocialAuth
 
@@ -179,3 +179,38 @@ def register(request):
 def user_logout(request):
     logout(request)
     return redirect('/')
+
+def add_review(request,videogame_name_slug,user_player_tag):
+
+    try:
+        videogame = VideoGame.objects.get(slug=videogame_name_slug)
+        user_id = UserProfile.objects.get(player_tag=user_player_tag)
+        print (user_id)
+    except:
+        user_id = None
+        videogame = None
+        videogame_name_slug = None
+
+    form = ReviewForm()
+    print("1 checkpoint")
+    # A HTTP POST?
+    if request.method == 'POST':
+        print("ITS A POST")
+        form = ReviewForm(request.POST)
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            # Save the new category to the database.
+            if videogame:
+                review = form.save(commit=False)
+                review.videogame = videogame
+                if user_id:
+                    review.user_id = user_id
+                    review.save()
+            return show_videogame(request, videogame_name_slug)
+        else:
+            print("ERROR")
+            # The supplied form contained errors - just print them to the terminal.
+            print(form.errors)
+    # Will handle the bad form (or form details), new form or no form supplied cases.
+    # Render the form with error messages (if any).
+    return render(request, 'noobnews/addReview.html', {'form': form, 'videogame':videogame})

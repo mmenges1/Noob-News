@@ -5,8 +5,8 @@ from crispy_forms.layout import Layout, Field
 from crispy_forms.bootstrap import PrependedText
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
-from noobnews.models import UserProfile
-
+from noobnews.models import UserProfile, Review
+from datetime import date
 
 class UserForm(forms.ModelForm):
     first_name = forms.CharField(label='', widget=forms.TextInput(
@@ -61,3 +61,12 @@ class UserProfileForm(forms.ModelForm):
             'user_profile_image', '<i class="fa fa-image"></i>')
     )
     helper.form_tag = False
+
+class ReviewForm(forms.ModelForm):
+    comments = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'comment'}))
+    rating = forms.IntegerField(label='', widget=forms.NumberInput(attrs={'placeholder': 'rating'}))
+    publish_date = forms.DateField(label='', widget=forms.DateInput(attrs={'placeholder': 'date'}))
+
+    class Meta:
+        model = Review
+        fields = ('comments', )
