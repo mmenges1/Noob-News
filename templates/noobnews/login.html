@@ -4,8 +4,9 @@
 Login 
 {% endblock %} 
 {% block body_block %}
+<script src="../../static/js/login.js"></script>
 <div class="row justify-content-center">
-  <div class="card w-50">
+  <div class="card-login w-50">
     <article class="card-body">
       <a href="{% url 'register' %}" class="float-right btn btn-outline-primary"
         >Sign up</a
@@ -16,6 +17,7 @@ Login
           href="{% url 'social:begin' 'twitter' %}"
           class="btn btn-block btn-outline-info"
         >
+          <i class="fab-login fa-twitter"></i>
           Login via Twitter
         </a>
       </p>
@@ -52,7 +54,7 @@ Login
             <!-- form-group// -->
           </div>
           <div class="col-md-6 text-right">
-            <a class="small" href="#">Forgot password?</a>
+            <a class="small" href="/">Return to the Home page</a>
           </div>
         </div>
         <!-- .row// -->

@@ -101,12 +101,18 @@
         <div class="comment-item--inner">
           {% if genres %}
           {% for g in genres %}
+
+
+
           <div class="is-left">
             <div class="avatar">
-      {% for u in users %}
-       <img src="/static/{{u.user_profile_image }}"  style="width: 100%;"alt="">
-           {% endfor %}
-     </div>
+              {% for u in users%}
+              {% ifequal  u.player_tag g.user_id.player_tag %}
+              <img src="/{{u.user_profile_image }}"  style="width: 100%; height:120px;"alt="">
+              {%endifequal%}
+                {%endfor%}
+
+              </div>
           </div>
           <div class="is-right">
             <div class="is-right--inner">
@@ -120,6 +126,7 @@
           </div>
         </div>
       </div>
+
 
 {% endfor %}
       {% endif %}

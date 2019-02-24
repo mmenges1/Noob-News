@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"/>
     <link rel="stylesheet" href="/static/css/noobnews.css" />
     <link rel="stylesheet" href="/static/css/top40.css" />
+    <link rel="stylesheet" href="/static/css/login.css" />
     <script src="{% static "js/noobnews-jquery.js" %}"></script>
     <script src="{% static "js/noobnews-ajax.js" %}"></script>
     <script src="{% static "js/top40.js" %}"></script>
@@ -48,18 +49,24 @@
     <span
       style="font-size:30px;cursor:pointer; font-size: 90%; font-family:'Batang'; padding-left:40px; color:white" onclick="openNav()">&#9776;</span
     >
-    <!-- https://codepen.io/CBeghin/pen/HeuiF-->
-    <a herf="www.google.com" class="user"> <i class="far fa-user"></i></a>
-    <a herf="www.google.com" class="searchicon"> <i class="fas fa-search"></i></a>
-
-
-  <!--Search Feacture: results are shown in the cats div! -->
-	 <form class="search" >
-     <input class="search-query form-control suggestion" type="text"name="suggestion" value="" id="suggestion" placeholder="Find a Game"/>
-     <div class="results" id="cats">
+    <div id="noob-navigator">
+      <div class="row">
+        <!-- https://codepen.io/CBeghin/pen/HeuiF-->
+        {% if user.is_authenticated %}
+          <a herf="www.google.com" class="user"> <i class="fas fa-user"></i></a>
+          <a herf="www.google.com" class="searchicon"> <i class="fas fa-search"></i></a>
+        {% else %}
+          <a href="{% url 'login' %}" role="button" class="login-button btn btn-outline-light btn-sm">Login</a>
+        {% endif %}
+        <!--Search Feacture: results are shown in the cats div! -->
+        <form class="search" >
+          <input class="search-query form-control suggestion" type="text"name="suggestion" value="" id="suggestion" placeholder="Find a Game"/>
+          <div class="results" id="cats">
+          </div>
+        </form>
+      </div>
+      <hr>
     </div>
-   </form>
-
    <div class="container">
       {% include 'noobnews/messages.html' %}
       {% block body_block %}

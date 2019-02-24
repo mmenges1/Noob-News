@@ -2,20 +2,25 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
-from noobnews.models import VideoGame, Genre, Review, UserProfile
+from noobnews.models import VideoGame, Genre, Review, User, UserProfile
 from noobnews.forms import UserForm, UserProfileForm
+
+from social_django.models import UserSocialAuth
 
 
 def home(request):
     videoGameList = VideoGame.objects.order_by('name')
-    context_dict = {'videogames': videoGameList}
+    context_dict = {
+        'videogames': videoGameList,
+        'user':request.user
+        }
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
 
@@ -24,16 +29,14 @@ def show_videogame(request, videogame_name_slug):
     context_dict = {}
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
-        genres = Review.objects.filter(videogame=videoGame);
-        users = UserProfile.objects.filter(review=genres)
-
-        context_dict['users'] = users
-        context_dict['genres'] = genres
-        context_dict['videoGame'] = videoGame
+        genres = Review.objects.filter(videogame=videoGame)
+        users = UserProfile.objects.order_by('player_tag')
+        context_dict = {'users': users,
+                        'genres': genres, 'videoGame': videoGame}
     except VideoGame.DoesNotExist:
-        context_dict['videoGame'] = None;
-        context_dict['genres'] = None;
-        context_dict['users'] = None;
+        context_dict['videoGame'] = None
+        context_dict['genres'] = None
+        context_dict['users'] = None
 
     return render(request, 'noobnews/videogame.html', context_dict)
 #
@@ -45,6 +48,7 @@ def show_videogame(request, videogame_name_slug):
 #     except VideoGame.DoesNotExist:
 #         context_dict['videoGame'] = None
 #     return render(request, 'noobnews/top40.html', context_dict)
+
 
 def top40(request):
     context_dict = {}
@@ -108,18 +112,49 @@ def register(request):
         profile_form = UserProfileForm(data=request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save(commit=False)
-            user.set_password(user.password)
 
-            profile = profile_form.save(commit=False)
-            user.username = user.email
-            user.save()
-            profile.user = user
+            repeat_password = user_form.cleaned_data['repeat_password']
+            if(user_form.cleaned_data['password'] != repeat_password):
+                messages.error(request, 'The passwords do not match!')
+                return render(request,
+                              'noobnews/register.html',
+                              {
+                                  'user_form': user_form,
+                                  'profile_form': profile_form,
+                              })
+            try:
+                userTmp = User.objects.get(
+                    email=user_form.cleaned_data['email'])
+            except User.DoesNotExist:
+                userTmp = None
 
-            if 'user_profile_image' in request.FILES:
-                profile.user_profile_image = request.FILES['user_profile_image']
+            if userTmp:
+                messages.error(request, 'A user with the email ' +
+                               userTmp.email+' already exists')
+                return render(request,
+                              'noobnews/register.html',
+                              {
+                                  'user_form': user_form,
+                                  'profile_form': profile_form,
+                                  'registered': registered
+                              })
 
-            profile.save()
+            try:
+                profileTmp = UserProfile.objects.get(
+                    player_tag=profile_form.cleaned_data['player_tag'])
+            except UserProfile.DoesNotExist:
+                profileTmp = None
+
+            if profileTmp:
+                messages.error(request, 'A user with the player tag ' +
+                               profileTmp.player_tag+' already exists')
+                return render(request,
+                              'noobnews/register.html',
+                              {
+                                  'user_form': user_form,
+                                  'profile_form': profile_form,
+                                  'registered': registered
+                              })
 
             registered = True
             messages.success(request, 'Account created successfully!')
@@ -142,5 +177,5 @@ def register(request):
 
 
 def user_logout(request):
-    auth_logout(request)
+    logout(request)
     return redirect('/')
