@@ -161,6 +161,19 @@ def register(request):
                                   'registered': registered
                               })
 
+            user = user_form.save(commit=False)
+            user.set_password(user.password)
+
+            profile = profile_form.save(commit=False)
+            user.username = user.email
+            user.save()
+            profile.user = user
+
+            if 'user_profile_image' in request.FILES:
+                profile.user_profile_image = request.FILES['user_profile_image']
+
+            profile.save()
+
             registered = True
             messages.success(request, 'Account created successfully!')
             return render(request,
