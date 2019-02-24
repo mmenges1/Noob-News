@@ -24,6 +24,11 @@ def home(request):
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
 
+def profile(request):
+    context_dict = {'boldmessage': "Crunchy, creamy, cookie, candy, cupcake!"}
+    
+    return render(request, 'noobnews/profile.html', context_dict)    
+
 
 def show_videogame(request, videogame_name_slug):
     context_dict = {}

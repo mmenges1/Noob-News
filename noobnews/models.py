@@ -9,10 +9,12 @@ from django.template.defaultfilters import slugify
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     player_tag = models.CharField(max_length=128, unique=True)
-    user_profile_image = models.ImageField(upload_to='static/profile_images', blank=True, default='profile_images/default-user.png')
+    user_profile_image = models.ImageField(
+        upload_to='static/profile_images', blank=True, default='profile_images/default-user.png')
 
     def __str__(self):
         return self.player_tag
+
 
 class Genre(models.Model):
     genre_id = models.IntegerField(unique=True, primary_key=True)
@@ -21,6 +23,7 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
+
 class VideoGame(models.Model):
     id = models.IntegerField(unique=True, primary_key=True)
     genre = models.ForeignKey(Genre)
@@ -28,12 +31,12 @@ class VideoGame(models.Model):
     slug = models.SlugField(blank=True)
     description = models.CharField(max_length=300)
     rating = models.IntegerField(default=0)
-    release = models.DateField(("Date"),default=date.today)
+    release = models.DateField(("Date"), default=date.today)
     developer = models.CharField(max_length=128)
     publisher = models.CharField(max_length=128)
     image = models.ImageField(default="")
     youtubeurl = models.CharField(max_length=300)
-    speedRun= models.CharField(max_length=300)
+    speedRun = models.CharField(max_length=300)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -45,16 +48,18 @@ class VideoGame(models.Model):
     def __str__(self):
         return self.name
 
+
 class Review(models.Model):
     reviews_id = models.IntegerField(unique=True, primary_key=True)
     videogame = models.ForeignKey(VideoGame)
     user_id = models.ForeignKey(UserProfile)
-    comments =  models.CharField(max_length=300)
-    publish_date = models.DateField(("Date"),default=date.today)
+    comments = models.CharField(max_length=300)
+    publish_date = models.DateField(("Date"), default=date.today)
     rating = models.IntegerField(default=0)
 
     def __int__(self):
         return self.reviews_id
+
 
 class VideoGameList(models.Model):
     list_id = models.IntegerField(unique=True, primary_key=True)
@@ -63,3 +68,7 @@ class VideoGameList(models.Model):
 
     def __str__(self):
         return self.list_id
+
+
+# class UserProfile(models.Model);
+ #   user = models.OneToOneField(User, on_delete = models.CASCADE)

@@ -20,8 +20,10 @@ from noobnews import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+    url(r'^profile/$', views.profile, name='profile'),
     url(r'^suggest/$', views.suggest_category, name='suggest_category'),
-    url(r'^videogame/(?P<videogame_name_slug>[\w\-]+)/$', views.show_videogame, name='show_videogame'),
+    url(r'^videogame/(?P<videogame_name_slug>[\w\-]+)/$',
+        views.show_videogame, name='show_videogame'),
     url(r'^login/$', views.user_login, name='login'),
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^register/$', views.register, name='register'),
