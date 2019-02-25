@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url
 from django.conf.urls import include
 from noobnews import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -26,6 +28,11 @@ urlpatterns = [
         views.show_videogame, name='show_videogame'),
     url(r'^login/$', views.user_login, name='login'),
     url(r'^logout/$', views.user_logout, name='logout'),
+
     url(r'^register/$', views.register, name='register'),
     url('', include('social_django.urls', namespace='social')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

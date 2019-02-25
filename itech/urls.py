@@ -22,10 +22,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-url(r'^$', views.home, name='home'),
-url(r'^noobnews/', include('noobnews.urls')),
-# above maps any URLs starting
-# with noobnews/ to be handled by
-# the noobnews application
-url(r'^admin/', admin.site.urls),
+    url(r'^$', views.home, name='home'),
+    url(r'^noobnews/', include('noobnews.urls')),
+    # above maps any URLs starting
+    # with noobnews/ to be handled by
+    # the noobnews application
+    url(r'^admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
