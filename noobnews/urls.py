@@ -31,6 +31,7 @@ urlpatterns = [
 
     url(r'^register/$', views.register, name='register'),
     url('', include('social_django.urls', namespace='social')),
+    url(r'^top40/$', views.top40, name='top40'),
 ]
 
 if settings.DEBUG:
