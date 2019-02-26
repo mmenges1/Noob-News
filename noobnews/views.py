@@ -10,30 +10,30 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
 from noobnews.models import VideoGame, Genre, Review, User, UserProfile
-from noobnews.forms import UserForm, UserProfileForm, ReviewForm
-from social_django.models import UserSocialAuth
+from noobnews.forms import UserForm, UserProfileForm,ReviewForm
 from datetime import date
+
+from social_django.models import UserSocialAuth
 
 
 def home(request):
     videoGameList = VideoGame.objects.order_by('name')
     context_dict = {
         'videogames': videoGameList,
-        'user': request.user
-    }
+        'user':request.user
+        }
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
 
-
 def profile(request):
-    context_dict = {'boldmessage': "Crunchy, creamy, cookie, candy, cupcake!"}
-
-    return render(request, 'noobnews/profile.html', context_dict)
-
+    return(request)
 
 def show_videogame(request, videogame_name_slug):
     context_dict = {}
     form = ReviewForm()
+    print (request.user)
+    user_id = UserProfile.objects.get(player_tag=request.user.userprofile.player_tag)
+
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
         genres = Review.objects.filter(videogame=videoGame)
@@ -58,7 +58,8 @@ def show_videogame(request, videogame_name_slug):
                 review = form.save(commit=False)
                 review.videogame = videoGame
                 review.publish_date= str(date.today())
-                review.user_id= UserProfile.objects.get(player_tag=request.user)
+                review.user_id= user_id
+                print(request.user)
                 review.save()
                 # return show_videogame(request, videogame_name_slug)
 
@@ -66,6 +67,16 @@ def show_videogame(request, videogame_name_slug):
     context_dict['videogame'] = videoGame
 
     return render(request, 'noobnews/videogame.html', context_dict )
+#
+# def top40(request):
+#     context_dict = {}
+#     try:
+#         videoGame = VideoGame.objects.order_by('name')
+#         context_dict['videoGame'] = videoGame
+#     except VideoGame.DoesNotExist:
+#         context_dict['videoGame'] = None
+#     return render(request, 'noobnews/top40.html', context_dict)
+
 
 def top40(request):
     context_dict = {}
@@ -109,7 +120,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('profile'))
+                return HttpResponseRedirect(reverse('home'))
             else:
                 return HttpResponse("Your account is disabled")
         else:
@@ -173,22 +184,11 @@ def register(request):
                                   'registered': registered
                               })
 
-            user = user_form.save(commit=False)
-            user.set_password(user.password)
-
-            profile = profile_form.save(commit=False)
-            user.username = user.email
-            user.save()
-            profile.user = user
-
-            if 'user_profile_image' in request.FILES:
-                profile.user_profile_image = request.FILES['user_profile_image']
-
-            profile.save()
-
             registered = True
             messages.success(request, 'Account created successfully!')
-            return HttpResponseRedirect(reverse('login'))
+            return render(request,
+                          'noobnews/login.html',
+                          {})
         else:
             print(user_form.errors, profile_form.errors)
     else:
@@ -204,9 +204,6 @@ def register(request):
                   })
 
 
-@login_required
 def user_logout(request):
-    # Since we know the user is logged in, we can now just log them out.
     logout(request)
-# Take the user back to the homepage.
-    return HttpResponseRedirect(reverse('home'))
+    return redirect('/')
