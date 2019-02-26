@@ -57,15 +57,18 @@ def show_videogame(request, videogame_name_slug):
             if videoGame:
                 review = form.save(commit=False)
                 review.videogame = videoGame
-                review.publish_date= str(date.today())
-                review.user_id= UserProfile.objects.get(player_tag=request.user)
+                review.publish_date = str(date.today())
+                print(request.user)
+                review.user_id = UserProfile.objects.get(
+                    player_tag=request.user)
                 review.save()
                 # return show_videogame(request, videogame_name_slug)
 
     context_dict['form'] = form
     context_dict['videogame'] = videoGame
 
-    return render(request, 'noobnews/videogame.html', context_dict )
+    return render(request, 'noobnews/videogame.html', context_dict)
+
 
 def top40(request):
     context_dict = {}
