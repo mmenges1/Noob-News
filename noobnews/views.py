@@ -10,7 +10,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
 from noobnews.models import VideoGame, Genre, Review, User, UserProfile
-from noobnews.forms import UserForm, UserProfileForm,ReviewForm
+from noobnews.forms import UserForm, UserProfileForm, ReviewForm
 from datetime import date
 
 from social_django.models import UserSocialAuth
@@ -20,19 +20,22 @@ def home(request):
     videoGameList = VideoGame.objects.order_by('name')
     context_dict = {
         'videogames': videoGameList,
-        'user':request.user
-        }
+        'user': request.user
+    }
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
 
+
 def profile(request):
-    return(request)
+    return render(request, 'noobnews/profile.html')
+
 
 def show_videogame(request, videogame_name_slug):
     context_dict = {}
     form = ReviewForm()
-    print (request.user)
-    user_id = UserProfile.objects.get(player_tag=request.user.userprofile.player_tag)
+    print(request.user)
+    user_id = UserProfile.objects.get(
+        player_tag=request.user.userprofile.player_tag)
 
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
@@ -60,7 +63,7 @@ def show_videogame(request, videogame_name_slug):
                 review.publish_date = str(date.today())
                 print(request.user)
                 review.user_id = UserProfile.objects.get(
-                    player_tag=request.user)
+                    player_tag=request.user.userprofile.player_tag)
                 review.save()
                 # return show_videogame(request, videogame_name_slug)
 
@@ -112,7 +115,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('home'))
+                return HttpResponseRedirect(reverse('profile'))
             else:
                 return HttpResponse("Your account is disabled")
         else:
