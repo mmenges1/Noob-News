@@ -27,7 +27,8 @@ def home(request):
 
 
 def profile(request):
-    return(request)
+    return render(request, 'noobnews/profile.html')
+
 
 
 def show_videogame(request, videogame_name_slug):
@@ -63,7 +64,7 @@ def show_videogame(request, videogame_name_slug):
                 review.publish_date = str(date.today())
                 print(request.user)
                 review.user_id = UserProfile.objects.get(
-                    player_tag=request.user)
+                    player_tag=request.user.userprofile.player_tag)
                 review.save()
                 # return show_videogame(request, videogame_name_slug)
 
@@ -115,7 +116,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('home'))
+                return HttpResponseRedirect(reverse('profile'))
             else:
                 return HttpResponse("Your account is disabled")
         else:
