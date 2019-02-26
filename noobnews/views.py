@@ -10,30 +10,30 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
 from noobnews.models import VideoGame, Genre, Review, User, UserProfile
-from noobnews.forms import UserForm, UserProfileForm, ReviewForm
-from social_django.models import UserSocialAuth
+from noobnews.forms import UserForm, UserProfileForm,ReviewForm
 from datetime import date
+
+from social_django.models import UserSocialAuth
 
 
 def home(request):
     videoGameList = VideoGame.objects.order_by('name')
     context_dict = {
         'videogames': videoGameList,
-        'user': request.user
-    }
+        'user':request.user
+        }
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
 
-
 def profile(request):
-    context_dict = {'boldmessage': "Crunchy, creamy, cookie, candy, cupcake!"}
-
-    return render(request, 'noobnews/profile.html', context_dict)
-
+    return(request)
 
 def show_videogame(request, videogame_name_slug):
     context_dict = {}
     form = ReviewForm()
+    print (request.user)
+    user_id = UserProfile.objects.get(player_tag=request.user.userprofile.player_tag)
+
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
         genres = Review.objects.filter(videogame=videoGame)
@@ -112,7 +112,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('profile'))
+                return HttpResponseRedirect(reverse('home'))
             else:
                 return HttpResponse("Your account is disabled")
         else:
@@ -175,7 +175,6 @@ def register(request):
                                   'profile_form': profile_form,
                                   'registered': registered
                               })
-
             user = user_form.save(commit=False)
             user.set_password(user.password)
 
