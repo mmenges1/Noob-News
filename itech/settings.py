@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'social_django',
     'crispy_forms',
     #'bootstrap_toolkit',
+    # 'bootstrap_toolkit',
     'noobnews',
 ]
 
@@ -167,3 +168,4 @@ SOCIAL_AUTH_LOGIN_URL = '/noobnews/'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

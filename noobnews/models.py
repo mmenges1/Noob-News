@@ -8,11 +8,17 @@ from django.template.defaultfilters import slugify
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user_profile_image = models.ImageField(default='NoProfile.jpg', upload_to='profile_pics')
+    # image = models.ImageField(default='default.jpg',
+    # upload_to = 'static/profile_images')
     player_tag = models.CharField(max_length=128, unique=True)
     user_profile_image = models.ImageField(upload_to='static/profile_images', blank=True, default='profile_images/default-user.png')
+    # image=models.ImageField(
+    # upload_to='static/profile_images', blank=True, default='profile_images/default-user.png')
 
     def __str__(self):
-        return self.player_tag
+        return {self.user.username};
 
 class Genre(models.Model):
     genre_id = models.IntegerField(unique=True, primary_key=True)
@@ -29,11 +35,13 @@ class VideoGame(models.Model):
     description = models.CharField(max_length=300)
     rating = models.IntegerField(default=0)
     release = models.DateField(("Date"),default=date.today)
+    release = models.DateField(("Date"), default=date.today)
     developer = models.CharField(max_length=128)
     publisher = models.CharField(max_length=128)
     image = models.ImageField(default="")
     youtubeurl = models.CharField(max_length=300)
     speedRun= models.CharField(max_length=300)
+    speedRun = models.CharField(max_length=300)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -44,6 +52,7 @@ class VideoGame(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Review(models.Model):
     reviews_id = models.IntegerField(unique=True, primary_key=True)
@@ -56,6 +65,7 @@ class Review(models.Model):
     def __int__(self):
         return self.reviews_id
 
+
 class VideoGameList(models.Model):
     list_id = models.IntegerField(unique=True, primary_key=True)
     videogame_id = models.ForeignKey(VideoGame)
@@ -63,3 +73,11 @@ class VideoGameList(models.Model):
 
     def __str__(self):
         return self.list_id
+
+
+# class Profile(models.Model):
+ #   user = models.OneToOneField(User, on_delete=models.CASCADE)
+  #  image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+
+   # def __str__(self):
+    #    return f'{self.user.username} Profile'

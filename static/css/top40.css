@@ -17,12 +17,15 @@
 .row2,
 .row2 > .column2 {
   padding: 8px;
+  padding: 20px;
 }
 
 /* Create three equal columns that floats next to each other */
 .column2 {
   float: left;
   width: 32%;
+  width: 25%;
+  padding: 15px;
   display: none; /* Hide columns by default */
 }
 
@@ -39,7 +42,11 @@
   border-bottom: 10px;
   padding: 10px;
   height: 350px;
+  padding: 5px;
+  height: 300px;
   transition: 0.5s;
+  border-radius: 15px 50px;
+  opacity: 0.9;
 }
 
 .hover:hover{
@@ -82,3 +89,45 @@
 .btn2.active2 {
   background-color: #fff;
 }
+
+.card2 {
+  height: 250px;
+  width: 25%;
+  margin: 60px auto;
+  background-color: #FFF;
+  -webkit-box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
+}
+
+.right2 {
+  margin-left: 5px;
+  margin-right: 0px;
+  top: 90px;
+}
+
+.thumbnail2 {
+  float: left;
+  position: relative;
+  left: -10px;
+  bottom: 0px;
+  height: 160px;
+  width: 150px;
+  -webkit-box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+}
+
+.plus{
+    float: right;
+    width: 70px;
+    height: 70px;
+    background-color: #fff transparent;
+    color: #000;
+    border-radius: 50%;
+    border: none;
+    -webkit-box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.7);
+    box-shadow: 10px 10px 60px 0px rgba(0, 0, 0, 0.7);
+  }

@@ -16,14 +16,25 @@ Including another URLconf
 from django.conf.urls import url
 from django.conf.urls import include
 from noobnews import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+    url(r'^profile/$', views.profile, name='profile'),
     url(r'^suggest/$', views.suggest_category, name='suggest_category'),
     url(r'^videogame/(?P<videogame_name_slug>[\w\-]+)/$', views.show_videogame, name='show_videogame'),
+    url(r'^videogame/(?P<videogame_name_slug>[\w\-]+)/$',
+        views.show_videogame, name='show_videogame'),
     url(r'^login/$', views.user_login, name='login'),
     url(r'^logout/$', views.user_logout, name='logout'),
+
     url(r'^register/$', views.register, name='register'),
     url('', include('social_django.urls', namespace='social')),
+    url(r'^top40/$', views.top40, name='top40'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
