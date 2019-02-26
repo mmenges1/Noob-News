@@ -10,7 +10,7 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
 from noobnews.models import VideoGame, Genre, Review, User, UserProfile
-from noobnews.forms import UserForm, UserProfileForm,ReviewForm
+from noobnews.forms import UserForm, UserProfileForm, ReviewForm
 from datetime import date
 
 from social_django.models import UserSocialAuth
@@ -20,19 +20,22 @@ def home(request):
     videoGameList = VideoGame.objects.order_by('name')
     context_dict = {
         'videogames': videoGameList,
-        'user':request.user
-        }
+        'user': request.user
+    }
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
+
 
 def profile(request):
     return(request)
 
+
 def show_videogame(request, videogame_name_slug):
     context_dict = {}
     form = ReviewForm()
-    print (request.user)
-    user_id = UserProfile.objects.get(player_tag=request.user.userprofile.player_tag)
+    print(request.user)
+    user_id = UserProfile.objects.get(
+        player_tag=request.user.userprofile.player_tag)
 
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
@@ -204,6 +207,19 @@ def register(request):
                       'profile_form': profile_form,
                       'registered': registered
                   })
+
+
+def save_profile(backend, user, response, *args, **kwargs):
+    if backend.name == 'twitter':
+        try:
+            profileTmp = UserProfile.objects.get(
+                player_tag=user.username)
+        except UserProfile.DoesNotExist:
+            profileTmp = None
+
+        if profileTmp is None:
+            profile = UserProfile(user=user, player_tag=user.username)
+            profile.save()
 
 
 @login_required
