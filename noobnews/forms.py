@@ -6,7 +6,7 @@ from crispy_forms.bootstrap import PrependedText
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
 from noobnews.models import UserProfile, Review
-from datetime import date
+
 
 class UserForm(forms.ModelForm):
     first_name = forms.CharField(label='', widget=forms.TextInput(

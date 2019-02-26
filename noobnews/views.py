@@ -10,28 +10,30 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
 from noobnews.models import VideoGame, Genre, Review, User, UserProfile
-from noobnews.forms import UserForm, UserProfileForm,ReviewForm
-from datetime import date
-
+from noobnews.forms import UserForm, UserProfileForm, ReviewForm
 from social_django.models import UserSocialAuth
+from datetime import date
 
 
 def home(request):
     videoGameList = VideoGame.objects.order_by('name')
     context_dict = {
         'videogames': videoGameList,
-        'user':request.user
-        }
+        'user': request.user
+    }
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
+
+
+def profile(request):
+    context_dict = {'boldmessage': "Crunchy, creamy, cookie, candy, cupcake!"}
+
+    return render(request, 'noobnews/profile.html', context_dict)
 
 
 def show_videogame(request, videogame_name_slug):
     context_dict = {}
     form = ReviewForm()
-
-    user_id = UserProfile.objects.get(player_tag='EndaMcVey')
-
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
         genres = Review.objects.filter(videogame=videoGame)
@@ -64,16 +66,6 @@ def show_videogame(request, videogame_name_slug):
     context_dict['videogame'] = videoGame
 
     return render(request, 'noobnews/videogame.html', context_dict )
-#
-# def top40(request):
-#     context_dict = {}
-#     try:
-#         videoGame = VideoGame.objects.order_by('name')
-#         context_dict['videoGame'] = videoGame
-#     except VideoGame.DoesNotExist:
-#         context_dict['videoGame'] = None
-#     return render(request, 'noobnews/top40.html', context_dict)
-
 
 def top40(request):
     context_dict = {}
@@ -117,7 +109,6 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect(reverse('home'))
                 return HttpResponseRedirect(reverse('profile'))
             else:
                 return HttpResponse("Your account is disabled")
@@ -197,9 +188,7 @@ def register(request):
 
             registered = True
             messages.success(request, 'Account created successfully!')
-            return render(request,
-                          'noobnews/login.html',
-                          {})
+            return HttpResponseRedirect(reverse('login'))
         else:
             print(user_form.errors, profile_form.errors)
     else:
@@ -215,14 +204,9 @@ def register(request):
                   })
 
 
-# def user_logout(request):
- #   logout(request)
-  #  return redirect('/')
-
 @login_required
 def user_logout(request):
     # Since we know the user is logged in, we can now just log them out.
     logout(request)
-    return redirect('/')
 # Take the user back to the homepage.
     return HttpResponseRedirect(reverse('home'))

@@ -12,14 +12,14 @@
       width: 40px;
     }
   </style>
-    <div class="card-login w-50 bg-light">
+  <form
+  id="user_form"
+  method="POST"
+  action="{% url 'register' %}"
+  enctype="multipart/form-data"
+>
+    <div class="card-login w-100 bg-light">
       <article class="card-body">
-          <form
-          id="user_form"
-          method="POST"
-          action="{% url 'register' %}"
-          enctype="multipart/form-data"
-        >
           {% csrf_token %}
         {% crispy user_form %}
         {% crispy profile_form %}
@@ -37,7 +37,6 @@
             <a class="small" href="{% url 'login' %}">Log In</a>
           </div>
         </div>
-      </form>
       </article>
     </div>
   </form>

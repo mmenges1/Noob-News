@@ -1,23 +1,19 @@
 {% extends 'noobnews/base.html' %}
 {% load staticfiles %}
-{% block title_block %}
-Profile
+{% block title_block%} 
+Profile 
 {% endblock %}
 {% block body_block %}
 
-
-<h4>Profile </h4>
+<h4>Profile</h4>
 <div>
+  <div>
+    <img src="{{ user.userprofile.user_profile_image.url }}" />
     <div>
-    
-    <img src="{{user.userprofile.image.url}}">
-    <div>
-    <h2>{{user.username}}</h2>
-    <p>{{user.email}}</p> 
+      <h2>{{ user.userprofile.player_tag }}</h2>
+      <p>{{ user.email }}</p>
     </div>
-    </div>
-    </div>
-    
-    
+  </div>
+</div>
 
 {% endblock %}
