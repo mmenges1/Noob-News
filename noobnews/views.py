@@ -11,6 +11,7 @@ from django.contrib import messages
 from datetime import datetime
 from noobnews.models import VideoGame, Genre, Review, User, UserProfile
 from noobnews.forms import UserForm, UserProfileForm,ReviewForm
+from datetime import date
 
 from social_django.models import UserSocialAuth
 
@@ -27,18 +28,42 @@ def home(request):
 
 def show_videogame(request, videogame_name_slug):
     context_dict = {}
+    form = ReviewForm()
+
+    user_id = UserProfile.objects.get(player_tag='EndaMcVey')
+
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
         genres = Review.objects.filter(videogame=videoGame)
-        users = UserProfile.objects.order_by('player_tag')
+        users = UserProfile.objects.all()
         context_dict = {'users': users,
                         'genres': genres, 'videoGame': videoGame}
-    except VideoGame.DoesNotExist:
+    except:
+        videoGame = None
+        videoGame_name_slug = None
         context_dict['videoGame'] = None
         context_dict['genres'] = None
         context_dict['users'] = None
+    # A HTTP POST?
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        print(form)
 
-    return render(request, 'noobnews/videogame.html', context_dict)
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            # Save the new category to the database.
+            if videoGame:
+                review = form.save(commit=False)
+                review.videogame = videoGame
+                review.publish_date= str(date.today())
+                review.user_id= UserProfile.objects.get(player_tag=request.user)
+                review.save()
+                # return show_videogame(request, videogame_name_slug)
+
+    context_dict['form'] = form
+    context_dict['videogame'] = videoGame
+
+    return render(request, 'noobnews/videogame.html', context_dict )
 #
 # def top40(request):
 #     context_dict = {}
@@ -179,38 +204,3 @@ def register(request):
 def user_logout(request):
     logout(request)
     return redirect('/')
-
-def add_review(request,videogame_name_slug,user_player_tag):
-
-    try:
-        videogame = VideoGame.objects.get(slug=videogame_name_slug)
-        user_id = UserProfile.objects.get(player_tag=user_player_tag)
-        print (user_id)
-    except:
-        user_id = None
-        videogame = None
-        videogame_name_slug = None
-
-    form = ReviewForm()
-    print("1 checkpoint")
-    # A HTTP POST?
-    if request.method == 'POST':
-        print("ITS A POST")
-        form = ReviewForm(request.POST)
-        # Have we been provided with a valid form?
-        if form.is_valid():
-            # Save the new category to the database.
-            if videogame:
-                review = form.save(commit=False)
-                review.videogame = videogame
-                if user_id:
-                    review.user_id = user_id
-                    review.save()
-            return show_videogame(request, videogame_name_slug)
-        else:
-            print("ERROR")
-            # The supplied form contained errors - just print them to the terminal.
-            print(form.errors)
-    # Will handle the bad form (or form details), new form or no form supplied cases.
-    # Render the form with error messages (if any).
-    return render(request, 'noobnews/addReview.html', {'form': form, 'videogame':videogame})

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 <html lang="en">
 
 <head>
@@ -31,7 +32,7 @@
         </div>
         <h5>{{ videoGame.rating }}/5</h5>
         <h6>{{ videoGame.release }}</h6>
-        <button>
+        <button id="button1" name="button1">
           <span>More</span>
 
           <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
@@ -92,47 +93,68 @@
 
 
 
-            <div class="comment-item">
-        <h1>Comment Section</h1>
+            <h1>Comment</h1><div class="comment-item">
+              <button type="submit"class="nc-icon-wrapper" style= "margin-left: 12%" onclick = "document.getElementById('AddComment').style.display='block'">Add Comment</button>
 
 
-          <div class="separator"></div>
-      <div class="comment-item">
-        <div class="comment-item--inner">
-          {% if genres %}
-          {% for g in genres %}
+                    <div class="separator"></div>
+                <div class="comment-item">
+                  <div class="comment-item--inner">
+                    {% if genres %}
+                    {% for g in genres %}
 
 
 
-          <div class="is-left">
-            <div class="avatar">
-              {% for u in users%}
-              {% ifequal  u.player_tag g.user_id.player_tag %}
-              <img src="/{{u.user_profile_image }}"  style="width: 100%; height:120px;"alt="">
-              {%endifequal%}
-                {%endfor%}
+                    <div class="is-left">
+                      <div class="avatar">
+                        {% for u in users%}
+                        {% ifequal  u.player_tag g.user_id.player_tag %}
+                        <img src="/{{u.user_profile_image }}"  style="width: 100%; height:120px;"alt="">
+                        {%endifequal%}
+                          {%endfor%}
 
+                        </div>
+                    </div>
+                    <div class="is-right">
+                      <div class="is-right--inner">
+                        <br>
+
+                        <div class="name">{{ g.user_id }}-    <small>{{ g.publish_date }}</small><div><br>
+                          <div class="blog-slider__text" style=" font-weight: normal;">{{ g.comments }}</div>
+                        <span class="share share-count share-plus">{{ g.comment_rating }}/5</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+          {% endfor %}
+                {% endif %}
+                <div id="AddComment" class="modal">
+                  <form id="videogame_form"  class="modal-content animate" method="POST" action="/noobnews/videogame/{{ videogame.slug }}/">
+                      <span onclick="document.getElementById('AddComment').style.display='none'" class="close" title="Close Modal">x</span>
+                      <center><h1> Add a Comment </h1></center>
+                      <hr>
+                      {% csrf_token %}
+                      {% for hidden in form.hidden_fields %}
+                          {{ hidden }}
+                      {% endfor %}
+                      {% for field in form.visible_fields %}
+                          {{ field.errors }}
+                          {{ field.help_text}}
+                          {{ field }}
+                      {% endfor %}
+
+
+                    <div class="clearfix">
+                      <button type="Save" class="button button1" style ='margin-left: 5%'>Finish </button>
+                    </div>
+                  </form>
+                </div>
               </div>
-          </div>
-          <div class="is-right">
-            <div class="is-right--inner">
-              <br>
-
-              <div class="name">{{ g.user_id }}-    <small>{{ g.publish_date }}</small><div><br>
-                <div class="blog-slider__text" style=" font-weight: normal;">{{ g.comments }}</div>
-              <span class="share share-count share-plus">{{ g.rating }}/5</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-{% endfor %}
-      {% endif %}
-    </div>
-
     </nav>
+
   </div>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
   <script src="/static/js/index.js"></script>

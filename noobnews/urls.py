@@ -26,6 +26,4 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^register/$', views.register, name='register'),
     url('', include('social_django.urls', namespace='social')),
-    url(r'^videogame/(?P<videogame_name_slug>[\w\-]+)/(?P<user_player_tag>[\w\-]+)/add_review/$', views.add_review, name='add_review'),
-
 ]

@@ -51,7 +51,7 @@ class Review(models.Model):
     user_id = models.ForeignKey(UserProfile)
     comments =  models.CharField(max_length=300)
     publish_date = models.DateField(("Date"),default=date.today)
-    rating = models.IntegerField(default=0)
+    comment_rating = models.IntegerField(default=0)
 
     def __int__(self):
         return self.reviews_id

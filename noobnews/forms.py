@@ -63,10 +63,24 @@ class UserProfileForm(forms.ModelForm):
     helper.form_tag = False
 
 class ReviewForm(forms.ModelForm):
+    #
+    # def _init_(self, *args, **kwargs):
+    #     self._user = kwargs.pop('user')
+    #     super(ReviewForm, self)._init_(*args, **kwargs)
+    #
+    # def save(self, commit=True):
+    #     inst = super(ReviewForm, self).save(commit=False)
+    #     inst.user_id = self._user
+    #     if commit:
+    #         inst.save()
+    #         self.save_m2m()
+    #     return inst
+
     comments = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'comment'}))
-    rating = forms.IntegerField(label='', widget=forms.NumberInput(attrs={'placeholder': 'rating'}))
-    publish_date = forms.DateField(label='', widget=forms.DateInput(attrs={'placeholder': 'date'}))
+    comment_rating = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Rating'}))
+    #user_id= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'User_id'}))
+
 
     class Meta:
         model = Review
-        fields = ('comments', )
+        fields = ('comments','comment_rating',)
