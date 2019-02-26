@@ -45,15 +45,6 @@ def show_videogame(request, videogame_name_slug):
         context_dict['users'] = None
 
     return render(request, 'noobnews/videogame.html', context_dict)
-#
-# def top40(request):
-#     context_dict = {}
-#     try:
-#         videoGame = VideoGame.objects.order_by('name')
-#         context_dict['videoGame'] = videoGame
-#     except VideoGame.DoesNotExist:
-#         context_dict['videoGame'] = None
-#     return render(request, 'noobnews/top40.html', context_dict)
 
 
 def top40(request):
@@ -177,9 +168,7 @@ def register(request):
 
             registered = True
             messages.success(request, 'Account created successfully!')
-            return render(request,
-                          'noobnews/login.html',
-                          {})
+            return HttpResponseRedirect(reverse('login'))
         else:
             print(user_form.errors, profile_form.errors)
     else:
@@ -194,10 +183,6 @@ def register(request):
                       'registered': registered
                   })
 
-
-# def user_logout(request):
- #   logout(request)
-  #  return redirect('/')
 
 @login_required
 def user_logout(request):
