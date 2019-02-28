@@ -17,9 +17,11 @@ from social_django.models import UserSocialAuth
 
 
 def home(request):
-    videoGameList = VideoGame.objects.order_by('name')
+    top40List = VideoGame.objects.order_by('-rating')[:40]
+    newList = VideoGame.objects.order_by('-release')[:10]
     context_dict = {
-        'videogames': videoGameList,
+        'newList' : newList,
+        'top40List': top40List,
         'user': request.user
     }
     # Render the response and send it back!

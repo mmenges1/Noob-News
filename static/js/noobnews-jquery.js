@@ -5,8 +5,8 @@ $(document).ready(function() {
   });
 });
 
-$('button').click(function(){
-  $('button').toggleClass('active');
+$(document.getElementById("button1")).click(function(){
+  $((document.getElementById("button1")).toggleClass('active');
   $('.title').toggleClass('active');
   $('nav').toggleClass('active');
 });
