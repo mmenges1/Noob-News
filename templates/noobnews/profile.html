@@ -1,7 +1,7 @@
 {% extends 'noobnews/base.html' %}
 {% load staticfiles %}
 
-{% block head%} 
+{% block head%}
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -18,11 +18,11 @@
 
 <!------ User picture and description ---------->
 
-<link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" media="screen">  
+<link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" media="screen">
 <div class="container">
     <div class="row user-menu-container square">
         <div class="col-md-7 user-details">
-           
+
             <div class="row coralbg white">
                 <div class="col-md-6 no-pad">
                     <div class="user-pad">
@@ -34,15 +34,15 @@
                 </div>
                 <div class="col-md-6 no-pad">
                     <div class="user-image">
-                        
+
                         <img src="{{ user.userprofile.user_profile_image.url }}" class="img-responsive thumbnail" >
                     </div>
                 </div>
             </div>
-           
+
         </div>
-       
-        
+
+
     </div>
 </div>
 
