@@ -100,8 +100,9 @@
 
             <div class="comment-item">
         <h1>Comment Section</h1>
-        <button id="button2" name="button2" type="submit"class="button2" style= "margin-left: 12%" onclick = "document.getElementById('AddComment').style.display='block'">Add Comment</button>
-
+        {% if user.is_authenticated %}
+          <button id="button2" name="button2" type="submit"class="button2" style= "margin-left: 12%" onclick = "document.getElementById('AddComment').style.display='block'">Add Comment</button>
+        {% endif %}
 
           <div class="separator"></div>
       <div class="comment-item">
