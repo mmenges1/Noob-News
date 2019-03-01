@@ -5,7 +5,8 @@ from crispy_forms.layout import Layout, Field
 from crispy_forms.bootstrap import PrependedText
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
-from noobnews.models import UserProfile, Review
+from noobnews.models import Review
+from noobnews.models import UserProfile
 
 
 class UserForm(forms.ModelForm):
@@ -62,12 +63,28 @@ class UserProfileForm(forms.ModelForm):
     )
     helper.form_tag = False
 
-class ReviewForm(forms.ModelForm):
-    comments = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'comment'}))
-    comment_rating = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Rating'}))
-    #user_id= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'User_id'}))
 
+class ReviewForm(forms.ModelForm):
+    comments = forms.CharField(label='', widget=forms.TextInput(
+        attrs={'placeholder': 'comment'}))
+    comment_rating = forms.CharField(
+        label='', widget=forms.TextInput(attrs={'placeholder': 'Rating'}))
+    #user_id= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'User_id'}))
 
     class Meta:
         model = Review
-        fields = ('comments','comment_rating',)
+        fields = ('comments', 'comment_rating',)
+
+
+# class UserUpdateForm(forms.ModelForm):
+ #   email = forms.EmailFiel()
+
+  #  class Meta:
+   #     model = User
+    #    fields = ['username', 'email']
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('user_profile_image',)

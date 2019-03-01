@@ -10,17 +10,18 @@ from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
 from noobnews.models import VideoGame, Genre, Review, User, UserProfile
-from noobnews.forms import UserForm, UserProfileForm, ReviewForm
 from datetime import date
-
+from noobnews.forms import UserForm, UserProfileForm, ReviewForm
 from social_django.models import UserSocialAuth
+
+from noobnews.forms import ProfileUpdateForm
 
 
 def home(request):
     top40List = VideoGame.objects.order_by('-rating')[:40]
     newList = VideoGame.objects.order_by('-release')[:10]
     context_dict = {
-        'newList' : newList,
+        'newList': newList,
         'top40List': top40List,
         'user': request.user
     }
@@ -28,9 +29,23 @@ def home(request):
     return render(request, 'noobnews/home.html', context_dict)
 
 
+# @login_required
 def profile(request):
-    return render(request, 'noobnews/profile.html')
+    if request.method == 'POST':
+        profile_form = ProfileUpdateForm(
+            request.POST, request.FILES, instance=request.user.userprofile)
 
+        if profile_form.is_valid():
+            profile_form.save()
+           # messages.success(request, f'Your picture  has been  updated! ')
+            return redirect('profile')
+
+    else:
+        profile_form = ProfileUpdateForm(instance=request.user.userprofile)
+
+    context = {'profile_form': profile_form}
+
+    return render(request, 'noobnews/profile.html', context)
 
 
 def show_videogame(request, videogame_name_slug):
@@ -224,7 +239,9 @@ def save_profile(backend, user, response, *args, **kwargs):
 
 @login_required
 def user_logout(request):
+
     # Since we know the user is logged in, we can now just log them out.
     logout(request)
 # Take the user back to the homepage.
     return HttpResponseRedirect(reverse('home'))
+   #  return render(request, 'noobnews/profile.html', context)
