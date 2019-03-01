@@ -36,9 +36,6 @@ def profile(request):
 def show_videogame(request, videogame_name_slug):
     context_dict = {}
     form = ReviewForm()
-    print(request.user)
-    user_id = UserProfile.objects.get(
-        player_tag=request.user.userprofile.player_tag)
 
     try:
         videoGame = VideoGame.objects.get(slug=videogame_name_slug)
