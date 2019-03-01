@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'noobnews/base.html' %} {% load staticfiles %} {% block head%}
 <link
   href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
@@ -8,6 +9,30 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 {% endblock %} {% block body_block %}
+=======
+{% extends 'noobnews/base.html' %}
+{% load staticfiles %}
+
+{% block head%}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+{% endblock %}
+
+{% block videoG %}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"crossorigin="anonymous"></script>
+<script src="{% static "js/top40.js" %}"></script>
+{% endblock %}
+{% block body_block %}
+
+>>>>>>> 8643a7a3c0239ca66367ff5515ba96581c52dee0
 
 <div class="col-md-6 img">
   <h3 style="color:white;">Profile</h3>
@@ -15,6 +40,7 @@
 </div>
 
 <!------ User picture and description ---------->
+<<<<<<< HEAD
 
 <link
   href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css"
@@ -49,8 +75,45 @@
           </div>
         </div>
       </div>
+=======
+<div style="padding-top: 115px;">
+<link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" media="screen">
+<div class="container">
+    <div class="row user-menu-container square">
+        <div class="col-md-7 user-details">
+
+            <div class="row coralbg white">
+                <div class="col-md-6 no-pad">
+                    <div class="user-pad">
+                        <h4 style="color:white;"><i ></i> {{ user.userprofile.player_tag }}</h4>
+                        <p  style="color:white;"> <i ></i> {{ user.email }} </p>
+                        <button type="button" class="btn btn-labeled btn-info" href="#">
+                            <span class="btn-label"><i ></i></span>Update my profile picture</button>
+                    </div>
+                </div>
+                <div class="col-md-6 no-pad">
+                    <div class="user-image">
+
+                        <img src="{{ user.userprofile.user_profile_image.url }}" class="img-responsive thumbnail" >
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+>>>>>>> 8643a7a3c0239ca66367ff5515ba96581c52dee0
     </div>
   </div>
 </div>
+<<<<<<< HEAD
+=======
+</div>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css'>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src="/static/js/index.js"></script>
+>>>>>>> 8643a7a3c0239ca66367ff5515ba96581c52dee0
 
 {% endblock %}

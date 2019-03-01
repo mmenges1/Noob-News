@@ -3,39 +3,18 @@
 
 <html lang="en">
   <head>
-        {% block videoG %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
-
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="/static/css/top40.css" />
-
-        <script src="{% static "js/top40.js" %}"></script>
-  {% endblock %}
-      <link rel="stylesheet" href="/static/css/login.css" />
+    <link rel="stylesheet" href="/static/css/login.css" />
     <link rel="stylesheet" href="/static/css/noobnews.css" />
-
-    <script src="{% static "js/noobnews-jquery.js" %}"></script>
-    <script src="{% static "js/noobnews-ajax.js" %}"></script>
-
+    <link rel="stylesheet" href="/static/css/top40.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <script>
       function openNav() {
         document.getElementById("mySidenav").style.width = "250px";
+      }
+      function searchBar() {
+        document.getElementById("search").style.visibility="visible";
+
       }
 
       function closeNav() {
@@ -45,17 +24,30 @@
     <title>
       {% block title_block %}Noob News{% endblock %}</title>
   </head>
-  <body background="/static/images/Background.png" style="background-size: cover;   background-repeat: no-repeat;">
+  <body background="/static/images/Background.png" style="background-attachment: fixed; background-size: cover;   background-repeat: no-repeat;">
     <!-- https://www.etq-amsterdam.com/ -->
-
     <div id="mySidenav" class="sidenav">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
-        >&times;</a
-      >
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'top40' %}">Top 40</a>
-      <a href="{% url 'profile' %}">Profile</a>
-      <a href="#">PlaceHolder</a>
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <div class="w3-container">
+    		<center>
+    			<div class="profile-pic">
+    					<img src="http://127.0.0.1:8000/static/videogameImages/metalGear5.jpg" ; style="width:150px;  height: 150px;" />
+    			</div>
+    		</center>
+        <br><br>
+    	</div>
+      <div class="w3-bar-block">
+        <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding "><i class="fas fa-file-upload fa-fw w3-margin-right"></i>Home</a>
+        <a href="{% url 'top40' %}" onclick="w3_close()" class="w3-bar-item w3-button w3-padding" id="ViewWork"><i class="fas fa-history fa-fw w3-margin-right"></i>Top 40</a>
+        <a  href="{% url 'profile' %}" class="w3-bar-item w3-button w3-padding "><i class="fas fa-mail-bulk fa-fw w3-margin-right"></i>Profile</a>
+         {% if user.is_authenticated %}
+
+              <a href="{% url 'logout' %}">Logout</a>
+            {% else %}
+              <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+      </div>
+
     </div>
     <br />
     <span
@@ -63,6 +55,7 @@
     <div id="noob-navigator">
       <div class="row">
         <!-- https://codepen.io/CBeghin/pen/HeuiF-->
+<<<<<<< HEAD
         {% if user.is_authenticated %}
         <a href="{% url 'profile' %}" class="user"> <i class="fas fa-user"></i></a>
 
@@ -71,33 +64,54 @@
         {% else %}
         <a href="{% url 'login' %}" role="button" class="login-button btn btn-outline-light btn-sm">Login</a>
         {% endif %}
+=======
+
+        <a onclick="searchBar()" class="searchicon"> <i class="fas fa-search"></i></a>
+>>>>>>> 8643a7a3c0239ca66367ff5515ba96581c52dee0
         <!--Search Feacture: results are shown in the cats div! -->
-        <form class="search" >
-          <input class="search-query form-control suggestion" type="text"name="suggestion" value="" id="suggestion" placeholder="Find a Game"/>
+        <form class="search" id="search">
+          <input class="suggestion" type="text" name="suggestion" value="" id="suggestion" placeholder="Find a Game"/>
           <div class="results" id="cats">
           </div>
         </form>
+        <a href="{% url 'profile' %}" class="user"> <i class="fas fa-user"></i></a>
       </div>
     </div>
+
    <div class="container">
       {% include 'noobnews/messages.html' %}
       {% block body_block %}
       {% endblock %}
     </div>
   </body>
+
   <!-- Bootstrap core JavaScript ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="{% static "js/noobnews-jquery.js" %}"></script>
 <script src="{% static "js/noobnews-ajax.js" %}"></script>
-    {% block video %}
+<link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>
+
+{% block video %}
 <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-
 <script src="{% static "js/top40.js" %}"></script>
-
 <script src="https://npmcdn.com/bootstrap@4.0.0-alpha.5/dist/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"> </script>
 <script src="http://v4-alpha.getbootstrap.com/dist/js/bootstrap.min.js"> </script>
-
 <script src= "http://v4-alpha.getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"> </script>
+{% endblock %}
+{% block videoG %}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"crossorigin="anonymous"></script>
+  <script src="{% static "js/top40.js" %}"></script>
 {% endblock %}
 </html>

@@ -8,6 +8,19 @@ body {
   background-repeat: no-repeat;"
 }
 
+.profile-pic {
+	position: relative;
+	display: inline-block;
+  border-radius: 100%;
+  display: flex;
+  flex: 0 0 150px;
+  height: 150px;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  width: 150px;
+}
+
 /*Comment Model*/
 
 .modal {
@@ -416,6 +429,14 @@ span.s2 {
   box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
 }
 
+.hot {
+  position: relative;
+  width: 1000px;
+  background-color: #FFF;
+  -webkit-box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 93px 0px rgba(0, 0, 0, 0.75);
+}
+
 /* Image on the left side */
 .thumbnail {
   float: left;
@@ -809,32 +830,34 @@ li {
   transform: translateY(-50%);
 }
 
-
-
-
-
-
 /*Search Bar_ https://codepen.io/airpwn/pen/ckCJd */
+.search {
+  visibility: hidden;
+  z-index: 1;
+  position: absolute;
+  width:14%;
+  top: 3%;
+  left: 70%;
+  color: white;
+}
 
-
-.search input:focus {
+.search input{
     z-index: 1;
     outline: none;
     border-color: #66b1ee;
+    width:150%;
 }
 
 .search .results {
-    z-index: 1;
+
     position: absolute;
-    width: 100%;
     top: 35px;
-    left: 0;
-    right: 0;
+    padding-left: 100%;
     margin: 0;
     border-width: 1px;
     border-style: solid;
     border-color: #cbcfe2 #c8cee7 #c4c7d7;
-    border-radius: 3px;
+    border-radius: 2px;
     background-color: #fdfdfd;
 }
 
@@ -856,7 +879,6 @@ li {
     color: #808394;
     font-weight: 500;
     width:600%;
-    text-shadow: 0 1px #fff;
     border: 1px solid transparent;
 }
 
@@ -891,14 +913,7 @@ li {
   color: black;
 }
 
-.login-button {
-  width: 8%;
-  position: absolute;
-  top: 6%;
-  left: 95%;
-  transform: translate(-50%, -50%);
-  color: black;
-}
+
 
 /*Search Icon */
 .searchicon {
@@ -910,24 +925,7 @@ li {
   color: black;
 }
 
-.search {
-  z-index: 1;
-  position: absolute;
-  top: 3%;
-  left: 54%;
-  transform: translate(-50%, -50%);
-  color: white;
-  border-radius: 50%;
- box-shadow:
-    inset 0 0 50px #fff,      /* inner white */
-    inset 20px 0 80px #f0f,   /* inner left magenta short */
-    inset -20px 0 80px #0ff,  /* inner right cyan short */
-    inset 20px 0 300px #f0f,  /* inner left magenta broad */
-    inset -20px 0 300px #0ff, /* inner right cyan broad */
-    0 0 50px #fff,            /* outer white */
-    -10px 0 80px #f0f,        /* outer left magenta */
-    10px 0 80px #0ff;         /* outer right cyan */
-}
+
 
 /*Grid Image Overlay effect*/
 .overlay {
