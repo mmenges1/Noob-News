@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/static/css/noobnews.css" />
     <link rel="stylesheet" href="/static/css/top40.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
       function openNav() {
         document.getElementById("mySidenav").style.width = "250px";
@@ -28,14 +28,16 @@
     <!-- https://www.etq-amsterdam.com/ -->
     <div id="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <div class="w3-container">
-    		<center>
-    			<div class="profile-pic">
-    					<img src="http://127.0.0.1:8000/static/videogameImages/metalGear5.jpg" ; style="width:150px;  height: 150px;" />
-    			</div>
-    		</center>
-        <br><br>
-    	</div>
+      {% if user.is_authenticated %}
+        <div class="w3-container">
+          <center>
+            <div class="profile-pic">
+                <img src="{{ user.userprofile.user_profile_image.url }}" ; style="width:150px;  height: 150px;" />
+            </div>
+          </center>
+          <br><br>
+        </div>
+      {% endif %}
       <div class="w3-bar-block">
         <a href="{% url 'home' %}" class="w3-bar-item w3-button w3-padding "><i class="fas fa-file-upload fa-fw w3-margin-right"></i>Home</a>
         <a href="{% url 'top40' %}" onclick="w3_close()" class="w3-bar-item w3-button w3-padding" id="ViewWork"><i class="fas fa-history fa-fw w3-margin-right"></i>Top 40</a>
@@ -78,7 +80,6 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="{% static "js/noobnews-jquery.js" %}"></script>
 <script src="{% static "js/noobnews-ajax.js" %}"></script>
-<link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" media="screen">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'>
 

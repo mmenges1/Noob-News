@@ -99,7 +99,7 @@
             <div class="comment-item">
         <h1>Comment Section</h1>
         {% if user.is_authenticated %}
-          <button id="button2" name="button2" type="submit"class="button2" style= "margin-left: 12%" onclick = "document.getElementById('AddComment').style.display='block'">mment</button>
+          <button id="button2" name="button2" type="submit"class="button2" style= "margin-left: 12%" onclick = "document.getElementById('AddComment').style.display='block'">Add comment</button>
         {% endif %}
 
           <div class="separator"></div>
@@ -112,12 +112,10 @@
           <div class="is-left">
             <div class="avatar">
               {% for u in users%}
-              {% ifequal  u.player_tag g.user_id.player_tag %}
-              <img src="/{{u.user_profile_image }}"  style="width: 100%; height:120px;"alt="">
-
-
-              {%endifequal%}
-                {%endfor%}
+                {% if u.player_tag == g.user_id.player_tag %}
+                  <img src="{{ u.user_profile_image.url }}"  style="width: 100%; height:120px;"alt="">
+                {%endif%}
+              {%endfor%}
 
               </div>
           </div>
@@ -125,7 +123,7 @@
             <div class="is-right--inner">
               <br>
 
-              <div class="name">{{ g.user_id }}-    <small>{{ g.publish_date }}</small><div><br>
+              <div class="name">{{ g.user_id.player_tag }} -    <small>{{ g.publish_date }}</small><div><br>
                 <div class="blog-slider__text" style=" font-weight: normal;">{{ g.comments }}</div>
               <span class="share share-count share-plus">{{ g.comment_rating }}/5</span>
               </div>

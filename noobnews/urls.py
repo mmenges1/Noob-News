@@ -28,8 +28,10 @@ urlpatterns = [
         views.show_videogame, name='show_videogame'),
     url(r'^login/$', views.user_login, name='login'),
     url(r'^logout/$', views.user_logout, name='logout'),
-
+    url(r'^reset_password/$', views.reset_password, name="reset_password"),
+    url(r'^reset_password_confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$', views.reset_password_confirm,name='reset_password_confirm'),
     url(r'^register/$', views.register, name='register'),
+    url(r'^contact_us/$', views.contact_us, name='contact_us'),
     url('', include('social_django.urls', namespace='social')),
     url(r'^top40/$', views.top40, name='top40'),
 ]
