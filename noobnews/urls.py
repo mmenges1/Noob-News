@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^profile/$', views.profile, name='profile'),
+
     url(r'^suggest/$', views.suggest_category, name='suggest_category'),
     url(r'^videogame/(?P<videogame_name_slug>[\w\-]+)/$',
         views.show_videogame, name='show_videogame'),

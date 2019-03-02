@@ -12,7 +12,7 @@ from noobnews.models import UserProfile
 class UserForm(forms.ModelForm):
     first_name = forms.CharField(label='', widget=forms.TextInput(
         attrs={'placeholder': 'Full name'}))
-    #name_icon = forms.CharField()
+    # name_icon = forms.CharField()
     email = forms.CharField(label='', widget=forms.TextInput(
         attrs={'placeholder': 'Email'}))
     password = forms.CharField(label='', widget=forms.PasswordInput(
@@ -69,19 +69,21 @@ class ReviewForm(forms.ModelForm):
         attrs={'placeholder': 'comment'}))
     comment_rating = forms.CharField(
         label='', widget=forms.TextInput(attrs={'placeholder': 'Rating'}))
-    #user_id= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'User_id'}))
+    # user_id= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'User_id'}))
 
     class Meta:
         model = Review
         fields = ('comments', 'comment_rating',)
 
 
-# class UserUpdateForm(forms.ModelForm):
- #   email = forms.EmailFiel()
+class UserUpdateForm(forms.ModelForm):
 
-  #  class Meta:
-   #     model = User
-    #    fields = ['username', 'email']
+    player_tag = forms.CharField(label='', widget=forms.TextInput(
+        attrs={'placeholder': 'Player tag'}))
+
+    class Meta:
+        model = UserProfile
+        fields = ('player_tag',)
 
 
 class ProfileUpdateForm(forms.ModelForm):

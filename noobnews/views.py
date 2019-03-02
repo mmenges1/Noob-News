@@ -14,7 +14,7 @@ from datetime import date
 from noobnews.forms import UserForm, UserProfileForm, ReviewForm
 from social_django.models import UserSocialAuth
 
-from noobnews.forms import ProfileUpdateForm
+from noobnews.forms import ProfileUpdateForm, UserUpdateForm
 
 
 def home(request):
@@ -27,25 +27,6 @@ def home(request):
     }
     # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
-
-
-# @login_required
-def profile(request):
-    if request.method == 'POST':
-        profile_form = ProfileUpdateForm(
-            request.POST, request.FILES, instance=request.user.userprofile)
-
-        if profile_form.is_valid():
-            profile_form.save()
-           # messages.success(request, f'Your picture  has been  updated! ')
-            return redirect('profile')
-
-    else:
-        profile_form = ProfileUpdateForm(instance=request.user.userprofile)
-
-    context = {'profile_form': profile_form}
-
-    return render(request, 'noobnews/profile.html', context)
 
 
 def show_videogame(request, videogame_name_slug):
@@ -245,3 +226,53 @@ def user_logout(request):
 # Take the user back to the homepage.
     return HttpResponseRedirect(reverse('home'))
    #  return render(request, 'noobnews/profile.html', context)
+
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        user_form_update = UserUpdateForm(
+            request.POST, instance=request.user.userprofile)
+        profile_form_update = ProfileUpdateForm(
+            request.POST, request.FILES, instance=request.user.userprofile)
+
+        if profile_form_update.is_valid() and user_form_update.is_valid():
+            profile_form_update.save()
+            user_form_update.save()
+            messages.success(request, f'Your information  has been  updated! ')
+            return redirect('profile')
+
+    else:
+        user_form_update = UserUpdateForm(
+            instance=request.user.userprofile)
+        profile_form_update = ProfileUpdateForm(
+            instance=request.user.userprofile)
+
+    context = {
+        'user_form_update': user_form_update,
+        'profile_form_update': profile_form_update
+    }
+
+    return render(request, 'noobnews/profile.html', context)
+
+
+# @login_required
+# def update_profile(request):
+ #   if request.method == 'POST':
+    # user_form_update = UserUpdateForm(data=request.POST)
+    # profile_form_update = ProfileUpdateForm(data=request.POST)
+
+    # if profile_form_update.is_valid() and user_form_update.is_valid():
+    # profile_form_update.save()
+    # user_form_update.save()
+    # messages.success(request, f'Your information  has been  updated! ')
+    # return redirect('profile')
+
+   # else:
+    # messages.success(request, f'There is a form! ')
+    # profile_form_update = ProfileUpdateForm()
+    # user_form_update = UserUpdateForm()
+    # context_a = {'profile_form_update': profile_form_update}
+    # context = {'user_form_update ': user_form_update}
+
+    # return render(request, 'noobnews/profile.html', {'user_form_update': user_form_update, 'profile_form_update': profile_form_update})

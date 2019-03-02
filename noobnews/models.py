@@ -6,14 +6,6 @@ from django.template.defaultfilters import slugify
 
 # Create your models here.
 
-# class UserProfile(models.Model):
-#   user = models.OneToOneField(User)
-#  player_tag = models.CharField(max_length=128, unique=True)
-# user_profile_image = models.ImageField(
-#    upload_to='static/profile_images', blank=True, default='profile_images/default-user.png')
-
-# def __str__(self):
-#   return self.player_tag
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -26,7 +18,7 @@ class UserProfile(models.Model):
     # upload_to='static/profile_images', blank=True, default='profile_images/default-user.png')
 
     def __str__(self):
-       # return self.player_tag
+
         return f'{self.user.username}'
 
 
@@ -82,11 +74,3 @@ class VideoGameList(models.Model):
 
     def __str__(self):
         return self.list_id
-
-
-# class Profile(models.Model):
- #   user = models.OneToOneField(User, on_delete=models.CASCADE)
-  #  image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-
-   # def __str__(self):
-    #    return f'{self.user.username} Profile'
