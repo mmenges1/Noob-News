@@ -5,8 +5,7 @@ from crispy_forms.layout import Layout, Field
 from crispy_forms.bootstrap import PrependedText
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
-from noobnews.models import Review
-from noobnews.models import UserProfile
+from noobnews.models import UserProfile, Review, VideoGame
 
 
 class UserForm(forms.ModelForm):
@@ -90,3 +89,67 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('user_profile_image',)
+
+
+class PasswordResetRequestForm(forms.Form):
+    email_or_playertag = forms.CharField(label='', widget=forms.TextInput(
+        attrs={'placeholder': 'Email or player tag'}))
+
+
+class SetPasswordForm(forms.Form):
+    error_messages = {
+        'password_mismatch': ("The two password fields didn't match."),
+    }
+    new_password1 = forms.CharField(label='',
+                                    widget=forms.PasswordInput(attrs={'placeholder': 'New password'}))
+    new_password2 = forms.CharField(label='',
+                                    widget=forms.PasswordInput(attrs={'placeholder': 'Confirm new  password'}))
+
+    def clean_new_password2(self):
+        password1 = self.cleaned_data.get('new_password1')
+        password2 = self.cleaned_data.get('new_password2')
+        if password1 and password2:
+            if password1 != password2:
+                raise forms.ValidationError(
+                    self.error_messages['password_mismatch'],
+                    code='password_mismatch',
+                )
+        return password2
+
+
+class ContactForm(forms.Form):
+    video_games_choices = VideoGame.objects.all()
+    full_name = forms.CharField(label='', widget=forms.TextInput(
+        attrs={'placeholder': 'Full name'}))
+    email = forms.CharField(label='', widget=forms.TextInput(
+        attrs={'placeholder': 'Email'}))
+    type_suggestion = forms.ChoiceField(label='',
+                                        choices=[(0, 'Select the suggestion type'),
+                                                 (1, 'Suggest games to add'), (2, 'Suggest changes to games')])
+    video_games_list = forms.ChoiceField(label='',
+                                         choices=[("-", "Select a game")] + [(video_game.id, video_game.name)
+                                                                             for video_game in video_games_choices])
+    contact_message = forms.CharField(label='', widget=forms.Textarea(
+        attrs={'placeholder': 'Message'}))
+
+    helper = FormHelper()
+    helper.layout = Layout(
+        PrependedText(
+            'full_name', '<i class="fa fa-user"></i>'),
+        PrependedText(
+            'email', '<i class="fa fa-envelope"></i>'),
+        PrependedText(
+            'contact_message', '<i class="fas fa-comments"></i>'),
+    )
+
+
+class ReviewForm(forms.ModelForm):
+    comments = forms.CharField(label='', widget=forms.TextInput(
+        attrs={'placeholder': 'comment'}))
+    comment_rating = forms.CharField(
+        label='', widget=forms.TextInput(attrs={'placeholder': 'Rating'}))
+    #user_id= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'User_id'}))
+
+    class Meta:
+        model = Review
+        fields = ('comments', 'comment_rating',)

@@ -18,7 +18,10 @@
   >
     <div class="card-login w-100">
       <article class="card-body">
-        {% csrf_token %} {% crispy user_form %} {% crispy profile_form %}
+          <h4 class="card-title mb-4 mt-1">Register here</h4>
+          {% csrf_token %}
+        {% crispy user_form %}
+        {% crispy profile_form %}
         <div class="row align-items-center">
           <div class="col-md-6">
             <div class="form-group">
