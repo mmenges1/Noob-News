@@ -20,21 +20,44 @@ from noobnews.models import VideoGame, Genre, Review, User, UserProfile
 from noobnews.forms import UserForm, UserProfileForm, ReviewForm, PasswordResetRequestForm, SetPasswordForm, ContactForm
 from datetime import date
 from social_django.models import UserSocialAuth
+from django.db.models import Max
+import random
+
 
 from noobnews.forms import ProfileUpdateForm, UserUpdateForm
 
 
 def home(request):
     top40List = VideoGame.objects.order_by('-rating')[:40]
-    newList = VideoGame.objects.order_by('-release')[:10]
+    top1 = get_random()
+    top2 = get_random()
+    top3 = get_random()
+    stream = get_random_stream()
     context_dict = {
-        'newList': newList,
+        'top1': top1,
+        'top2': top2,
+        'top3': top3,
+        'stream': stream,
         'top40List': top40List,
         'user': request.user
     }
-    # Render the response and send it back!
     return render(request, 'noobnews/home.html', context_dict)
 
+def get_random():
+    max_id = VideoGame.objects.all().aggregate(max_id=Max("id"))['max_id']
+    while True:
+        pk = random.randint(1, max_id)
+        videogame = VideoGame.objects.filter(pk=pk).first()
+        if videogame:
+            return videogame
+
+def get_random_stream():
+    max_id = VideoGame.objects.all().aggregate(max_id=Max("id"))['max_id']
+    while True:
+        pk = random.randint(1, max_id)
+        videogame = VideoGame.objects.filter(pk=pk).first()
+        if videogame:
+            return videogame
 
 def show_videogame(request, videogame_name_slug):
     context_dict = {}
@@ -373,25 +396,3 @@ def profile(request):
     }
 
     return render(request, 'noobnews/profile.html', context)
-
-
-# @login_required
-# def update_profile(request):
- #   if request.method == 'POST':
-    # user_form_update = UserUpdateForm(data=request.POST)
-    # profile_form_update = ProfileUpdateForm(data=request.POST)
-
-    # if profile_form_update.is_valid() and user_form_update.is_valid():
-    # profile_form_update.save()
-    # user_form_update.save()
-    # messages.success(request, f'Your information  has been  updated! ')
-    # return redirect('profile')
-
-   # else:
-    # messages.success(request, f'There is a form! ')
-    # profile_form_update = ProfileUpdateForm()
-    # user_form_update = UserUpdateForm()
-    # context_a = {'profile_form_update': profile_form_update}
-    # context = {'user_form_update ': user_form_update}
-
-    # return render(request, 'noobnews/profile.html', {'user_form_update': user_form_update, 'profile_form_update': profile_form_update})

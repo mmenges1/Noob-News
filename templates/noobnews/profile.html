@@ -25,14 +25,14 @@
               <h4 style="color:black;">
                 <i></i> {{ user.userprofile.player_tag }}
               </h4>
-              
 
-              
-                
+
+
+
                 <button type="submit" class="btn btn-labeled btn-info">
                   <span class="btn-label"><i></i></span>Update my picture
                 </button>
-             
+
             </div>
           </div>
           <div class="col-md-6 no-pad">
@@ -54,16 +54,16 @@
     <form method="POST"  enctype="multipart/form-data">
       {% csrf_token %}
        <!-- Display each form -->
-      
+
 
       {{ user_form_update|crispy }}
       {{ profile_form_update|crispy }}
-     
-      
+
+
         <button type="submit" class="btn btn-labeled btn-info">
           <span class="btn-label"><i></i></span>Update user info test
         </button>
-     
+
     </form>
   </div>
 </div>

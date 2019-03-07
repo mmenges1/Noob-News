@@ -64,15 +64,15 @@ class UserProfileForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-    comments = forms.CharField(label='', widget=forms.TextInput(
-        attrs={'placeholder': 'comment'}))
     comment_rating = forms.CharField(
         label='', widget=forms.TextInput(attrs={'placeholder': 'Rating'}))
+    comments = forms.CharField(label='', widget=forms.TextInput(
+        attrs={'placeholder': 'comment'}))
     # user_id= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'User_id'}))
 
     class Meta:
         model = Review
-        fields = ('comments', 'comment_rating',)
+        fields = ('comment_rating', 'comments', )
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -141,15 +141,3 @@ class ContactForm(forms.Form):
         PrependedText(
             'contact_message', '<i class="fas fa-comments"></i>'),
     )
-
-
-class ReviewForm(forms.ModelForm):
-    comments = forms.CharField(label='', widget=forms.TextInput(
-        attrs={'placeholder': 'comment'}))
-    comment_rating = forms.CharField(
-        label='', widget=forms.TextInput(attrs={'placeholder': 'Rating'}))
-    #user_id= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'User_id'}))
-
-    class Meta:
-        model = Review
-        fields = ('comments', 'comment_rating',)
