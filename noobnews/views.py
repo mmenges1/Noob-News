@@ -29,7 +29,7 @@ def home(request):
 
 
 def profile(request):
-    return render(request, 'noobnews/profile.html')
+    return render(request, 'noobnews/profile.php')
 
 
 

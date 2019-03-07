@@ -1,4 +1,5 @@
 from django import forms
+
 from string import Template
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
@@ -63,11 +64,10 @@ class UserProfileForm(forms.ModelForm):
     helper.form_tag = False
 
 class ReviewForm(forms.ModelForm):
-    comments = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'comment'}))
-    comment_rating = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Rating'}))
+    comment_rating = forms.ChoiceField(choices=[(x, x) for x in range(1, 6)])
+    comments = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': 'Please write your comment in here '}))
     #user_id= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'User_id'}))
-
 
     class Meta:
         model = Review
-        fields = ('comments','comment_rating',)
+        fields = ('comment_rating', 'comments',)
