@@ -1,54 +1,71 @@
 {% extends 'noobnews/base.html' %}
 {% load staticfiles %}
-
-{% block head%}
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-{% endblock %}
-
-{% block videoG %}    {% endblock %}
+{% load crispy_forms_tags %} 
 {% block body_block %}
 
-
-  <div class="col-md-6 img" >
-      <h3 style="color:white;">Profile</h3><br><br>
-  </div>
+<div class="col-md-6 img">
+  <h3 style="color:white;">Profile</h3>
+  <br /><br />
+</div>
 
 <!------ User picture and description ---------->
+<div style="padding-top: 115px;">
+  <link
+    href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css"
+    rel="stylesheet"
+    media="screen"
+  />
 
-<link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" media="screen">
-<div class="container">
+  <div class="container">
     <div class="row user-menu-container square">
-        <div class="col-md-7 user-details">
+      <div class="col-md-7 user-details">
+        <div class="row coralbg white">
+          <div class="col-md-6 no-pad">
+            <div class="user-pad">
+              <h4 style="color:black;">
+                <i></i> {{ user.userprofile.player_tag }}
+              </h4>
+              
 
-            <div class="row coralbg white">
-                <div class="col-md-6 no-pad">
-                    <div class="user-pad">
-                        <h4 style="color:white;"><i ></i> {{ user.userprofile.player_tag }}</h4>
-                        <p  style="color:white;"> <i ></i> {{ user.email }} </p>
-                        <button type="button" class="btn btn-labeled btn-info" href="#">
-                            <span class="btn-label"><i ></i></span>Update my profile picture</button>
-                    </div>
-                </div>
-                <div class="col-md-6 no-pad">
-                    <div class="user-image">
-
-                        <img src="{{ user.userprofile.user_profile_image.url }}" class="img-responsive thumbnail" >
-                    </div>
-                </div>
+              
+                
+                <button type="submit" class="btn btn-labeled btn-info">
+                  <span class="btn-label"><i></i></span>Update my picture
+                </button>
+             
             </div>
-
+          </div>
+          <div class="col-md-6 no-pad">
+            <div class="user-image">
+              <img
+                src="{{ user.userprofile.user_profile_image.url }}"
+                class="img-responsive thumbnail"
+              />
+            </div>
+          </div>
         </div>
-
-
+      </div>
     </div>
-</div>
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css'>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<script src="/static/js/index.js"></script>
+  </div>
 
+  <!------ User information updates ---------->
+
+  <div class="content-section">
+    <form method="POST"  enctype="multipart/form-data">
+      {% csrf_token %}
+       <!-- Display each form -->
+      
+
+      {{ user_form_update|crispy }}
+      {{ profile_form_update|crispy }}
+     
+      
+        <button type="submit" class="btn btn-labeled btn-info">
+          <span class="btn-label"><i></i></span>Update user info test
+        </button>
+     
+    </form>
+  </div>
+</div>
+</div>
 {% endblock %}

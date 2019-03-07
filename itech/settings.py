@@ -35,10 +35,20 @@ SOCIAL_AUTH_TWITTER_SECRET = '75De0xcoR0ZywFA6WFbxnfJQD6wGjAx75cY1WTYbaGU8swylOj
 
 ALLOWED_HOSTS = []
 
+# Email implementation
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'noobnewsa1@gmail.com'
+SERVER_EMAIL = 'noobnewsa1@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'noobnewsa1@gmail.com'
+EMAIL_HOST_PASSWORD = 'noobnews1234'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Application definition
 
 INSTALLED_APPS = [
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -181,5 +191,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-#STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
