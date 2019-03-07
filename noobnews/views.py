@@ -59,6 +59,11 @@ def get_random_stream():
         if videogame:
             return videogame
 
+def profile(request):
+    return render(request, 'noobnews/profile.php')
+
+
+
 def show_videogame(request, videogame_name_slug):
     context_dict = {}
     form = ReviewForm()

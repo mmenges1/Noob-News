@@ -1,4 +1,5 @@
 from django import forms
+
 from string import Template
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field
@@ -61,19 +62,6 @@ class UserProfileForm(forms.ModelForm):
             'user_profile_image', '<i class="fa fa-image"></i>')
     )
     helper.form_tag = False
-
-
-class ReviewForm(forms.ModelForm):
-    comment_rating = forms.CharField(
-        label='', widget=forms.TextInput(attrs={'placeholder': 'Rating'}))
-    comments = forms.CharField(label='', widget=forms.TextInput(
-        attrs={'placeholder': 'comment'}))
-    # user_id= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'User_id'}))
-
-    class Meta:
-        model = Review
-        fields = ('comment_rating', 'comments', )
-
 
 class UserUpdateForm(forms.ModelForm):
 
@@ -141,3 +129,12 @@ class ContactForm(forms.Form):
         PrependedText(
             'contact_message', '<i class="fas fa-comments"></i>'),
     )
+
+class ReviewForm(forms.ModelForm):
+    comment_rating = forms.ChoiceField(choices=[(x, x) for x in range(1, 6)])
+    comments = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': 'Please write your comment in here '}))
+    #user_id= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'User_id'}))
+
+    class Meta:
+        model = Review
+        fields = ('comment_rating', 'comments',)

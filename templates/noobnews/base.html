@@ -56,9 +56,6 @@
     <div id="noob-navigator">
       <div class="row">
         <!-- https://codepen.io/CBeghin/pen/HeuiF-->
-        {% if user.is_authenticated %}
-       <a href="{% url 'profile' %}" class="user"> <i class="fas fa-user"></i></a>
-        {% endif %}
         <!--Search Feacture: results are shown in the cats div! -->
         <form class="search" id="search">
           <input class="suggestion" type="text" name="suggestion" value="" id="suggestion" placeholder="Find a Game"/>
