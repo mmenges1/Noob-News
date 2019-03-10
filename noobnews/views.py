@@ -348,7 +348,7 @@ def contact_us(request):
         if contact_form.is_valid():
             try:
                 videogame = VideoGame.objects.get(
-                    id=contact_form.cleaned_data["video_games_list"])
+                    id=contact_form.cleaned_data["video_games_list"].id)
             except VideoGame.DoesNotExist:
                 videogame = None
             type_suggestion = contact_form.cleaned_data["type_suggestion"]

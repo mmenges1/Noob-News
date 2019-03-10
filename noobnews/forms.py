@@ -63,6 +63,7 @@ class UserProfileForm(forms.ModelForm):
     )
     helper.form_tag = False
 
+
 class UserUpdateForm(forms.ModelForm):
 
     player_tag = forms.CharField(label='', widget=forms.TextInput(
@@ -106,7 +107,6 @@ class SetPasswordForm(forms.Form):
 
 
 class ContactForm(forms.Form):
-    video_games_choices = VideoGame.objects.all()
     full_name = forms.CharField(label='', widget=forms.TextInput(
         attrs={'placeholder': 'Full name'}))
     email = forms.CharField(label='', widget=forms.TextInput(
@@ -114,9 +114,9 @@ class ContactForm(forms.Form):
     type_suggestion = forms.ChoiceField(label='',
                                         choices=[(0, '--Select the suggestion type--'),
                                                  (1, 'Suggest games to add'), (2, 'Suggest changes to a game')])
-    video_games_list = forms.ChoiceField(label='',
-                                         choices=[(0, "--Select a game--")] + [(video_game.id, video_game.name)
-                                                                             for video_game in video_games_choices])
+    video_games_list = forms.ModelChoiceField(label='', queryset=VideoGame.objects.all().order_by('name'),
+                                              empty_label="--Select a game--",
+                                              to_field_name="id")
     contact_message = forms.CharField(label='', widget=forms.Textarea(
         attrs={'placeholder': 'Message'}))
 
@@ -130,9 +130,11 @@ class ContactForm(forms.Form):
             'contact_message', '<i class="fas fa-comments"></i>'),
     )
 
+
 class ReviewForm(forms.ModelForm):
     comment_rating = forms.ChoiceField(choices=[(x, x) for x in range(1, 6)])
-    comments = forms.CharField(label='', widget=forms.Textarea(attrs={'placeholder': 'Please write your comment in here '}))
+    comments = forms.CharField(label='', widget=forms.Textarea(
+        attrs={'placeholder': 'Please write your comment in here '}))
     #user_id= forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'User_id'}))
 
     class Meta:
