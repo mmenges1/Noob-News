@@ -1,6 +1,6 @@
 {% load i18n %}{% autoescape off %}
 <div>
-    <img src="/static/images/NoobNewslogo.png" alt="NoobNews">
+    <img src="cid:nooblogo" alt="NoobNews" width="100px">
 </div>
 <hr>
 You're receiving this email because {{ fullname }} has requested the site administrator to 
@@ -10,10 +10,10 @@ You're receiving this email because {{ fullname }} has requested the site admini
     change information about:
     <div class="row">
         <div class="col-6">
-            {{ videogame.name }}
+            <img src="cid:videogamelogo" alt="{{ videogame.name }}" width="100px">
         </div>
         <div class="col-6">
-            <img src="{{ videogame.image.url }}" alt="{{ videogame.name }}">
+            <strong>{{ videogame.name }}</strong>            
         </div>
     </div>
 {% endif %}

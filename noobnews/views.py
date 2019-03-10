@@ -13,6 +13,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
+from email.mime.image import MIMEImage
 from django.contrib.auth import logout
 from django.template import loader
 from django.contrib import messages
@@ -22,6 +23,7 @@ from noobnews.forms import UserForm, UserProfileForm, ReviewForm, PasswordResetR
 from datetime import date
 from social_django.models import UserSocialAuth
 from django.db.models import Max
+import os
 import random
 
 
@@ -346,15 +348,16 @@ def contact_us(request):
     if request.method == 'POST':
         contact_form = ContactForm(data=request.POST)
         if contact_form.is_valid():
+            videogame = None
             try:
-                videogame = VideoGame.objects.get(
-                    id=contact_form.cleaned_data["video_games_list"].id)
+                if contact_form.cleaned_data["video_games_list"]:
+                    videogame = VideoGame.objects.get(
+                        id=contact_form.cleaned_data["video_games_list"].id)
             except VideoGame.DoesNotExist:
                 videogame = None
             type_suggestion = contact_form.cleaned_data["type_suggestion"]
             if videogame or type_suggestion == '1':
                 email = contact_form.cleaned_data["email"]
-                print(email)
                 blend_email_directory = {
                     'fullname': contact_form.cleaned_data["full_name"],
                     'email': email,
@@ -370,9 +373,29 @@ def contact_us(request):
                 subject = ''.join(subject.splitlines())
                 email_body = loader.render_to_string(
                     email_template_name, blend_email_directory)
+                my_path = os.path.abspath(os.path.dirname(__file__))
+                logo_path = os.path.join(
+                    my_path, "../static/images/NoobNewslogo.png")
+                fp = open(logo_path, 'rb')
+                msgLogo = MIMEImage(fp.read())
+                fp.close()
+                msgLogo.add_header('Content-ID', '<nooblogo>')
                 msg = EmailMultiAlternatives(subject, 'Important message', 'noobnewsa1@gmail.com', [
                                              'noobnewsa1@gmail.com', email])
                 msg.attach_alternative(email_body, "text/html")
+                msg.attach(msgLogo)
+                if videogame is not None and videogame.image is not None:
+                    built_path = '..' + videogame.image.name
+                    videogame_path = os.path.join(
+                        my_path, built_path)
+                    print(built_path)
+                    print(videogame_path)
+                    fp = open(videogame_path, 'rb')
+                    msgVideoGame = MIMEImage(fp.read())
+                    fp.close()
+                    msgVideoGame.add_header('Content-ID', '<videogamelogo>')
+                    msg.attach(msgVideoGame)
+
                 msg.send()
                 messages.success(
                     request, 'An email has been sent to the site administrator. Thank you for helping us improve our site.')

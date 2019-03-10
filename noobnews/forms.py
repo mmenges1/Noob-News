@@ -116,7 +116,8 @@ class ContactForm(forms.Form):
                                                  (1, 'Suggest games to add'), (2, 'Suggest changes to a game')])
     video_games_list = forms.ModelChoiceField(label='', queryset=VideoGame.objects.all().order_by('name'),
                                               empty_label="--Select a game--",
-                                              to_field_name="id")
+                                              to_field_name="id",
+                                              required=False)
     contact_message = forms.CharField(label='', widget=forms.Textarea(
         attrs={'placeholder': 'Message'}))
 
