@@ -12,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.contrib.auth import logout
 from django.template import loader
 from django.contrib import messages
@@ -43,6 +44,7 @@ def home(request):
     }
     return render(request, 'noobnews/home.html', context_dict)
 
+
 def get_random():
     max_id = VideoGame.objects.all().aggregate(max_id=Max("id"))['max_id']
     while True:
@@ -50,6 +52,7 @@ def get_random():
         videogame = VideoGame.objects.filter(pk=pk).first()
         if videogame:
             return videogame
+
 
 def get_random_stream():
     max_id = VideoGame.objects.all().aggregate(max_id=Max("id"))['max_id']
@@ -59,9 +62,9 @@ def get_random_stream():
         if videogame:
             return videogame
 
+
 def profile(request):
     return render(request, 'noobnews/profile.php')
-
 
 
 def show_videogame(request, videogame_name_slug):
@@ -342,6 +345,38 @@ def reset_password_confirm(request, uidb64=None, token=None):
 def contact_us(request):
     if request.method == 'POST':
         contact_form = ContactForm(data=request.POST)
+        if contact_form.is_valid():
+            try:
+                videogame = VideoGame.objects.get(
+                    id=contact_form.cleaned_data["video_games_list"])
+            except VideoGame.DoesNotExist:
+                videogame = None
+            type_suggestion = contact_form.cleaned_data["type_suggestion"]
+            if videogame or type_suggestion == '1':
+                email = contact_form.cleaned_data["email"]
+                print(email)
+                blend_email_directory = {
+                    'fullname': contact_form.cleaned_data["full_name"],
+                    'email': email,
+                    'domain': request.META['HTTP_HOST'],
+                    'site_name': 'NoobNews',
+                    'videogame': videogame,
+                    'message': contact_form.cleaned_data["contact_message"],
+                    'type_suggestion': type_suggestion,
+                    'protocol': 'http',
+                }
+                email_template_name = 'noobnews/contact_us_email.html'
+                subject = 'Message from user'
+                subject = ''.join(subject.splitlines())
+                email_body = loader.render_to_string(
+                    email_template_name, blend_email_directory)
+                msg = EmailMultiAlternatives(subject, 'Important message', 'noobnewsa1@gmail.com', [
+                                             'noobnewsa1@gmail.com', email])
+                msg.attach_alternative(email_body, "text/html")
+                msg.send()
+                messages.success(
+                    request, 'An email has been sent to the site administrator. Thank you for helping us improve our site.')
+                return HttpResponseRedirect(reverse('home'))
     else:
         contact_form = ContactForm()
 

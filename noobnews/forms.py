@@ -112,10 +112,10 @@ class ContactForm(forms.Form):
     email = forms.CharField(label='', widget=forms.TextInput(
         attrs={'placeholder': 'Email'}))
     type_suggestion = forms.ChoiceField(label='',
-                                        choices=[(0, 'Select the suggestion type'),
-                                                 (1, 'Suggest games to add'), (2, 'Suggest changes to games')])
+                                        choices=[(0, '--Select the suggestion type--'),
+                                                 (1, 'Suggest games to add'), (2, 'Suggest changes to a game')])
     video_games_list = forms.ChoiceField(label='',
-                                         choices=[("-", "Select a game")] + [(video_game.id, video_game.name)
+                                         choices=[(0, "--Select a game--")] + [(video_game.id, video_game.name)
                                                                              for video_game in video_games_choices])
     contact_message = forms.CharField(label='', widget=forms.Textarea(
         attrs={'placeholder': 'Message'}))

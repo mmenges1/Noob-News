@@ -23,7 +23,7 @@
   <div class="card-login w-25">
     <article class="card-body">
       <h4 class="card-title mb-4 mt-1">Contact Form</h4>
-      <form id="login_form" method="post" action="{% url 'login' %}">
+      <form id="contact_form" method="post" action="{% url 'contact_us' %}">
         {% csrf_token %}
         {{ contact_form | crispy }}
         <!-- form-group// -->
