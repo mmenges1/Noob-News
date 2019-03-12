@@ -17,8 +17,7 @@ class UserProfile(models.Model):
     # image=models.ImageField(
     # upload_to='static/profile_images', blank=True, default='profile_images/default-user.png')
 
-    def __str__(self):
-
+    def _str_(self):
         return f'{self.user.username}'
 
 
@@ -26,7 +25,7 @@ class Genre(models.Model):
     genre_id = models.IntegerField(unique=True, primary_key=True)
     name = models.CharField(max_length=128)
 
-    def __str__(self):
+    def _str_(self):
         return self.name
 
 
@@ -35,7 +34,7 @@ class VideoGame(models.Model):
     genre = models.ForeignKey(Genre)
     name = models.CharField(max_length=128, unique=True)
     slug = models.SlugField(blank=True)
-    description = models.CharField(max_length=1000)
+    description = models.CharField(max_length=300)
     rating = models.IntegerField(default=0)
     release = models.DateField(("Date"), default=date.today)
     developer = models.CharField(max_length=128)
@@ -43,12 +42,7 @@ class VideoGame(models.Model):
     image = models.ImageField(default="")
     youtubeurl = models.CharField(max_length=300)
     speedRun = models.CharField(max_length=300)
-    trivia = models.CharField(max_length=300, default="There is no Trivia available for this game at the moment")
-    cheats = models.CharField(max_length=1000, default="There is no Cheats available for this game at the moment. If you would like to add more cheats pleae contact one of the system admins who would be more than happy to add cheats for this game. Let the Games contuine. I am writing more words for the sake of writing words lol lol, more words. More words. I love tango, even tho I can not dance, I look like a whale with slipply fish on his feet. ")
-    credits = models.CharField(max_length=300, default="There is no Credits available for this game at the moment")
-    triviaPicture = models.CharField(max_length=300, default="There is no Trivia available for this game at the moment")
-    cheatPicture = models.CharField(max_length=300, default="There is no Cheats available for this game at the moment")
-    creditPicture = models.CharField(max_length=300, default="There is no Credits available for this game at the moment")
+    trivia = models.CharField(max_length=300)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -57,7 +51,7 @@ class VideoGame(models.Model):
     class Meta:
         verbose_name_plural = 'videogames'
 
-    def __str__(self):
+    def _str_(self):
         return self.name
 
 
@@ -69,8 +63,8 @@ class Review(models.Model):
     publish_date = models.DateField(("Date"), default=date.today)
     comment_rating = models.IntegerField(default=0)
 
-    def __int__(self):
-        return self.reviews_id
+    def _str_(self):
+        return self.videogame.name
 
 
 class VideoGameList(models.Model):
@@ -78,8 +72,20 @@ class VideoGameList(models.Model):
     videogame_id = models.ForeignKey(VideoGame)
     user_id = models.ForeignKey(UserProfile)
 
-    def __str__(self):
+    def _str_(self):
         return self.list_id
+
+# class VideoExtraInfo(models.Model):
+#     videogame_id = models.ForeignKey(VideoGame)
+#     trivia = models.CharField(max_length=300, default="There is no Trivia available for this game at the moment")
+#     cheats = models.CharField(max_length=300, default="There is no Cheats available for this game at the moment")
+#     credits = models.CharField(max_length=300, default="There is no Credits available for this game at the moment")
+#     triviaPicture = models.CharField(max_length=300, default="There is no Trivia available for this game at the moment")
+#     cheatPicture = models.CharField(max_length=300, default="There is no Cheats available for this game at the moment")
+#     creditPicture = models.CharField(max_length=300, default="There is no Credits available for this game at the moment")
+#
+#     def __str__(self):
+#         return self.trivia
 
 class ratingValue(models.Model):
     number = models.IntegerField(default=0)

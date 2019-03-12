@@ -136,7 +136,7 @@ class SuggestForm(forms.ModelForm):
      class Meta:
          model = VideoGame
          fields = ('name', 'description','publisher','release',)
-         
+
 class ReviewForm(forms.ModelForm):
     comment_rating = forms.ChoiceField(choices=[(x, x) for x in range(1, 6)])
     comments = forms.CharField(label='', widget=forms.Textarea(
