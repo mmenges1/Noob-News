@@ -18,13 +18,15 @@ from django.contrib.auth import logout
 from django.template import loader
 from django.contrib import messages
 from datetime import datetime
-from noobnews.models import VideoGame, Genre, Review, User, UserProfile
-from noobnews.forms import UserForm, UserProfileForm, ReviewForm, PasswordResetRequestForm, SetPasswordForm, ContactForm
+from noobnews.models import VideoGame, Genre, Review, User, UserProfile, ratingValue, score
+from noobnews.forms import UserForm, UserProfileForm, ReviewForm, PasswordResetRequestForm, SetPasswordForm, ContactForm, SuggestForm
 from datetime import date
 from social_django.models import UserSocialAuth
 from django.db.models import Max
 import os
 import random
+from django.db.models import Count
+from django.db.models import Sum
 
 
 from noobnews.forms import ProfileUpdateForm, UserUpdateForm
@@ -85,6 +87,56 @@ def show_videogame(request, videogame_name_slug):
         context_dict['videoGame'] = None
         context_dict['genres'] = None
         context_dict['users'] = None
+    # Working out the Value of each review
+
+    totalRating = Review.objects.all().aggregate(Sum('comment_rating'))['comment_rating__sum'] or 0.00
+    totalRating= totalRating/5
+
+        # Need to delete all objects in the score table
+    score.objects.all().delete()
+        # updating the rating table with the new rating values
+    for i in range(1,6):
+        rat=totalRating * i
+        updaterating= ratingValue.objects.filter(number=i)
+        updaterating= updaterating[0]
+        updaterating.value=rat
+        updaterating.save()
+
+    ratingVideoGames=VideoGame.objects.all()
+    size= len(ratingVideoGames)
+    for j in range(size):
+        currentgame=ratingVideoGames[j]
+        Gamescore=0
+
+        for k in range(1,6):
+            currentReview=Review.objects.filter(videogame=currentgame, comment_rating = k)
+            currentValue=ratingValue.objects.filter(number=k)
+            currentscore=currentValue[0].value * len(currentReview)
+            Gamescore = Gamescore + currentscore
+
+            # need to update score table with these value
+        score.objects.create(videogame=currentgame,score=Gamescore)
+
+        # Need to find the highest Score
+    highestScore= score.objects.all().aggregate(Max('score'))['score__max'] or 0.00
+    print(highestScore)
+
+    for l in range(size):
+        currentgame=ratingVideoGames[l]
+
+        currentScore=score.objects.filter(videogame=currentgame)
+        currentScore= currentScore[0].score
+
+        gameScore = currentScore / highestScore
+        gameScore = gameScore * 100
+        updateGame= VideoGame.objects.filter(name=currentgame)
+        updateGame= updateGame[0]
+        updateGame.rating=gameScore
+        print (currentgame)
+        print(currentScore)
+        print (gameScore)
+        updateGame.save()
+
     # A HTTP POST?
     if request.method == 'POST':
         form = ReviewForm(request.POST)
@@ -98,8 +150,7 @@ def show_videogame(request, videogame_name_slug):
                 review.videogame = videoGame
                 review.publish_date = str(date.today())
                 print(request.user)
-                review.user_id = UserProfile.objects.get(
-                    player_tag=request.user.userprofile.player_tag)
+                review.user_id = UserProfile.objects.get(player_tag=request.user.userprofile.player_tag)
                 review.save()
                 # return show_videogame(request, videogame_name_slug)
 
@@ -107,6 +158,34 @@ def show_videogame(request, videogame_name_slug):
     context_dict['videogame'] = videoGame
 
     return render(request, 'noobnews/videogame.html', context_dict)
+
+def suggestChanges(request, videogame_name_slug):
+    context_dict = {}
+    form = SuggestForm()
+
+    try:
+        videoGame = VideoGame.objects.get(slug=videogame_name_slug)
+        # genres = Review.objects.filter(videogame=videoGame)
+        users = UserProfile.objects.all()
+        context_dict = {'users': users, 'videoGame': videoGame}
+    except:
+        videoGame = None
+        videoGame_name_slug = None
+        context_dict['videoGame'] = None
+        context_dict['genres'] = None
+        context_dict['users'] = None
+
+    # A HTTP POST?
+    if request.method == 'POST':
+        form = SuggestForm(request.POST, instance=videoGame)
+        # Have we been provided with a valid form?
+        if form.is_valid():
+            if videoGame:
+                form.save()
+            return render(request, 'noobnews/videogame.html', context_dict)
+        print(form);
+                # return show_videogame(request, videogame_name_slug)
+    return render(request, 'noobnews/videogameSuggestChanges.html', context_dict)
 
 
 def top40(request):
@@ -119,6 +198,8 @@ def top40(request):
     except VideoGame.DoesNotExist:
         context_dict['genres'] = None
         context_dict['videoGame'] = None
+
+
     return render(request, 'noobnews/top40.html', context_dict)
 
 
