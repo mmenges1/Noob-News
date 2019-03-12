@@ -13,9 +13,14 @@
   {% block videoG %} {% endblock %}
   <link rel="stylesheet" href="/static/css/videoGameBootstrap.css">
   <link rel="stylesheet" href="/static/css/noobnews.css">
+  <!-- Load the Twitch embed script -->
+  <!--
+    Create a Twitch.Embed object that will render
+    within the "twitch-embed" root element.
+  -->
+  <script type="text/javascript">
 
-
-
+  </script>
 </head>
 
 
@@ -76,22 +81,18 @@
 
         <div class="blog-slider__item swiper-slide">
           <div class="blog-slider__img">
-            <span><iframe width="560" height="315" src="https://player.twitch.tv/?autoplay=false&video={{ videoGame.speedRun }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span>
+            <span>
+              <!-- Add a placeholder for the Twitch embed -->
+              <div id="twitch-embed"></div>
+              <!-- <iframe width="560" height="315" src="https://player.twitch.tv/?autoplay=false&video={{ videoGame.speedRun }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+            </span>
           </div>
           <div class="blog-slider__content">
             <div class="blog-slider__title">Twitch Speed Run</div>
             <div class="blog-slider__text">Speed run record held by BLA BLA BLA</div>
           </div>
         </div>
-        <div class="blog-slider__item swiper-slide">
-          <div class="blog-slider__img">
-            <span><iframe width="560" height="315" src="https://player.twitch.tv/?autoplay=false&video={{ videoGame.speedRun }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span>
-          </div>
-          <div class="blog-slider__content">
-            <div class="blog-slider__title">Twitch: LIVE</div>
-            <div class="blog-slider__text">Speed run record held by BLA BLA BLA</div>
-          </div>
-        </div>
+
 
       </div>
       <div class="blog-slider__pagination"></div>
@@ -207,6 +208,8 @@
   </nav>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://embed.twitch.tv/embed/v1.js"></script>
+
   <script>
     $.getJSON(' https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=1&playlistId={{ videoGame.youtubeurl }}&fields=items/snippet/title,items/snippet/description&key=AIzaSyDu4N6OHRVf81plK5FcmXb1P0L5Ef-nYMY', function(data) {
     $.each(data.items, function(i, item) {
@@ -216,7 +219,35 @@
        $("#title").append(title);;
     });
   });
+
+  $.getJSON('https://player.twitch.tv/?autoplay=false&video={{ videoGame.speedRun }}', function(data) {
+  $.each(data.items, function(i, item) {
+    console.log(item);
+    var videoDes = item['snippet']['description'];
+    var title = item['snippet']['title']
+     $("#desc").append(videoDes);;
+     $("#title").append(title);;
+  });
+});
+
+
+
+
+  var embed = new Twitch.Embed("twitch-embed", {
+  width: 560,
+  height: 315,
+  video: "{{ videoGame.speedRun }}",
+  layout: "video",
+  autoplay: false,
+  });
+  embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+    var player = embed.getPlayer();
+    console.log(player.getChannel());
+    player.play();
+    });
   </script>
+
+
 
 
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed'>

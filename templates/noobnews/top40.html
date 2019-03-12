@@ -16,17 +16,18 @@
 {% block body_block %}
 
 <div class="jumbotron text-center mt-2" style="background: transparent;">
-  <div class="try2" id="myBtnContainer" style="-webkit-align-content: center; align-content: center;">
+      <div class="angle" style="height: 120px; margin: 2px auto 45px -27%;"><p style="padding-top: 50px;">Choose your adventure wisely</p></div>
+  <center><div class="try2" id="myBtnContainer" style="background-color: black; -webkit-align-content: center; align-content: center; width: 865px;">
     <button class="btn2 active2" id="btn2" onclick="filterSelection('all')"><span> Show all</span></button>
     {% for g in genres %}
     <button id="btn2" class="btn2" onclick="filterSelection('{{ g.name }}')"><span>{{ g.name }}</span></button>
     {% endfor %}
-  </div>
+  </div></center>
   <div class="row2">
     {% for v in videoGame %}
     <a href="{% url 'show_videogame' v.slug %}"><div id="hover" class="column2 {{ v.genre.name }}">
       <div id="{{ v.genre.name }}" class="content2">
-        <div><button class="plus"><h1 style="font-size: 2rem; color: #000;">{{ v.rating }}/5</h1></<button></div>
+        <div><button class="plus"><h1 style="font-size: 2rem; margin-top: 0px; color: black;">{{ v.rating }}/5</h1></<button></div>
         <div class="right2">
           <h1 style="color:black; margin-right: 70px; padding-bottom: 40px; font-size: 15px;">{{ v.name }}</h1>
         </div>

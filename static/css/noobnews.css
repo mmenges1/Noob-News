@@ -971,7 +971,7 @@ li {
 .user {
   width: 30%;
   position: absolute;
-  top: 6%;
+  top: 3%;
   left: 110%;
   transform: translate(-50%, -50%);
   color: black;
@@ -1076,7 +1076,7 @@ li {
 .user {
   width: 30%;
   position: absolute;
-  top: 6%;
+  top: 3%;
   left: 110%;
   transform: translate(-50%, -50%);
   color: black;
@@ -1206,16 +1206,17 @@ body {
 
 .angle {
   z-index: -1;
-  font-family: Century, sans-serif;
-  position: relative;
-  margin: 0 auto -35px -5%;
-  width: 110%;
-  background: #000000;
-  transform: rotate(3deg);
-  -o-transform: rotate(3deg);
-  -ms-transform: rotate(3deg);
-  -moz-transform: rotate(3deg);
-  -webkit-transform: rotate(3deg);
+      font-family: Century, sans-serif;
+      position: relative;
+      margin: -20px auto -126px -27%;
+      width: 1600px;
+      height: 275px;
+      background: #000000;
+      transform: rotate(3deg);
+      -o-transform: rotate(3deg);
+      -ms-transform: rotate(3deg);
+      -moz-transform: rotate(3deg);
+      -webkit-transform: rotate(3deg);
 }
 
 .angle p {
@@ -1239,9 +1240,10 @@ body {
   z-index: -1;
   font-family: Century Gothic, sans-serif;
   position: relative;
-  margin: 186px auto -29px -68px;
-  width: 110%;
-  background:#000000;
+  margin: 186px auto -113px -261px;
+  width: 1600px;
+  height: 275px;
+  background: #000000;
   transform: rotate(6deg);
   -o-transform: rotate(6deg);
   -ms-transform: rotate(6deg);
