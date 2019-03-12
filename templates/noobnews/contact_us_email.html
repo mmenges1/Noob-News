@@ -1,0 +1,33 @@
+{% load i18n %}{% autoescape off %}
+<div>
+    <img src="cid:nooblogo" alt="NoobNews" width="100px">
+</div>
+<hr>
+You're receiving this email because {{ fullname }} has requested the site administrator to 
+{% if type_suggestion == '1' %}
+    add the games to the website
+{% else %}
+    change information about:
+    <div class="row">
+        <div class="col-6">
+            <img src="cid:videogamelogo" alt="{{ videogame.name }}" width="100px">
+        </div>
+        <div class="col-6">
+            <strong>{{ videogame.name }}</strong>            
+        </div>
+    </div>
+{% endif %}
+<p>
+    <strong>Additional information:</strong>
+    <div>
+        {{ message }}
+    </div>
+    <div>
+        {{ email }}
+    </div>
+</p>
+
+
+{% blocktrans %}The {{ site_name }} team{% endblocktrans %}
+
+{% endautoescape %}

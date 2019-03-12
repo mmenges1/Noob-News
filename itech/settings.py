@@ -33,7 +33,7 @@ SOCIAL_AUTH_TWITTER_KEY = '4Kx1d0pV1VtyKZLpTxKHh88Od'
 SOCIAL_AUTH_TWITTER_SECRET = '75De0xcoR0ZywFA6WFbxnfJQD6wGjAx75cY1WTYbaGU8swylOj'
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['noobnews.pythonanywhere.com','127.0.0.1','localhost']
 
 # Email implementation
 EMAIL_USE_TLS = True
@@ -191,6 +191,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOL = os.path.join(BASE_DIR, 'static')
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

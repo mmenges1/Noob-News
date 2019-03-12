@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+{% extends 'noobnews/base.html' %}
+{% load staticfiles %}
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  {% block title_block %}{{ videoGame.name }}{% endblock %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  {% block videoG %} {% endblock %}
+  <link rel="stylesheet" href="/static/css/videoGameBootstrap.css">
+  <link rel="stylesheet" href="/static/css/noobnews.css">
+
+
+
+</head>
+
+
+{% block body_block %}
+
+
+</div>
+<form method="POST" action="/noobnews/videogamesuggest/{{ videoGame.slug }}/">{% csrf_token %}
+
+<div class="fond"><span class="s2"></span></div>
+<div class="contact">
+  <main>
+    <div class="card">
+      <div class="thumbnail"><img style="height: inherit; width:inherit;" class="left" src="{{ videoGame.image }}" /></div>
+      <div class="right">
+<h1></h1>
+        <input type="text" size=20 name= "name" id="id_name" value="{{ videoGame.name }}">
+        <div>
+            <input type="text" name= "publisher" id="id_publisher" class="input4" value="{{ videoGame.publisher }}">
+
+          <br>
+        </div>
+        <br>
+        <div class="separator"></div>
+        <br>
+          <textarea class='textarea2' name="description" id="id_description">{{ videoGame.description }}</textarea>
+
+      </div>
+      <h5>{{ videoGame.rating }}/5</h5>
+
+      <input type="date" class="input3" name= "release" id="id_release" placeholder="{{ videoGame.release }}">
+      <button type="Save">
+        <span>Confirm Changes</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+          <g class="nc-icon-wrapper" fill="#444444">
+            <path d="M14.83 30.83L24 21.66l9.17 9.17L36 28 24 16 12 28z"></path>
+          </g>
+        </svg>
+
+
+      </button>
+
+    </div>
+
+
+  </main>
+
+</form>
+
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js'></script>
+
+  </nav>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    $.getJSON(' https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=1&playlistId={{ videoGame.youtubeurl }}&fields=items/snippet/title,items/snippet/description&key=AIzaSyDu4N6OHRVf81plK5FcmXb1P0L5Ef-nYMY', function(data) {
+    $.each(data.items, function(i, item) {
+      var videoDes = item['snippet']['description'];
+      var title = item['snippet']['title']
+       $("#desc").append(videoDes);;
+       $("#title").append(title);;
+    });
+  });
+  </script>
+
+
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css'>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  <script src="/static/js/index.js"></script>
+
+  {% endblock %}

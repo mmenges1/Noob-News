@@ -42,11 +42,11 @@
         <a href="{% url 'top40' %}" onclick="w3_close()" class="w3-bar-item w3-button w3-padding" id="ViewWork"><i class="fas fa-history fa-fw w3-margin-right"></i>Top 40</a>
         <a  href="{% url 'profile' %}" class="w3-bar-item w3-button w3-padding "><i class="fas fa-mail-bulk fa-fw w3-margin-right"></i>Profile</a>
          {% if user.is_authenticated %}
-
-              <a href="{% url 'logout' %}">Logout</a>
+              <a href="{% url 'logout' %}" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-out-alt fa-fw w3-margin-right"></i>Logout</a>
             {% else %}
-              <a href="{% url 'login' %}">Login</a>
-            {% endif %}
+              <a href="{% url 'login' %}" class="w3-bar-item w3-button w3-padding"><i class="fas fa-sign-in-alt fa-fw w3-margin-right"></i>Login</a>
+          {% endif %}
+        <a href="{% url 'contact_us' %}" class="w3-bar-item w3-button w3-padding"><i class="fas fa-envelope fa-fw w3-margin-right"></i>Contact us</a>
       </div>
 
     </div>
@@ -62,7 +62,6 @@
           <div class="results" id="cats">
           </div>
         </form>
-        <a onclick="searchBar()" class="searchicon"> <i class="fas fa-search"></i></a>
         <a href="{% url 'profile' %}" class="user"> <i class="fas fa-user"></i></a>
       </div>
     </div>
