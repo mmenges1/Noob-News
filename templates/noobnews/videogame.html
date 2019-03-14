@@ -13,9 +13,14 @@
   {% block videoG %} {% endblock %}
   <link rel="stylesheet" href="/static/css/videoGameBootstrap.css">
   <link rel="stylesheet" href="/static/css/noobnews.css">
+  <!-- Load the Twitch embed script -->
+  <!--
+    Create a Twitch.Embed object that will render
+    within the "twitch-embed" root element.
+  -->
+  <script type="text/javascript">
 
-
-
+  </script>
 </head>
 
 
@@ -67,6 +72,7 @@
     <div class="mypanel"></div>
       <div class="blog-slider">
         <div class="blog-slider__wrp swiper-wrapper">
+          {% ifnotequal videoGame.trivia "" %}
           <div class="blog-slider__item swiper-slide">
             <div class="Video-card">
               <div class="meta">
@@ -75,12 +81,14 @@
               <div class="description">
                 <h1>Trivia</h1>
                 <h2>{{ videoGame.name }}</h2>
-                <p >{{ videoGame.cheats }}
+                <p >{{ videoGame.trivia }}
                   <p>
               </div>
             </div>
           </div>
+          {% endifnotequal %}
 
+          {% ifnotequal videoGame.cheats "" %}
           <div class="blog-slider__item swiper-slide">
             <div class="Video-card">
               <div class="meta">
@@ -94,19 +102,21 @@
               </div>
             </div>
           </div>
-
+          {% endifnotequal %}
+          {% ifnotequal videoGame.easter_eggs "" %}
           <div class="blog-slider__item swiper-slide">
             <div class="Video-card">
               <div class="meta">
                 <div class="photo" style="background-image: url({{ videoGame.image }})"></div>
               </div>
               <div class="description">
-                <h1>Credits</h1>
+                <h1>Easter Eggs</h1>
                 <h2>{{ videoGame.name }}</h2>
-                <p class="scrolld" style =""> {{ videoGame.cheats }}<p>
+                <p class="scrolld" style =""> {{ videoGame.easter_eggs }}<p>
               </div>
             </div>
           </div>
+          {% endifnotequal %}
 
         </div>
         <div class="blog-slider__pagination"></div>
@@ -226,7 +236,7 @@
 
             <div class="comment-item">
         <h1>Comment Section</h1>
-      
+
 
           <div class="separator"></div>
       <div class="comment-item">
@@ -329,6 +339,19 @@
        $("#title").append(title);;
     });
   });
+
+  $.getJSON('https://player.twitch.tv/?autoplay=false&video={{ videoGame.speedRun }}', function(data) {
+  $.each(data.items, function(i, item) {
+    console.log(item);
+    var videoDes = item['snippet']['description'];
+    var title = item['snippet']['title']
+     $("#desc").append(videoDes);;
+     $("#title").append(title);;
+  });
+});
+
+
+
   </script>
 
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed'>
