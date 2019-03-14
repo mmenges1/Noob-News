@@ -119,22 +119,18 @@ def show_videogame(request, videogame_name_slug):
 
         # Need to find the highest Score
     highestScore= score.objects.all().aggregate(Max('score'))['score__max'] or 0.00
-    print(highestScore)
+
 
     for l in range(size):
         currentgame=ratingVideoGames[l]
-
         currentScore=score.objects.filter(videogame=currentgame)
         currentScore= currentScore[0].score
-
         gameScore = currentScore / highestScore
         gameScore = gameScore * 100
-        updateGame= VideoGame.objects.filter(name=currentgame)
+        updateGame= VideoGame.objects.filter(name=currentgame.name)
         updateGame= updateGame[0]
         updateGame.rating=gameScore
-        print (currentgame)
-        print(currentScore)
-        print (gameScore)
+
         updateGame.save()
 
     # A HTTP POST?

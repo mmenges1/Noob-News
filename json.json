@@ -1,0 +1,50 @@
+{
+  "title": "Devil May Cry 5 - Parte 2 / FINAL",
+  "description": "",
+  "description_html": "",
+  "broadcast_id": 1,
+  "broadcast_type": "highlight",
+  "status": "recorded",
+  "language": "pt",
+  "tag_list": "",
+  "views": 23792,
+  "created_at": "2019-03-09T05:15:44Z",
+  "published_at": "2019-03-09T05:15:44Z",
+  "url": "https://www.twitch.tv/videos/392641898",
+  "_id": "v392641898",
+  "recorded_at": "2019-03-09T05:15:44Z",
+  "game": "Devil May Cry 5",
+  "length": 22950,
+  "preview": "https://static-cdn.jtvnw.net/s3_vods/eda68820e50f53b4f00f_alanzoka_15298738476_9944877901//thumb/thumb392641898-320x240.jpg",
+  "animated_preview_url": "https://vod-storyboards.twitch.tv/eda68820e50f53b4f00f_alanzoka_15298738476_9944877901/storyboards/392641898-strip-0.jpg",
+  "thumbnails": [{
+    "type": "generated",
+    "url": "https://static-cdn.jtvnw.net/s3_vods/eda68820e50f53b4f00f_alanzoka_15298738476_9944877901//thumb/thumb392641898-320x240.jpg"
+  }],
+  "fps": {
+    "160p30": 29.999176125880687,
+    "360p30": 29.999176125880687,
+    "480p30": 29.999176125880687,
+    "720p30": 29.999176125880687,
+    "720p60": 59.998291605893186,
+    "audio_only": 0,
+    "chunked": 59.998291605893186
+  },
+  "resolutions": {
+    "160p30": "284x160",
+    "360p30": "640x360",
+    "480p30": "852x480",
+    "720p30": "1280x720",
+    "720p60": "1280x720",
+    "audio_only": "",
+    "chunked": "1600x900"
+  },
+  "channel": {
+    "name": "alanzoka",
+    "display_name": "alanzoka"
+  },
+  "_links": {
+    "self": "https://api.twitch.tv/kraken/videos/v392641898",
+    "channel": "https://api.twitch.tv/kraken/channels/alanzoka"
+  }
+}

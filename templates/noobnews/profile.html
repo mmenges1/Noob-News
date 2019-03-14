@@ -1,71 +1,58 @@
 {% extends 'noobnews/base.html' %}
 {% load staticfiles %}
-{% load crispy_forms_tags %} 
+{% load crispy_forms_tags %}
 {% block body_block %}
 
-<div class="col-md-6 img">
-  <h3 style="color:white;">Profile</h3>
-  <br /><br />
-</div>
+<div id=Speedtitle> </div> 
+<script>
+var temp = ""
+var id="client_id=lafleu2a48dpivopblprona7jhjf3j"
+$.getJSON("https://api.twitch.tv/kraken/videos/top?game={{ videoGame.name }}&"+id,function(obj){
+      console.log(obj);
+      for(var i=0;i<1;i++){
+          var x={};
+          x.img=obj.videos[i].preview;
+          x.content=obj.videos[i].description.substring(0,20);
+          x.url=obj.videos[i].url;
 
-<!------ User picture and description ---------->
-<div style="padding-top: 115px;">
-  <link
-    href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css"
-    rel="stylesheet"
-    media="screen"
-  />
-
-  <div class="container">
-    <div class="row user-menu-container square">
-      <div class="col-md-7 user-details">
-        <div class="row coralbg white">
-          <div class="col-md-6 no-pad">
-            <div class="user-pad">
-              <h4 style="color:black;">
-                <i></i> {{ user.userprofile.player_tag }}
-              </h4>
-
-
-
-
-                <button type="submit" class="btn btn-labeled btn-info">
-                  <span class="btn-label"><i></i></span>Update my picture
-                </button>
-
-            </div>
-          </div>
-          <div class="col-md-6 no-pad">
-            <div class="user-image">
-              <img
-                src="{{ user.userprofile.user_profile_image.url }}"
-                class="img-responsive thumbnail"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!------ User information updates ---------->
-
-  <div class="content-section">
-    <form method="POST"  enctype="multipart/form-data">
-      {% csrf_token %}
-       <!-- Display each form -->
+          x.description=obj.videos[i].description;
+          x.id=obj.videos[i]._id;
+          console.log(obj.videos[i])
+          x.author=obj.videos[i].channel.name;
+          x.views=obj.videos[i].views;
+          x.title=obj.videos[i].title.substring(0,20);
+          $("#Tdesc").append(x.content);;
+          $("#Ttitle").append(x.title);;
+          $("#Tviews").append(x.views);;
+          $("#Ttitle").append(x.title);;
+          $("#Turl").append(x.url);;
+          $("#id").append(x.id);;
+          $("#streamer").append(x.author);;
 
 
-      {{ user_form_update|crispy }}
-      {{ profile_form_update|crispy }}
+          iframe="<span><iframe width='560' height='315' src='https://player.twitch.tv/?autoplay=false&video="+ x.id + "'frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></span>"
+        $("#frame").append(iframe);;
+     }
+  },"jsonp");
+
+  $.getJSON("https://api.twitch.tv/kraken/videos/v392641898?"+id,function(obj){
+        console.log(obj);
+        for(var i=0;i<1;i++){
+            var x={};
+            x.description=obj.description;
+            x.author=obj.channel.name;
+            x.views=obj.views;
+            x.title=obj.title.substring(0,20);
+            $("#Speeddesc").append(x.content);;
+            $("#Speedtitle").append(x.title);;
+            $("#Speedviews").append(x.views);;
+            $("#Speedurl").append(x.url);;
+            $("#Speedstreamer").append(x.author);;
+            console.log(x.title);
+       }
+    },"jsonp");
 
 
-        <button type="submit" class="btn btn-labeled btn-info">
-          <span class="btn-label"><i></i></span>Update user info test
-        </button>
 
-    </form>
-  </div>
-</div>
-</div>
+</script>
 {% endblock %}
