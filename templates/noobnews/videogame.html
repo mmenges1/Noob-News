@@ -72,6 +72,7 @@
     <div class="mypanel"></div>
       <div class="blog-slider">
         <div class="blog-slider__wrp swiper-wrapper">
+          {% ifnotequal videoGame.trivia "" %}
           <div class="blog-slider__item swiper-slide">
             <div class="Video-card">
               <div class="meta">
@@ -80,12 +81,14 @@
               <div class="description">
                 <h1>Trivia</h1>
                 <h2>{{ videoGame.name }}</h2>
-                <p >{{ videoGame.cheats }}
+                <p >{{ videoGame.trivia }}
                   <p>
               </div>
             </div>
           </div>
+          {% endifnotequal %}
 
+          {% ifnotequal videoGame.cheats "" %}
           <div class="blog-slider__item swiper-slide">
             <div class="Video-card">
               <div class="meta">
@@ -99,19 +102,21 @@
               </div>
             </div>
           </div>
-
+          {% endifnotequal %}
+          {% ifnotequal videoGame.easter_eggs "" %}
           <div class="blog-slider__item swiper-slide">
             <div class="Video-card">
               <div class="meta">
                 <div class="photo" style="background-image: url({{ videoGame.image }})"></div>
               </div>
               <div class="description">
-                <h1>Credits</h1>
+                <h1>Easter Eggs</h1>
                 <h2>{{ videoGame.name }}</h2>
-                <p class="scrolld" style =""> {{ videoGame.cheats }}<p>
+                <p class="scrolld" style =""> {{ videoGame.easter_eggs }}<p>
               </div>
             </div>
           </div>
+          {% endifnotequal %}
 
         </div>
         <div class="blog-slider__pagination"></div>
@@ -291,19 +296,6 @@
 
 
 
-
-  var embed = new Twitch.Embed("twitch-embed", {
-  width: 560,
-  height: 315,
-  video: "{{ videoGame.speedRun }}",
-  layout: "video",
-  autoplay: false,
-  });
-  embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
-    var player = embed.getPlayer();
-    console.log(player.getChannel());
-    player.play();
-    });
   </script>
 
 
