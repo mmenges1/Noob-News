@@ -1,52 +1,14 @@
 {% extends 'noobnews/base.html' %}
 {% load staticfiles %}
-<head>
-  <meta charset="UTF-8">
 {% block title_block %}Noob News{% endblock %}
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 {% block videoG %}
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"crossorigin="anonymous"></script>
 {% endblock %}
 <link rel="stylesheet" href="/static/css/videoGameBootstrap.css">
-<link rel="stylesheet" href="/static/css/noobnews.css">
-</head>
-
 {% block body_block %}
-<style>
-  .centered {
-  position: absolute;
-  top: 60%;
-  left: 35%;
-  font-size: 20px;
-  transform: translate(-50%, -50%);
-}* {
-  box-sizing: border-box;
-}
-
-.column {
-  float: left;
-  width: 33.33%;
-  padding: 5px;
-  overflow:hidden;
-  width:330px;
-  height:330px;
-}
-
-/* Clearfix (clear floats) */
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-  </style>
 
 <div class="homecontent">
     <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:100%; height:100%;" >
@@ -81,20 +43,11 @@
     <div class="newCards">
   <div class="thumbnail3" style="border-radius: 20px / 15px; background-color: transparent;"><img class="left" src="{{ top3.image }}"  style="width:100%; height: 100%; " /></div>
   </div></a>
-  <!-- <div onclick="window.location.href='{% url 'show_videogame' top1.slug %}'" class="column">
-    <img  style="width:100%; height:100%;" src="{{ top1.image }}">
-  </div> -->
-  <!-- <div class="column">
-    <img onclick="window.location.href='{% url 'show_videogame' top2.slug %}'" style="width:100%; height:100%;" src="{{ top2.image }}">
-  </div>
-  <div class="column">
-    <img onclick="window.location.href='{% url 'show_videogame' top3.slug %}'" style="width:100%; height:100%;" src="{{ top3.image }}" >
-  </div> -->
 </div>
 </div>
 <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:100%; height:100%;" >
   <div class="angle">
-    <p>Stream of the Week</p></div>
+    <p>Featured Playlist</p></div>
   <div class="blog-slider">
       <div class="blog-slider__item">
         <div class="blog-slider__img2">
@@ -102,11 +55,6 @@
         </div>
       </div>
   </div>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
   <!-- <span><iframe width="100%" height="100%" src="https://player.twitch.tv/?autoplay=false&video={{ stream.speedRun }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span> -->
 </div>
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css'>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
 {% endblock %}

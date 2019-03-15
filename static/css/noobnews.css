@@ -583,7 +583,7 @@ h6 {
 
 /* Those futur buttons */
 ul {
-  margin-left: 250px;
+  margin-left: 221px;
 }
 
 li {
@@ -910,13 +910,14 @@ li {
     outline: none;
     border-color: #66b1ee;
     width:150%;
+    color: black;
 }
 
 .search .results {
-
     position: absolute;
     top: 35px;
-    padding-left: 100%;
+    width: 352px;
+    padding-left: 0%;
     margin: 0;
     border-width: 1px;
     border-style: solid;
@@ -925,7 +926,7 @@ li {
     background-color: #fdfdfd;
 }
 
-.search .results li {   z-index: 1; display: block }
+.search .results li { z-index: 1; display: block }
 
 
 .search .results li:first-child:before {
@@ -946,7 +947,7 @@ li {
     border: 1px solid transparent;
 }
 
-.search .results a span {   z-index: 1; font-weight: 200 }
+.search .results a span {  z-index: 1; font-weight: 200 }
 
 .search .results a:before {
     z-index: 1;
@@ -981,10 +982,10 @@ li {
 
 /*Search Icon */
 .searchicon {
-  width: 30%;
+  width: 2%;
   position: absolute;
-  top: 6%;
-  left: 107%;
+  top: 3%;
+  left: 92%;
   transform: translate(-50%, -50%);
   color: black;
 }
