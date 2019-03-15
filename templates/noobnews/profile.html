@@ -1,8 +1,14 @@
 {% extends 'noobnews/base.html' %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
+{% block videoG %}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
+{% endblock %}
 {% block body_block %}
 
+
+<div class="angle" id="profileAngle"><p>Stats</p></div>
 <div class="col-md-6 img">
   <h3 style="color:white;">Profile</h3>
   <br /><br />
@@ -25,10 +31,6 @@
               <h4 style="color:black;">
                 <i></i> {{ user.userprofile.player_tag }}
               </h4>
-
-
-
-
                 <button type="submit" class="btn btn-labeled btn-info">
                   <span class="btn-label"><i></i></span>Update my picture
                 </button>

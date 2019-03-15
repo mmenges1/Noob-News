@@ -17,7 +17,7 @@ var swiper = new Swiper('.blog-slider', {
         clickable: true,
       }
     });
-    
+
 function hideNavbar() {
   $("#noob-navigator").removeClass("d-none");
 }

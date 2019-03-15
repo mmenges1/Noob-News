@@ -1,23 +1,15 @@
 <!DOCTYPE html>
 {% extends 'noobnews/base.html' %}
 {% load staticfiles %}
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed'>
-<link rel="stylesheet" href="/static/css/noobnews.css">
 {% block videoG %}
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"crossorigin="anonymous"></script>
 <script src="{% static "js/top40.js" %}"></script>
 {% endblock %}
 {% block body_block %}
 
 <div class="jumbotron text-center mt-2" style="background: transparent;">
-      <div class="angle" style="height: 120px; margin: 2px auto 45px -27%;"><p style="padding-top: 50px;">Choose your adventure wisely</p></div>
-  <center><div class="try2" id="myBtnContainer" style="background-color: black; -webkit-align-content: center; align-content: center; width: 865px;">
+      <div class="angle" id="top40Angle"><p>Choose your adventure wisely</p></div>
+  <center><div class="try2">
     <button class="btn2 active2" id="btn2" onclick="filterSelection('all')"><span> Show all</span></button>
     {% for g in genres %}
     <button id="btn2" class="btn2" onclick="filterSelection('{{ g.name }}')"><span>{{ g.name }}</span></button>
@@ -27,22 +19,14 @@
     {% for v in videoGame %}
     <a href="{% url 'show_videogame' v.slug %}"><div id="hover" class="column2 {{ v.genre.name }}">
       <div id="{{ v.genre.name }}" class="content2">
-        <div><button class="plus"><h1 style="font-size: 2rem; margin-top: 0px; color: black;">{{ v.rating }}/5</h1></<button></div>
+        <div><button class="plus"><h1 id="h1Style2">{{ v.rating }}</h1></<button></div>
         <div class="right2">
-          <h1 style="color:black; margin-right: 70px; padding-bottom: 40px; font-size: 15px;">{{ v.name }}</h1>
+          <h1 id="h1Style">{{ v.name }}</h1>
         </div>
-    <div class="thumbnail2" style="border-radius: 50px / 15px; background-color: transparent;"><img class="left" src="{{ v.image }}"  style="width:100%; height: 100%; " /></div>
+    <div class="thumbnail2"><img class="left" src="{{ v.image }}"/></div>
     </div>
   </div></a>
     {% endfor %}
   </div>
 </div>
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css'>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
-<script src="/static/js/index.js"></script>
 {% endblock %}
-
-
-<script src="{% static "js/top40.js" %}"></script>
