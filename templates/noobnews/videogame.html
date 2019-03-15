@@ -13,11 +13,6 @@
   {% block videoG %} {% endblock %}
   <link rel="stylesheet" href="/static/css/videoGameBootstrap.css">
   <link rel="stylesheet" href="/static/css/noobnews.css">
-  <!-- Load the Twitch embed script -->
-  <!--
-    Create a Twitch.Embed object that will render
-    within the "twitch-embed" root element.
-  -->
   <script type="text/javascript">
   </script>
 </head>
@@ -25,7 +20,7 @@
 
 {% block body_block %}
 
-
+<!--Basic Video Game Card, this shows the basic info for the game -->
 </div>
 <div class="fond"><span class="s2"></span></div>
 <div class="contact">
@@ -44,9 +39,12 @@
       <h5>{{ videoGame.rating }}</h5>
       <h6>{{ videoGame.release }}</h6>
 
+      <!--We only want users who are loged to edit out games- in the future would be beter if on admin users can edit  -->
       {% if user.is_authenticated %}
       <button id="button2" name="button2" style="margin-right: 110px;" type="submit" class="button2" onclick="window.location.href='/noobnews/videogamesuggest/{{ videoGame.slug }}'">Edit</button>
       {% endif %}
+
+      <!--Fancy more button, will load the other game cards -->
       <button id="button1" name="button1">
         <span>More</span>
 
@@ -55,19 +53,14 @@
             <path d="M14.83 30.83L24 21.66l9.17 9.17L36 28 24 16 12 28z"></path>
           </g>
         </svg>
-
-
       </button>
-
     </div>
-
-
   </main>
 
 
 
   <nav>
-
+    <!--First Set of scroll cards, show game triva, cheats and easter eggs if there is any stored in the database -->
     <div class="mypanel"></div>
     <div class="blog-slider">
       <div class="blog-slider__wrp swiper-wrapper">
@@ -106,6 +99,7 @@
     </div>
     <br>
 
+<!-- Next Set of cards, uses youtbe and twitch api to show youtube videos, comments and description of each of the videos -->
     <div class="mypanel"></div>
     <div class="blog-slider">
       <div class="blog-slider__wrp swiper-wrapper">
@@ -159,10 +153,6 @@
             </div>
           </div>
         </div>
-
-
-
-
       </div>
       <div class="blog-slider__pagination"></div>
     </div>
