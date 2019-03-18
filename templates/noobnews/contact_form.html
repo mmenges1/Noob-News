@@ -1,0 +1,49 @@
+{% extends 'noobnews/base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+{% block title_block%} Contact form {% endblock %}
+{% block body_block %}
+<script src="../../static/js/login.js"></script>
+<script>
+    $(document).ready(function () {
+        var video_game_dropdown = $("#id_video_games_list");
+        var suggestion_type = $("#id_type_suggestion");
+
+        video_game_dropdown.addClass("d-none");
+        suggestion_type.change(function () {
+            if (suggestion_type.val() != 2) {
+                video_game_dropdown.addClass("d-none");
+            } else {
+                video_game_dropdown.removeClass("d-none");
+            }
+        });
+    });
+</script>
+<div class="row justify-content-center">
+  <div class="card-login w-25">
+    <article class="card-body">
+      <h4 class="card-title mb-4 mt-1">Contact Form</h4>
+      <form id="contact_form" method="post" action="{% url 'contact_us' %}">
+        {% csrf_token %}
+        {{ contact_form | crispy }}
+        <!-- form-group// -->
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary btn-block">
+                Send message
+              </button>
+            </div>
+            <!-- form-group// -->
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="small" href="/">Return to the Home page</a>
+          </div>
+        </div>
+        <!-- .row// -->
+      </form>
+    </article>
+  </div>
+  <!-- card.// -->
+</div>
+{% endblock %}

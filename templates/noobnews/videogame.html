@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+{% extends 'noobnews/base.html' %}
+{% load staticfiles %}
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  {% block title_block %}{{ videoGame.name }}{% endblock %}
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  {% block videoG %} {% endblock %}
+  <link rel="stylesheet" href="/static/css/videoGameBootstrap.css">
+  <link rel="stylesheet" href="/static/css/noobnews.css">
+  <script type="text/javascript">
+  </script>
+</head>
+
+
+{% block body_block %}
+
+<!--Basic Video Game Card, this shows the basic info for the game -->
+</div>
+<div class="fond"><span class="s2"></span></div>
+<div class="contact">
+  <main>
+    <div class="card">
+      <div class="thumbnail"><img style="height: inherit; width:inherit;" class="left" src="{{ videoGame.image }}" /></div>
+      <div class="right">
+        <h1>{{ videoGame.name }} </h1>
+        <div>
+          <p>{{ videoGame.publisher }}</p>
+        </div>
+        <div class="separator"></div>
+        <p class="scrolld">{{ videoGame.description }}
+          <p>
+      </div>
+      <h5>{{ videoGame.rating }}</h5>
+      <h6>{{ videoGame.release }}</h6>
+
+      <!--We only want users who are loged to edit out games- in the future would be beter if on admin users can edit  -->
+      {% if user.is_authenticated %}
+      <button id="button2" name="button2" style="margin-right: 110px;" type="submit" class="button2" onclick="window.location.href='/noobnews/videogamesuggest/{{ videoGame.slug }}'">Edit</button>
+      {% endif %}
+
+      <!--Fancy more button, will load the other game cards -->
+      <button id="button1" name="button1">
+        <span>More</span>
+
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+          <g class="nc-icon-wrapper" fill="#444444">
+            <path d="M14.83 30.83L24 21.66l9.17 9.17L36 28 24 16 12 28z"></path>
+          </g>
+        </svg>
+      </button>
+    </div>
+  </main>
+
+
+
+  <nav>
+    <!--First Set of scroll cards, show game triva, cheats and easter eggs if there is any stored in the database -->
+    <div class="mypanel"></div>
+    <div class="blog-slider">
+      <div class="blog-slider__wrp swiper-wrapper">
+        {% ifnotequal videoGame.cheats "" %}
+        <div class="blog-slider__item swiper-slide">
+          <div class="blog-slider__content">
+            <div class="blog-slider__title">Cheats</div>
+            <div class="blog-slider__text">{{ videoGame.cheats }}</div>
+          </div>
+        </div>
+        {% endifnotequal %}
+        {% ifnotequal videoGame.easter_eggs "" %}
+        <div class="blog-slider__item swiper-slide">
+
+          <div class="blog-slider__content">
+            <div class="blog-slider__title">Easter Eggs</div>
+            <div class="blog-slider__text">{{ videoGame.easter_eggs }}</div>
+          </div>
+        </div>
+        {% endifnotequal %}
+  {% ifnotequal videoGame.trivia "" %}
+        <div class="blog-slider__item swiper-slide">
+
+          <div class="blog-slider__content">
+            <div class="blog-slider__title">Trivia</div>
+            <div class="blog-slider__text">{{ videoGame.trivia }}</div>
+          </div>
+        </div>
+          {% endifnotequal %}
+
+
+
+
+      </div>
+      <div class="blog-slider__pagination"></div>
+    </div>
+    <br>
+
+<!-- Next Set of cards, uses youtbe and twitch api to show youtube videos, comments and description of each of the videos -->
+    <div class="mypanel"></div>
+    <div class="blog-slider">
+      <div class="blog-slider__wrp swiper-wrapper">
+        <div class="blog-slider__item swiper-slide">
+          <div class="blog-slider__img">
+            <span><iframe width="560" height="315" src="https://www.youtube.com/embed/videoseries?list={{ videoGame.youtubeurl }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span>
+          </div>
+          <div class="blog-slider__content">
+            <div class="blog-slider__title" id="title"></div>
+            <div class="blog-slider__text" id="desc"></div>
+          </div>
+        </div>
+
+        <div class="blog-slider__item swiper-slide">
+          <div class="blog-slider__img">
+            <span><iframe width="560" height="315" src="https://player.twitch.tv/?autoplay=false&video={{ videoGame.speedRun }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span>
+          </div>
+          <div class="blog-slider__content">
+            <div class="blog-slider__title" id='Stitle'></div>
+            <div class="blog-slider__text">
+              Streamer:
+              <q id=Speedstreamer></q>
+              <br>
+              Number of Views:
+              <q id=Speedviews></q></div>
+          </div>
+        </div>
+        <div class="blog-slider__item swiper-slide">
+          <div class="blog-slider__img">
+            <div id="frameing"> </div>
+          </div>
+          <div class="blog-slider__content">
+            <div class="blog-slider__title" id='Ttitle'></div>
+            <div class="blog-slider__text">
+              Streamer:
+              <q id=streamer></q>
+              <br>
+              Number of Views:
+              <q id=Tviews></q></div>
+          </div>
+        </div>
+
+        <div class="blog-slider__item swiper-slide">
+          <div class="blog-slider__img">
+            <div id=frame> </div>
+          </div>
+          <div class="blog-slider__content">
+            <div class="blog-slider__title">Suggestions</div>
+            <div class="blog-slider__text">
+              If you have any suggestions for changes to any of the content shown above, feel free to contact us!
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="blog-slider__pagination"></div>
+    </div>
+    <br>
+
+
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js'></script>
+
+
+    <div class="title">
+      <div id="AddComment" class="modal">
+        <form id="videogame_form" class="modal-content animate" method="POST" action="/noobnews/videogame/{{ videogame.slug }}/">
+          <span onclick="document.getElementById('AddComment').style.display='none'" class="close" title="Close Modal">x</span>
+
+          <br>
+          <center>
+            <h3 class="modelTitle">Comment Form</h3>
+          </center>
+          <hr>
+          {% csrf_token %}
+          {% for hidden in form.hidden_fields %}
+          {{ hidden }}
+          {% endfor %}
+          {% for field in form.visible_fields %}
+          {{ field.errors }}
+          {{ field.help_text}}
+          {{ field }}
+          <br><br>
+          {% endfor %}
+          <br>
+
+          <div class="clearfix">
+            <center><button type="Save" id="button2" name="button2" class="button button1" style='margin-left: 5%'>Finish </button>
+              <center>
+          </div>
+        </form>
+      </div>
+
+      <a>
+        <main>
+          {% if user.is_authenticated %}
+          <button id="button2" name="button2" type="submit" class="button2" onclick="document.getElementById('AddComment').style.display='block'">Leave a Comment</button>
+          {% endif %}
+        </main>
+
+
+
+
+
+                  <!--To embred a video you need to https://www.youtube.com/embed/videoseries?list= then the playlist code, the playlist code could be stored in the database -->
+                    <!--Comments Sections -->
+
+
+
+                    <div class="comment-item">
+                <h1>Comment Section</h1>
+                  <div class="separator"></div>
+              <div class="comment-item">
+                <div class="scroll">
+                <div class="comment-item--inner">
+
+                  {% if genres %}
+                  {% for g in genres %}
+
+
+                  <div class="is-left">
+                    <div class="avatar">
+                      {% for u in users%}
+                      {% ifequal  u.player_tag g.user_id.player_tag %}
+                      <img src="/media/{{u.user_profile_image }}"  style="width: 100%; height:120px;"alt="">
+                      {%endifequal%}
+                        {%endfor%}
+
+                      </div>
+                  </div>
+                  <div class="is-right">
+                    <div class="is-right--inner">
+                      <br>
+
+                      <div class="name">{{ g.user_id }}-    <small>{{ g.publish_date }}</small><div><br>
+                        <div class="blog-slider__text" style=" font-weight: normal;">{{ g.comments }}</div>
+                      <span class="share share-count share-plus">{{ g.comment_rating }}/5</span>
+                      </div>
+                    </div>
+                  </div>
+                  <br><br>
+
+          {% endfor %}
+                {% endif %}
+              </div>
+            </div>
+</div>
+            </nav>
+
+  
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+  <script>
+    console.log("HELLLOOOOOo")
+    var id = "client_id=lafleu2a48dpivopblprona7jhjf3j"
+    $.getJSON("https://api.twitch.tv/kraken/videos/top?game={{ videoGame.name }}&" + id, function(obj) {
+      for (var i = 0; i < 1; i++) {
+        var x = {};
+        x.img = obj.videos[i].preview;
+        x.content = obj.videos[i].description.substring(0, 20);
+        x.url = obj.videos[i].url;
+        x.description = obj.videos[i].description;
+        x.id = obj.videos[i]._id;
+        x.author = obj.videos[i].channel.name;
+        x.views = obj.videos[i].views;
+        x.title = obj.videos[i].title.substring(0, 20);
+        $("#Tdesc").append(x.content);;
+        $("#Ttitle").append(x.title);;
+        $("#Tviews").append(x.views);;
+        $("#Ttitle").append(x.title);;
+        $("#Turl").append(x.url);;
+        $("#id").append(x.id);;
+        $("#streamer").append(x.author);;
+        iframe = "<span><iframe width='560' height='315' src='https://player.twitch.tv/?autoplay=false&video=" + x.id +
+          "'frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></span>"
+        $("#frameing").append(iframe);;
+      }
+    }, "jsonp");
+    $.getJSON("https://api.twitch.tv/kraken/videos/{{videoGame.speedRun}}?" + id, function(obj) {
+      for (var i = 0; i < 1; i++) {
+        var x = {};
+        x.author = obj.channel.name;
+        x.views = obj.views;
+        x.title2 = obj.title.substring(0, 20);
+        $("#Stitle").append(x.title2);;
+        $("#Speedviews").append(x.views);;
+        $("#Speedstreamer").append(x.author);;
+      }
+    }, "jsonp");
+  </script>
+
+  <script>
+    $.getJSON(' https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=1&playlistId={{ videoGame.youtubeurl }}&fields=items/snippet/title,items/snippet/description&key=AIzaSyDu4N6OHRVf81plK5FcmXb1P0L5Ef-nYMY', function(data) {
+      $.each(data.items, function(i, item) {
+        var videoDes = item['snippet']['description'];
+        var title = item['snippet']['title']
+        $("#desc").append(videoDes);;
+        $("#title").append(title);;
+      });
+    });
+    $.getJSON('https://player.twitch.tv/?autoplay=false&video={{ videoGame.speedRun }}', function(data) {
+      $.each(data.items, function(i, item) {
+        console.log(item);
+        var videoDes = item['snippet']['description'];
+        var title = item['snippet']['title']
+        $("#desc").append(videoDes);;
+        $("#title").append(title);;
+      });
+    });
+  </script>
+
+<div>
+  {% if user.is_authenticated %}
+
+<main>
+<form method='POST' action= '{%  url "profile" %}'>
+    {% csrf_token %}
+    <input type='hidden' name='selected_game'  value = '{{videoGame.id}}' />
+    <button type="submit">Add to library</button>
+  </form>
+</main>
+{% endif %}
+</div>
+
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto+Condensed'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css'>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  <script src="/static/js/index.js"></script>
+
+  
+  
+  {% endblock %}

@@ -1,0 +1,30 @@
+.centered {
+position: absolute;
+top: 60%;
+left: 35%;
+font-size: 20px;
+transform: translate(-50%, -50%);
+}* {
+box-sizing: border-box;
+}
+
+.column {
+float: left;
+width: 33.33%;
+padding: 5px;
+overflow:hidden;
+width:330px;
+height:330px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+content: "";
+clear: both;
+display: table;
+}
+
+.carousel-inner{
+  width:inherit;
+  height:inherit;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% extends 'noobnews/base.html' %}
+{% load staticfiles %}
+{% block videoG %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="{% static "js/top40.js" %}"></script>
+{% endblock %}
+{% block body_block %}
+
+<div class="jumbotron text-center mt-2" style="background: transparent;">
+      <div class="angle" id="top40Angle"><p>Choose your adventure wisely</p></div>
+  <center><div class="try2">
+    <button class="btn2 active2" id="btn2" onclick="filterSelection('all')"><span> Show all</span></button>
+    {% for g in genres %}
+    <button id="btn2" class="btn2" onclick="filterSelection('{{ g.name }}')"><span>{{ g.name }}</span></button>
+    {% endfor %}
+  </div></center>
+  <div class="row2">
+    {% for v in videoGame %}
+    <a href="{% url 'show_videogame' v.slug %}"><div id="hover" class="column2 {{ v.genre.name }}">
+      <div id="{{ v.genre.name }}" class="content2">
+        <div><button class="plus"><h1 id="h1Style2">{{ v.rating }}</h1></<button></div>
+        <div class="right2">
+          <h1 id="h1Style">{{ v.name }}</h1>
+        </div>
+    <div class="thumbnail2"><img class="left" src="{{ v.image }}"/></div>
+    </div>
+  </div></a>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

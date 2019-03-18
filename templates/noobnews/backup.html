@@ -1,0 +1,37 @@
+
+
+<div class="homecontent">
+  <div class="block x1"><img style="height: inherit; width:inherit;" src="/static/videogameImages/breathOfTheWild.jpg"></div>
+  <div class="block x2">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:100%; height:100%;" >
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" style="width:100%; height:100%;">
+        <div class="item active" style="width:100%; height:100%;">
+          <img style="height: inherit; width:inherit;" src="/static/videogameImages/breathOfTheWild.jpg" alt=""">
+        </div>
+        {% for v in top40List %}
+        <div class="item" style="width:100%; height:100%;">
+          <img style="height: inherit; width:inherit;" src="{{ v.image }}" alt="{{ v.name }}" >
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="block x3">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width:100%; height:100%;" >
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner" style="width:100%; height:100%;">
+        <div class="item active" style="width:100%; height:100%;">
+          <img style="height: inherit; width:inherit;" src="/static/videogameImages/breathOfTheWild.jpg" alt=""">
+        </div>
+        {% for n in newList %}
+        <div class="item" style="width:100%; height:100%;">
+          <img style="height: inherit; width:inherit;" src="{{ n.image }}" alt="{{ n.name }}" >
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="block x4">4</div>
+  <div class="block x5">5</div>
+</div>

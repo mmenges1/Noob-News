@@ -1,0 +1,17 @@
+<ul>
+  {% if cats %}
+  {% for c in cats %}
+  {% if c == act_cat %}
+
+
+  <a href="{% url 'show_videogame' c.slug %}">{{ c.name }}</a></div>
+
+  {% else %}
+  <li><a href="{% url 'show_videogame' c.slug %}">{{ c.name }}<br /><span></span></a></li>
+
+  {% endif %}
+  {% endfor %}
+  {% else %}
+  <li><a href=""> There are no games that match your search term</a><li>
+  {% endif %}
+</ul>
