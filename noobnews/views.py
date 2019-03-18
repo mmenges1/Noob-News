@@ -217,21 +217,25 @@ def suggest_category(request):
     cat_list = get_category_list(8, starts_with)
     return render(request, 'noobnews/cats.html', {'cats': cat_list})
 
-
+# Method to login
 def user_login(request):
     if request.method == 'POST':
         email = request.POST.get('mail')
         password = request.POST.get('password')
-
+        # using the django authentication framework to manage the login process
         user = authenticate(username=email, password=password)
-
+        # If the credentials are correct
         if user:
+            # If the user is active
             if user.is_active:
+                # process the authenticated user to store session keys
                 login(request, user)
+                # Redirect to the profile page
                 return HttpResponseRedirect(reverse('profile'))
             else:
                 return HttpResponse("Your account is disabled")
         else:
+            # Message to show the user if the credentials are wrong
             message = "Invalid login details"
             messages.error(request, message)
             return render(request, 'noobnews/login.html', {'message': message})
@@ -239,7 +243,7 @@ def user_login(request):
     else:
         return render(request, 'noobnews/login.html', {})
 
-
+# Method to register a new user 
 def register(request):
     registered = False
 
@@ -248,8 +252,8 @@ def register(request):
         profile_form = UserProfileForm(data=request.POST)
 
         if user_form.is_valid() and profile_form.is_valid():
-
             repeat_password = user_form.cleaned_data['repeat_password']
+            # Validate that both passwords match
             if(user_form.cleaned_data['password'] != repeat_password):
                 messages.error(request, 'The passwords do not match!')
                 return render(request,
@@ -259,12 +263,14 @@ def register(request):
                                   'profile_form': profile_form,
                               })
             try:
+                # Search for a user with the same email that we are trying to register
                 userTmp = User.objects.get(
                     email=user_form.cleaned_data['email'])
             except User.DoesNotExist:
                 userTmp = None
 
             if userTmp:
+                # If a user exists, notify the user about the error
                 messages.error(request, 'A user with the email ' +
                                userTmp.email+' already exists')
                 return render(request,
@@ -276,12 +282,14 @@ def register(request):
                               })
 
             try:
+                # Search for a user profile with the same player_tag that we are trying to register 
                 profileTmp = UserProfile.objects.get(
                     player_tag=profile_form.cleaned_data['player_tag'])
             except UserProfile.DoesNotExist:
                 profileTmp = None
 
             if profileTmp:
+                # If a user profile exists, notify the user
                 messages.error(request, 'A user with the player tag ' +
                                profileTmp.player_tag+' already exists')
                 return render(request,
@@ -291,19 +299,21 @@ def register(request):
                                   'profile_form': profile_form,
                                   'registered': registered
                               })
+            # Store the user data from the form without save it in the databse
             user = user_form.save(commit=False)
             user.set_password(user.password)
-
+            # Store the user profile data from the form without save it in the databse
             profile = profile_form.save(commit=False)
+            # Set the username as the email for authentication purposes
             user.username = user.email
+            # Save the user in the database
             user.save()
             profile.user = user
-
+            # If the user uploaded a profile image
             if 'user_profile_image' in request.FILES:
                 profile.user_profile_image = request.FILES['user_profile_image']
 
             profile.save()
-
             registered = True
             messages.success(request, 'Account created successfully!')
             return HttpResponseRedirect(reverse('login'))
@@ -321,15 +331,18 @@ def register(request):
                       'registered': registered
                   })
 
-
+# Method to reset the password using the django authentication framwework
 def reset_password(request):
     if request.method == 'POST':
+        # Store the form information
         reset_form = PasswordResetRequestForm(data=request.POST)
         if reset_form.is_valid():
             userTmp = None
             profileTmp = None
+            # The user is allowed to type the email or the player tag to reset the password
             data = reset_form.cleaned_data["email_or_playertag"]
             try:
+                # Validation to check if the user typed the email
                 validate_email(data)
                 is_email = True
             except ValidationError:
@@ -337,16 +350,19 @@ def reset_password(request):
 
             if is_email is True:
                 try:
+                    # Search the user by email
                     userTmp = User.objects.get(email=data)
                 except User.DoesNotExist:
                     userTmp = None
             else:
                 try:
+                    # Search the user profile by player tag
                     profileTmp = UserProfile.objects.get(player_tag=data)
                 except UserProfile.DoesNotExist:
                     profileTmp = None
 
             if userTmp is None and profileTmp is None:
+                # If there is no record for the input data, show the error to the user
                 messages.error(
                     request, 'Sorry, we do not have any user associated with the information provided')
                 return render(request,
@@ -356,7 +372,7 @@ def reset_password(request):
                               })
             if profileTmp:
                 userTmp = profileTmp.user
-
+            # Directory to set the required variables to the password_reset_email.html template
             blend_email_directory = {
                 'email': userTmp.email,
                 'domain': request.META['HTTP_HOST'],
@@ -366,17 +382,22 @@ def reset_password(request):
                 'token': default_token_generator.make_token(userTmp),
                 'protocol': 'http',
             }
+            # Subject text from django authentication framework
             subject_template_name = 'registration/password_reset_subject.txt'
+            # Template with the email body for reset the password
             email_template_name = 'registration/password_reset_email.html'
-            subject = loader.render_to_string(
-                subject_template_name, blend_email_directory)
+            # Function to load the subject template and set the required variables
+            subject = loader.render_to_string(subject_template_name, blend_email_directory)
             subject = ''.join(subject.splitlines())
-            email = loader.render_to_string(
-                email_template_name, blend_email_directory)
+            # Function to load the body message template and set the required variables
+            email = loader.render_to_string(email_template_name, blend_email_directory)
+            # Function to send the email
             send_mail(subject, email, 'noobnewsa1@gmail.com', [
                       userTmp.email], fail_silently=False)
+            # Message to notify the user that the email was sent successfully
             messages.success(request, 'An email has been sent to ' + userTmp.email +
                              '. Please check its inbox to continue reseting password.')
+            # Redirect to the login page
             return HttpResponseRedirect(reverse('login'))
 
     else:
@@ -465,8 +486,6 @@ def contact_us(request):
                     built_path = '..' + videogame.image.name
                     videogame_path = os.path.join(
                         my_path, built_path)
-                    print(built_path)
-                    print(videogame_path)
                     fp = open(videogame_path, 'rb')
                     msgVideoGame = MIMEImage(fp.read())
                     fp.close()
