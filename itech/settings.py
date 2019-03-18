@@ -33,7 +33,7 @@ SOCIAL_AUTH_TWITTER_KEY = '4Kx1d0pV1VtyKZLpTxKHh88Od'
 SOCIAL_AUTH_TWITTER_SECRET = '75De0xcoR0ZywFA6WFbxnfJQD6wGjAx75cY1WTYbaGU8swylOj'
 
 
-ALLOWED_HOSTS = ['noobnews.pythonanywhere.com','127.0.0.1','localhost']
+ALLOWED_HOSTS = ['noobnews.pythonanywhere.com', '127.0.0.1', 'localhost']
 
 # Email implementation
 EMAIL_USE_TLS = True
@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'crispy_forms',
-    # 'bootstrap_toolkit',
     'noobnews',
 ]
 

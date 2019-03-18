@@ -6,7 +6,7 @@ from crispy_forms.layout import Layout, Field
 from crispy_forms.bootstrap import PrependedText
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
-from noobnews.models import UserProfile, Review, VideoGame
+from noobnews.models import UserProfile, Review, VideoGame, VideoGameList
 
 
 class UserForm(forms.ModelForm):
@@ -50,7 +50,7 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ('player_tag', 'user_profile_image')
+        fields = ('player_tag', 'user_profile_image',)
 
     helper = FormHelper()
     helper.layout = Layout(
@@ -59,15 +59,20 @@ class UserProfileForm(forms.ModelForm):
             'player_tag', '<i class="fa fa-gamepad"></i>'),
         # 'user_profile_image',
         PrependedText(
-            'user_profile_image', '<i class="fa fa-image"></i>')
+            'user_profile_image', '<i class="fa fa-image"></i>'),
+
+        # test video game library image
+
+
     )
+
     helper.form_tag = False
 
 
 class UserUpdateForm(forms.ModelForm):
 
     player_tag = forms.CharField(label='', widget=forms.TextInput(
-        attrs={'placeholder': 'Player tag'}))
+        attrs={'placeholder': 'Change my user name'}))
 
     class Meta:
         model = UserProfile
@@ -78,6 +83,12 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('user_profile_image',)
+
+
+class VideoImageUpdateForm(forms.ModelForm):
+    class Meta:
+        model = VideoGameList
+        fields = ('game_library_image',)
 
 
 class PasswordResetRequestForm(forms.Form):
@@ -131,11 +142,13 @@ class ContactForm(forms.Form):
             'contact_message', '<i class="fas fa-comments"></i>'),
     )
 
+
 class SuggestForm(forms.ModelForm):
 
-     class Meta:
-         model = VideoGame
-         fields = ('name', 'description','publisher','release',)
+    class Meta:
+        model = VideoGame
+        fields = ('name', 'description', 'publisher', 'release',)
+
 
 class ReviewForm(forms.ModelForm):
     comment_rating = forms.ChoiceField(choices=[(x, x) for x in range(1, 6)])

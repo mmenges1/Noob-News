@@ -1,0 +1,16 @@
+{% extends 'noobnews/base.html' %} 
+{% load staticfiles %} 
+{% block body_block %}
+
+<h3>test</h3>
+
+{% if user.is_authenticated %}
+
+<h3>test</h3>
+{% for s in game %}
+
+{{ s.name }}
+
+{% endfor %} 
+{% endif %} 
+{% endblock %}

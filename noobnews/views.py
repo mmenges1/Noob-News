@@ -18,6 +18,12 @@ from django.contrib.auth import logout
 from django.template import loader
 from django.contrib import messages
 from datetime import datetime
+from noobnews.models import VideoGame, Genre, Review, User, UserProfile, VideoGameList
+from noobnews.forms import UserForm, UserProfileForm, ReviewForm, PasswordResetRequestForm, SetPasswordForm, ContactForm, VideoImageUpdateForm
+from datetime import date
+from social_django.models import UserSocialAuth
+from django.db.models import Max
+from django.views.generic import DetailView
 from noobnews.models import VideoGame, Genre, Review, User, UserProfile, ratingValue, score
 from noobnews.forms import UserForm, UserProfileForm, ReviewForm, PasswordResetRequestForm, SetPasswordForm, ContactForm, SuggestForm
 from datetime import date
@@ -28,6 +34,7 @@ import random
 from django.db.models import Count
 from django.db.models import Sum
 
+from django.db.models.signals import pre_save, post_save, m2m_changed
 
 from noobnews.forms import ProfileUpdateForm, UserUpdateForm
 
@@ -531,6 +538,26 @@ def user_logout(request):
 
 @login_required
 def profile(request):
+    #library
+    selected_game = request.POST.get('selected_game')
+    if selected_game is None:
+        
+        game_obj = VideoGame.objects.get(id=56)
+
+        library = VideoGameList.objects.filter(user_id=request.user.userprofile)
+        library_obj = VideoGameList.objects.get(list_id=library)
+        library_obj.userLibrary.add(game_obj)
+        game = library_obj.userLibrary.all()
+        
+    else:    
+        game_obj = VideoGame.objects.get(id=selected_game)
+
+        library = VideoGameList.objects.filter(user_id=request.user.userprofile)
+        library_obj = VideoGameList.objects.get(list_id=library)
+        library_obj.userLibrary.add(game_obj)
+        game = library_obj.userLibrary.all() 
+
+    # user profile has been updated
     if request.method == 'POST':
         user_form_update = UserUpdateForm(
             request.POST, instance=request.user.userprofile)
@@ -544,14 +571,63 @@ def profile(request):
             return redirect('profile')
 
     else:
+        
+        # profile page before updates
         user_form_update = UserUpdateForm(
             instance=request.user.userprofile)
+
         profile_form_update = ProfileUpdateForm(
             instance=request.user.userprofile)
 
+       
     context = {
         'user_form_update': user_form_update,
-        'profile_form_update': profile_form_update
-    }
+        'profile_form_update': profile_form_update,
+        'game': game,
+        
 
+
+
+    }
     return render(request, 'noobnews/profile.html', context)
+
+#test library
+def video_game_list_add(request):
+    selected_game = request.POST.get('selected_game')
+    if selected_game is None:
+        
+        game_obj = VideoGame.objects.get(id=56)
+
+        library = VideoGameList.objects.filter(user_id=request.user.userprofile)
+        library_obj = VideoGameList.objects.get(list_id=library)
+        library_obj.userLibrary.add(game_obj)
+        game = library_obj.userLibrary.all()
+        context = {'game': game}
+    else:    
+        game_obj = VideoGame.objects.get(id=selected_game)
+
+        library = VideoGameList.objects.filter(user_id=request.user.userprofile)
+        library_obj = VideoGameList.objects.get(list_id=library)
+        library_obj.userLibrary.add(game_obj)
+        game = library_obj.userLibrary.all()
+
+        context = {'game': game}
+
+    return render(request, 'noobnews/cart.html', context)
+
+
+class GameDetailView(DetailView):
+    queryset = VideoGameList.objects.all()
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(GameDetailView, self).get_context_data(*args, **kwargs)
+        request = self.request
+        library_obj = VideoGameList.new_or_get(self.request)
+        context['game'] = library_obj
+        return context
+
+    def get_object(self, *args, **kwargs):
+        request = self.request
+        slug = self.kwargs.get('slug')
+        instance = VideoGameList.objects.get(slug=slug, active=True)
+        return instance

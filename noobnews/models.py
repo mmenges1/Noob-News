@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
 from django.template.defaultfilters import slugify
+from django.conf import settings
+from django.db.models.signals import pre_save, post_save, m2m_changed
 
 
 # Create your models here.
@@ -10,12 +12,10 @@ from django.template.defaultfilters import slugify
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_profile_image = models.ImageField(
-        default='NoProfile.jpg', upload_to='media/static/profile_images')
-    # image = models.ImageField(default='default.jpg',
-    # upload_to = 'static/profile_images')
+        default='NoProfile.jpg', upload_to='static/profile_images')
+    game_library_image = models.ImageField(
+        default='default_videogame.jpg', upload_to='static/video_game_default')
     player_tag = models.CharField(max_length=128, unique=True)
-    # image=models.ImageField(
-    # upload_to='static/profile_images', blank=True, default='profile_images/default-user.png')
 
     def __str__(self):
         return f'{self.user.username}'
@@ -42,9 +42,12 @@ class VideoGame(models.Model):
     image = models.ImageField(default="")
     youtubeurl = models.CharField(max_length=300)
     speedRun = models.CharField(max_length=300)
-    trivia = models.CharField(max_length=300, default="There are no Trivia available for this game at the moment")
-    cheats = models.CharField(max_length=300, default="There are no Cheats available for this game at the moment")
-    easter_eggs = models.CharField(max_length=300, default="There are no Easter Eggs available for this game at the moment")
+    trivia = models.CharField(
+        max_length=300, default="There are no Trivia available for this game at the moment")
+    cheats = models.CharField(
+        max_length=300, default="There are no Cheats available for this game at the moment")
+    easter_eggs = models.CharField(
+        max_length=300, default="There are no Easter Eggs available for this game at the moment")
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
@@ -69,19 +72,64 @@ class Review(models.Model):
         return self.videogame.name
 
 
+<<<<<<< HEAD
 class VideoGameList(models.Model):
     list_id = models.IntegerField(unique=True, primary_key=True)
     videogame_id = models.ForeignKey(VideoGame)
     user_id = models.ForeignKey(UserProfile)
 
+        library_id = request.session.get("library_id", None)
+        qs = self.get_queryset().filter(list_id=library_id)
+
+        if qs.count() == 1:
+            new_obj = False
+            library_obj = qs.first()
+            if request.user.is_authenticated() and library_obj.user is None:
+                library_obj.user = request.user
+                library_obj.save()
+        else:
+            user = request.user.userprofile
+            library_obj = VideoGameList.objects.new(
+                user=request.user.userprofile)
+            new_obj = True
+            request.session['library_id'] = library_obj.list_id
+        return library_obj, new_obj
+
+    def new(self, user=None):
+        user_obj = None
+        if user is not None:
+            user_obj = user
+        return self.model.objects.create(user=user_obj)
+
+
+class VideoGameList(models.Model):
+    list_id = models.IntegerField(unique=True, primary_key=True)
+    user = models.ForeignKey(UserProfile, null=True)
+    userLibrary = models.ManyToManyField(VideoGame, blank=True)
+    game_library_image = models.ImageField(
+        default='default_videogame.jpg', upload_to='static/video_game_default')
+
+    objects = VideoGameListManager()
+
     def __str__(self):
-        return self.list_id
+        return str(self.list_id)
+
+
+def m2m_changed_video_game_list(sender, instance, action, *args, **kwargs):
+    if action == 'post_add' or action == 'post_remove' or action == 'post_clear':
+        userLibrary = instance.userLibrary.all()
+        instance.save()
+
+
+m2m_changed.connect(m2m_changed_video_game_list,
+                    sender=VideoGameList.userLibrary.through)
+
+>>>>>>> df32b4599063704810fe93498a2f68a33e085f0e
 
 # class VideoExtraInfo(models.Model):
 #     videogame_id = models.ForeignKey(VideoGame)
 #     trivia = models.CharField(max_length=300, default="There is no Trivia available for this game at the moment")
 #     cheats = models.CharField(max_length=300, default="There is no Cheats available for this game at the moment")
-#     credits = models.CharField(max_length=300, default="There is no Credits available for this game at the moment")
 #     triviaPicture = models.CharField(max_length=300, default="There is no Trivia available for this game at the moment")
 #     cheatPicture = models.CharField(max_length=300, default="There is no Cheats available for this game at the moment")
 #     creditPicture = models.CharField(max_length=300, default="There is no Credits available for this game at the moment")
