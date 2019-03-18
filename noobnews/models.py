@@ -11,6 +11,7 @@ from django.db.models.signals import pre_save, post_save, m2m_changed
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
     user_profile_image = models.ImageField(
         default='NoProfile.jpg', upload_to='static/profile_images')
     game_library_image = models.ImageField(
@@ -71,13 +72,11 @@ class Review(models.Model):
     def __str__(self):
         return self.videogame.name
 
+#User = settings.AUTH_USER_MODEL
 
-<<<<<<< HEAD
-class VideoGameList(models.Model):
-    list_id = models.IntegerField(unique=True, primary_key=True)
-    videogame_id = models.ForeignKey(VideoGame)
-    user_id = models.ForeignKey(UserProfile)
+class VideoGameListManager(models.Manager):
 
+    def new_or_get(self, request):
         library_id = request.session.get("library_id", None)
         qs = self.get_queryset().filter(list_id=library_id)
 
@@ -103,7 +102,7 @@ class VideoGameList(models.Model):
 
 
 class VideoGameList(models.Model):
-    list_id = models.IntegerField(unique=True, primary_key=True)
+    list_id =  models.AutoField(primary_key=True)
     user = models.ForeignKey(UserProfile, null=True)
     userLibrary = models.ManyToManyField(VideoGame, blank=True)
     game_library_image = models.ImageField(
@@ -124,12 +123,12 @@ def m2m_changed_video_game_list(sender, instance, action, *args, **kwargs):
 m2m_changed.connect(m2m_changed_video_game_list,
                     sender=VideoGameList.userLibrary.through)
 
->>>>>>> df32b4599063704810fe93498a2f68a33e085f0e
 
 # class VideoExtraInfo(models.Model):
 #     videogame_id = models.ForeignKey(VideoGame)
 #     trivia = models.CharField(max_length=300, default="There is no Trivia available for this game at the moment")
 #     cheats = models.CharField(max_length=300, default="There is no Cheats available for this game at the moment")
+#     credits = models.CharField(max_length=300, default="There is no Credits available for this game at the moment")
 #     triviaPicture = models.CharField(max_length=300, default="There is no Trivia available for this game at the moment")
 #     cheatPicture = models.CharField(max_length=300, default="There is no Cheats available for this game at the moment")
 #     creditPicture = models.CharField(max_length=300, default="There is no Credits available for this game at the moment")
@@ -143,6 +142,7 @@ class ratingValue(models.Model):
 
     def __str__(self):
         return self.number
+
 
 class score(models.Model):
     videogame = models.ForeignKey(VideoGame)

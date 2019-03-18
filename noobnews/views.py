@@ -96,47 +96,49 @@ def show_videogame(request, videogame_name_slug):
         context_dict['users'] = None
     # Working out the Value of each review
 
-    totalRating = Review.objects.all().aggregate(Sum('comment_rating'))['comment_rating__sum'] or 0.00
-    totalRating= totalRating/5
+    totalRating = Review.objects.all().aggregate(Sum('comment_rating'))[
+        'comment_rating__sum'] or 0.00
+    totalRating = totalRating/5
 
-        # Need to delete all objects in the score table
+    # Need to delete all objects in the score table
     score.objects.all().delete()
-        # updating the rating table with the new rating values
-    for i in range(1,6):
-        rat=totalRating * i
-        updaterating= ratingValue.objects.filter(number=i)
-        updaterating= updaterating[0]
-        updaterating.value=rat
+    # updating the rating table with the new rating values
+    for i in range(1, 6):
+        rat = totalRating * i
+        updaterating = ratingValue.objects.filter(number=i)
+        updaterating = updaterating[0]
+        updaterating.value = rat
         updaterating.save()
 
-    ratingVideoGames=VideoGame.objects.all()
-    size= len(ratingVideoGames)
+    ratingVideoGames = VideoGame.objects.all()
+    size = len(ratingVideoGames)
     for j in range(size):
-        currentgame=ratingVideoGames[j]
-        Gamescore=0
+        currentgame = ratingVideoGames[j]
+        Gamescore = 0
 
-        for k in range(1,6):
-            currentReview=Review.objects.filter(videogame=currentgame, comment_rating = k)
-            currentValue=ratingValue.objects.filter(number=k)
-            currentscore=currentValue[0].value * len(currentReview)
+        for k in range(1, 6):
+            currentReview = Review.objects.filter(
+                videogame=currentgame, comment_rating=k)
+            currentValue = ratingValue.objects.filter(number=k)
+            currentscore = currentValue[0].value * len(currentReview)
             Gamescore = Gamescore + currentscore
 
             # need to update score table with these value
-        score.objects.create(videogame=currentgame,score=Gamescore)
+        score.objects.create(videogame=currentgame, score=Gamescore)
 
         # Need to find the highest Score
-    highestScore= score.objects.all().aggregate(Max('score'))['score__max'] or 0.00
-
+    highestScore = score.objects.all().aggregate(Max('score'))[
+        'score__max'] or 0.00
 
     for l in range(size):
-        currentgame=ratingVideoGames[l]
-        currentScore=score.objects.filter(videogame=currentgame)
-        currentScore= currentScore[0].score
+        currentgame = ratingVideoGames[l]
+        currentScore = score.objects.filter(videogame=currentgame)
+        currentScore = currentScore[0].score
         gameScore = currentScore / highestScore
         gameScore = gameScore * 100
-        updateGame= VideoGame.objects.filter(name=currentgame.name)
-        updateGame= updateGame[0]
-        updateGame.rating=gameScore
+        updateGame = VideoGame.objects.filter(name=currentgame.name)
+        updateGame = updateGame[0]
+        updateGame.rating = gameScore
 
         updateGame.save()
 
@@ -153,7 +155,8 @@ def show_videogame(request, videogame_name_slug):
                 review.videogame = videoGame
                 review.publish_date = str(date.today())
                 print(request.user)
-                review.user_id = UserProfile.objects.get(player_tag=request.user.userprofile.player_tag)
+                review.user_id = UserProfile.objects.get(
+                    player_tag=request.user.userprofile.player_tag)
                 review.save()
                 # return show_videogame(request, videogame_name_slug)
 
@@ -161,6 +164,7 @@ def show_videogame(request, videogame_name_slug):
     context_dict['videogame'] = videoGame
 
     return render(request, 'noobnews/videogame.html', context_dict)
+
 
 def suggestChanges(request, videogame_name_slug):
     context_dict = {}
@@ -186,8 +190,8 @@ def suggestChanges(request, videogame_name_slug):
             if videoGame:
                 form.save()
             return render(request, 'noobnews/videogame.html', context_dict)
-        print(form);
-                # return show_videogame(request, videogame_name_slug)
+        print(form)
+        # return show_videogame(request, videogame_name_slug)
     return render(request, 'noobnews/videogameSuggestChanges.html', context_dict)
 
 
@@ -201,7 +205,6 @@ def top40(request):
     except VideoGame.DoesNotExist:
         context_dict['genres'] = None
         context_dict['videoGame'] = None
-
 
     return render(request, 'noobnews/top40.html', context_dict)
 
@@ -225,6 +228,8 @@ def suggest_category(request):
     return render(request, 'noobnews/cats.html', {'cats': cat_list})
 
 # Method to login
+
+
 def user_login(request):
     if request.method == 'POST':
         email = request.POST.get('mail')
@@ -250,7 +255,9 @@ def user_login(request):
     else:
         return render(request, 'noobnews/login.html', {})
 
-# Method to register a new user 
+# Method to register a new user
+
+
 def register(request):
     registered = False
 
@@ -289,7 +296,7 @@ def register(request):
                               })
 
             try:
-                # Search for a user profile with the same player_tag that we are trying to register 
+                # Search for a user profile with the same player_tag that we are trying to register
                 profileTmp = UserProfile.objects.get(
                     player_tag=profile_form.cleaned_data['player_tag'])
             except UserProfile.DoesNotExist:
@@ -339,6 +346,8 @@ def register(request):
                   })
 
 # Method to reset the password using the django authentication framwework
+
+
 def reset_password(request):
     if request.method == 'POST':
         # Store the form information
@@ -394,10 +403,12 @@ def reset_password(request):
             # Template with the email body for reset the password
             email_template_name = 'registration/password_reset_email.html'
             # Function to load the subject template and set the required variables
-            subject = loader.render_to_string(subject_template_name, blend_email_directory)
+            subject = loader.render_to_string(
+                subject_template_name, blend_email_directory)
             subject = ''.join(subject.splitlines())
             # Function to load the body message template and set the required variables
-            email = loader.render_to_string(email_template_name, blend_email_directory)
+            email = loader.render_to_string(
+                email_template_name, blend_email_directory)
             # Function to send the email
             send_mail(subject, email, 'noobnewsa1@gmail.com', [
                       userTmp.email], fail_silently=False)
@@ -538,24 +549,23 @@ def user_logout(request):
 
 @login_required
 def profile(request):
-    #library
+    # library
+    game = None
     selected_game = request.POST.get('selected_game')
+    library = VideoGameList.objects.filter(
+            user=request.user.userprofile)
+    if not library:
+        library_obj = VideoGameList.objects.create(user=request.user.userprofile)
+    else:
+        library_obj = VideoGameList.objects.get(list_id=library.first().list_id)
+
     if selected_game is None:
-        
         game_obj = VideoGame.objects.get(id=56)
-
-        library = VideoGameList.objects.filter(user_id=request.user.userprofile)
-        library_obj = VideoGameList.objects.get(list_id=library)
-        library_obj.userLibrary.add(game_obj)
-        game = library_obj.userLibrary.all()
-        
-    else:    
+    else:
         game_obj = VideoGame.objects.get(id=selected_game)
-
-        library = VideoGameList.objects.filter(user_id=request.user.userprofile)
-        library_obj = VideoGameList.objects.get(list_id=library)
-        library_obj.userLibrary.add(game_obj)
-        game = library_obj.userLibrary.all() 
+    
+    library_obj.userLibrary.add(game_obj)
+    game = library_obj.userLibrary.all()
 
     # user profile has been updated
     if request.method == 'POST':
@@ -571,7 +581,7 @@ def profile(request):
             return redirect('profile')
 
     else:
-        
+
         # profile page before updates
         user_form_update = UserUpdateForm(
             instance=request.user.userprofile)
@@ -579,34 +589,37 @@ def profile(request):
         profile_form_update = ProfileUpdateForm(
             instance=request.user.userprofile)
 
-       
     context = {
         'user_form_update': user_form_update,
         'profile_form_update': profile_form_update,
         'game': game,
-        
+
 
 
 
     }
     return render(request, 'noobnews/profile.html', context)
 
-#test library
+# test library
+
+
 def video_game_list_add(request):
     selected_game = request.POST.get('selected_game')
     if selected_game is None:
-        
+
         game_obj = VideoGame.objects.get(id=56)
 
-        library = VideoGameList.objects.filter(user_id=request.user.userprofile)
+        library = VideoGameList.objects.filter(
+            user_id=request.user.userprofile)
         library_obj = VideoGameList.objects.get(list_id=library)
         library_obj.userLibrary.add(game_obj)
         game = library_obj.userLibrary.all()
         context = {'game': game}
-    else:    
+    else:
         game_obj = VideoGame.objects.get(id=selected_game)
 
-        library = VideoGameList.objects.filter(user_id=request.user.userprofile)
+        library = VideoGameList.objects.filter(
+            user_id=request.user.userprofile)
         library_obj = VideoGameList.objects.get(list_id=library)
         library_obj.userLibrary.add(game_obj)
         game = library_obj.userLibrary.all()
