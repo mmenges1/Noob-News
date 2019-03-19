@@ -549,11 +549,12 @@ def user_logout(request):
 
 @login_required
 def profile(request):
-    # library
+    # My video games library
     game = None
     selected_game = request.POST.get('selected_game')
     library = VideoGameList.objects.filter(
             user=request.user.userprofile)
+    # Make a library for new users        
     if not library:
         library_obj = VideoGameList.objects.create(user=request.user.userprofile)
     else:
@@ -568,12 +569,13 @@ def profile(request):
     game = library_obj.userLibrary.all()
 
     # user profile has been updated
+    #Update my name
     if request.method == 'POST':
         user_form_update = UserUpdateForm(
             request.POST, instance=request.user.userprofile)
         profile_form_update = ProfileUpdateForm(
             request.POST, request.FILES, instance=request.user.userprofile)
-
+        #update my profile picture 
         if profile_form_update.is_valid() and user_form_update.is_valid():
             profile_form_update.save()
             user_form_update.save()
@@ -600,9 +602,7 @@ def profile(request):
     }
     return render(request, 'noobnews/profile.html', context)
 
-# test library
-
-
+# test library funtionality 
 def video_game_list_add(request):
     selected_game = request.POST.get('selected_game')
     if selected_game is None:

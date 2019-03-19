@@ -11,7 +11,7 @@ from django.db.models.signals import pre_save, post_save, m2m_changed
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
+    # Default images
     user_profile_image = models.ImageField(
         default='NoProfile.jpg', upload_to='static/profile_images')
     game_library_image = models.ImageField(
@@ -72,8 +72,8 @@ class Review(models.Model):
     def __str__(self):
         return self.videogame.name
 
-#User = settings.AUTH_USER_MODEL
 
+# Manage library
 class VideoGameListManager(models.Manager):
 
     def new_or_get(self, request):
@@ -100,9 +100,11 @@ class VideoGameListManager(models.Manager):
             user_obj = user
         return self.model.objects.create(user=user_obj)
 
+# Make a library for favorite games
+
 
 class VideoGameList(models.Model):
-    list_id =  models.AutoField(primary_key=True)
+    list_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(UserProfile, null=True)
     userLibrary = models.ManyToManyField(VideoGame, blank=True)
     game_library_image = models.ImageField(

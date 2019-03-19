@@ -61,12 +61,13 @@ class UserProfileForm(forms.ModelForm):
         PrependedText(
             'user_profile_image', '<i class="fa fa-image"></i>'),
 
-        # test video game library image
 
 
     )
 
     helper.form_tag = False
+
+# update my name in user profile page
 
 
 class UserUpdateForm(forms.ModelForm):
@@ -77,6 +78,8 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('player_tag',)
+
+# update my picture in user profile page
 
 
 class ProfileUpdateForm(forms.ModelForm):
