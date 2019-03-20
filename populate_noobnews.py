@@ -8,7 +8,8 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
 def populate():
-# https://uk.ign.com
+#cheats and easter_eggs retreived from https://uk.ign.com
+#Images retreived from wikipedia and uk.ign.com
      adventure_videogame = [
          {"name": "Far Cry 5",
          "id": 1,
@@ -1196,17 +1197,12 @@ def add_review(player_tag, name, reviews_id, comments, comment_rating):
     vg = VideoGame.objects.get(name=name)
     # videogame_name_slug)
     r = Review.objects.get_or_create(reviews_id=reviews_id, videogame=vg, user_id=user, comments=comments, comment_rating=comment_rating)[0]
-    print(r.reviews_id);
-    print(r.videogame.name);
-    print(r.user_id);
-    print(r.comments);
     r.save()
     return r
 
 def add_user(username, password, player_tag):
     user = User.objects.get_or_create(username=username, password=password)[0]
     u = UserProfile.objects.get_or_create(player_tag=player_tag, user=user)[0]
-    print(u.player_tag);
     u.save()
     return u
 

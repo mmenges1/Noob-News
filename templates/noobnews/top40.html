@@ -6,17 +6,21 @@
 <script src="{% static "js/top40.js" %}"></script>
 {% endblock %}
 {% block body_block %}
-
+<!-- Top 40 Video game list  -->
 <div class="jumbotron text-center mt-2" style="background: transparent;">
+  <!-- Top 40 Banner  -->
       <div class="angle" id="top40Angle"><p>Choose your adventure wisely</p></div>
   <center><div class="try2">
+    <!-- Show all video games in Top 40 initially -->
     <button class="btn2 active2" id="btn2" onclick="filterSelection('all')"><span> Show all</span></button>
     {% for g in genres %}
+    <!-- Show video games from Top 40 with specific genre -->
     <button id="btn2" class="btn2" onclick="filterSelection('{{ g.name }}')"><span>{{ g.name }}</span></button>
     {% endfor %}
   </div></center>
   <div class="row2">
     {% for v in videoGame %}
+    <!-- individual video game information -->
     <a href="{% url 'show_videogame' v.slug %}"><div id="hover" class="column2 {{ v.genre.name }}">
       <div id="{{ v.genre.name }}" class="content2">
         <div><button class="plus"><h1 id="h1Style2">{{ v.rating }}</h1></<button></div>
