@@ -1,8 +1,7 @@
-console.log("HELLLOOOOOo");
-var id = "client_id=lafleu2a48dpivopblprona7jhjf3j";
-function loadApis(videogame) {
+function loadApis(name, speedRun, youtubeurl) {
+  var id = "client_id=lafleu2a48dpivopblprona7jhjf3j";
   $.getJSON(
-    "https://api.twitch.tv/kraken/videos/top?game=" + videogame.name + "&" + id,
+    "https://api.twitch.tv/kraken/videos/top?game=" + name + "&" + id,
     function(obj) {
       for (var i = 0; i < 1; i++) {
         var x = {};
@@ -31,7 +30,7 @@ function loadApis(videogame) {
     "jsonp"
   );
   $.getJSON(
-    "https://api.twitch.tv/kraken/videos/" + videogame.speedRun + "?" + id,
+    "https://api.twitch.tv/kraken/videos/" + speedRun + "?" + id,
     function(obj) {
       for (var i = 0; i < 1; i++) {
         var x = {};
@@ -48,7 +47,7 @@ function loadApis(videogame) {
 
   $.getJSON(
     " https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=1&playlistId=" +
-      videogame.youtubeurl +
+      youtubeurl +
       "&fields=items/snippet/title,items/snippet/description&key=AIzaSyDu4N6OHRVf81plK5FcmXb1P0L5Ef-nYMY",
     function(data) {
       $.each(data.items, function(i, item) {
@@ -60,7 +59,7 @@ function loadApis(videogame) {
     }
   );
   $.getJSON(
-    "https://player.twitch.tv/?autoplay=false&video=" + videogame.speedRun,
+    "https://player.twitch.tv/?autoplay=false&video=" + speedRun,
     function(data) {
       $.each(data.items, function(i, item) {
         console.log(item);

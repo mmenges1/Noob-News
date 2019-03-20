@@ -13,8 +13,6 @@
   {% block videoG %} {% endblock %}
   <link rel="stylesheet" href="/static/css/videoGameBootstrap.css">
   <link rel="stylesheet" href="/static/css/noobnews.css">
-  <script type="text/javascript">
-  </script>
 </head>
 
 
@@ -254,9 +252,11 @@
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-
-  <script>
+  <script src="/static/js/external_apis.js"></script>
+<script>
+  loadApis("{{videoGame.name}}", "{{videoGame.speedRun}}", "{{videoGame.youtubeurl}}")
+</script>
+  <!-- <script>
     console.log("HELLLOOOOOo")
     var id = "client_id=lafleu2a48dpivopblprona7jhjf3j"
     $.getJSON("https://api.twitch.tv/kraken/videos/top?game={{ videoGame.name }}&" + id, function(obj) {
@@ -313,7 +313,7 @@
         $("#title").append(title);;
       });
     });
-  </script>
+  </script> -->
 
 <div>
   {% if user.is_authenticated %}
