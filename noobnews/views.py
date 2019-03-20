@@ -94,14 +94,22 @@ def show_videogame(request, videogame_name_slug):
         context_dict['videoGame'] = None
         context_dict['genres'] = None
         context_dict['users'] = None
-    # Working out the Value of each review
+    # ********* Working out the Value of each review ***********
+    # Explication on rating system- Work out the total numner of reviews currently stored and divide 5- this will give us a base rating
+    # Next we need to multiple the base rating with each of the ratings- (1,2,3,4,5) as this will allow us to see how much each of these ratings are worth (these need to be stored in the database)
+    # Then using this we can count how many 1 star, 2 star etc reviews that each game have and multiple by how much the rating is worth,
+    # We add these reviews all together to give us a over all game score
+    # Next we get the Review with the higest score and we work out the percentage the other games are of that score- this means all of the games will have a number between 1 and 100
 
+
+    # Gets the total number of reviews and works out out base rating
     totalRating = Review.objects.all().aggregate(Sum('comment_rating'))[
         'comment_rating__sum'] or 0.00
     totalRating = totalRating/5
 
     # Need to delete all objects in the score table
     score.objects.all().delete()
+
     # updating the rating table with the new rating values
     for i in range(1, 6):
         rat = totalRating * i
@@ -111,14 +119,15 @@ def show_videogame(request, videogame_name_slug):
         updaterating.save()
 
     ratingVideoGames = VideoGame.objects.all()
+
     size = len(ratingVideoGames)
+    # Gets the game score based on the number of differnt stars reviews the game has
     for j in range(size):
         currentgame = ratingVideoGames[j]
         Gamescore = 0
 
         for k in range(1, 6):
-            currentReview = Review.objects.filter(
-                videogame=currentgame, comment_rating=k)
+            currentReview = Review.objects.filter(videogame=currentgame, comment_rating=k)
             currentValue = ratingValue.objects.filter(number=k)
             currentscore = currentValue[0].value * len(currentReview)
             Gamescore = Gamescore + currentscore
@@ -131,6 +140,7 @@ def show_videogame(request, videogame_name_slug):
         'score__max'] or 0.00
 
     for l in range(size):
+        # Works out what percentage that the game score is compared to the higest game, this is the rating
         currentgame = ratingVideoGames[l]
         currentScore = score.objects.filter(videogame=currentgame)
         currentScore = currentScore[0].score
@@ -140,6 +150,7 @@ def show_videogame(request, videogame_name_slug):
         updateGame = updateGame[0]
         updateGame.rating = gameScore
 
+        # Stores the new rating in the database
         updateGame.save()
 
     # A HTTP POST?
@@ -554,7 +565,7 @@ def profile(request):
     selected_game = request.POST.get('selected_game')
     library = VideoGameList.objects.filter(
             user=request.user.userprofile)
-    # Make a library for new users        
+    # Make a library for new users
     if not library:
         library_obj = VideoGameList.objects.create(user=request.user.userprofile)
     else:
@@ -564,7 +575,7 @@ def profile(request):
         game_obj = VideoGame.objects.get(id=56)
     else:
         game_obj = VideoGame.objects.get(id=selected_game)
-    
+
     library_obj.userLibrary.add(game_obj)
     game = library_obj.userLibrary.all()
 
@@ -575,7 +586,7 @@ def profile(request):
             request.POST, instance=request.user.userprofile)
         profile_form_update = ProfileUpdateForm(
             request.POST, request.FILES, instance=request.user.userprofile)
-        #update my profile picture 
+        #update my profile picture
         if profile_form_update.is_valid() and user_form_update.is_valid():
             profile_form_update.save()
             user_form_update.save()
@@ -602,7 +613,7 @@ def profile(request):
     }
     return render(request, 'noobnews/profile.html', context)
 
-# test library funtionality 
+# test library funtionality
 def video_game_list_add(request):
     selected_game = request.POST.get('selected_game')
     if selected_game is None:

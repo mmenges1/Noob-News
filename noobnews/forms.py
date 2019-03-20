@@ -150,7 +150,7 @@ class SuggestForm(forms.ModelForm):
 
     class Meta:
         model = VideoGame
-        fields = ('name', 'description', 'publisher', 'release',)
+        fields = ('name', 'description', 'publisher',)
 
 
 class ReviewForm(forms.ModelForm):

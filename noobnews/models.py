@@ -35,7 +35,7 @@ class VideoGame(models.Model):
     genre = models.ForeignKey(Genre)
     name = models.CharField(max_length=128, unique=True)
     slug = models.SlugField(blank=True)
-    description = models.CharField(max_length=300)
+    description = models.CharField(max_length=1000)
     rating = models.IntegerField(default=0)
     release = models.DateField(("Date"), default=date.today)
     developer = models.CharField(max_length=128)
