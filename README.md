@@ -18,6 +18,10 @@ To run the application, please do the following:
 
 2. Install requirements.txt, e.g. `pip install -r requirements.txt`
 
+3. Run `python manage.py makemigrations`
+
+4. Run `python manage.py migrate`
+
 ## Sources
 
 - [Building and deploying an Enterprise Django Web App in 16 hours](https://medium.com/python-pandemonium/building-and-deploying-an-enterprise-django-web-app-in-16-hours-79e018f7b94c)
