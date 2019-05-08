@@ -26,3 +26,7 @@ To run the application, please do the following:
 
 - [Building and deploying an Enterprise Django Web App in 16 hours](https://medium.com/python-pandemonium/building-and-deploying-an-enterprise-django-web-app-in-16-hours-79e018f7b94c)
 - [How to Use Bootstrap 4 Forms With Django](https://simpleisbetterthancomplex.com/tutorial/2018/08/13/how-to-use-bootstrap-4-forms-with-django.html)
+
+## Demo Video
+
+Youtube Link: https://youtu.be/pn6mTarhtfI
