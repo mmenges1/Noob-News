@@ -20,5 +20,5 @@ six==1.12.0
 social-auth-app-django==3.1.0
 social-auth-core==3.0.0
 sweetify==1.0.3
-urllib3==1.24.1
+urllib3==1.26.5
 wincertstore==0.2
